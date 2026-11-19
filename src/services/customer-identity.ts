@@ -297,7 +297,13 @@ export async function updateCustomerProfile(
       encryptionKeyHex,
       context.customerId,
     );
-    const updated: CustomerProfile = { ...previous, ...input };
+    const updated: CustomerProfile = {
+      email: previous.email,
+      emailVerified: previous.emailVerified,
+      displayName: input.displayName ?? previous.displayName,
+      declaredResidenceCountryCode: input.declaredResidenceCountryCode ?? previous.declaredResidenceCountryCode,
+      preferredLocale: input.preferredLocale ?? previous.preferredLocale,
+    };
     const encryptedProfile = encryptCustomerProfile(updated, encryptionKeyHex, context.customerId);
     await connection.execute(
       'UPDATE customer_profiles SET encrypted_profile = ?, encryption_version = 1 WHERE customer_id = ?',
