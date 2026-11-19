@@ -1,6 +1,6 @@
 import { z } from 'zod';
 
-const decimalAmount = z.string().regex(/^(0|[1-9]\\d{0,14})(\\.\\d{1,4})?$/, 'Enter a valid positive decimal amount');
+const decimalAmount = z.string().regex(/^(0|[1-9]\d{0,14})(\\.\d{1,4})?$/, 'Enter a valid positive decimal amount');
 
 function toMinorPrecision(value: string): bigint {
   const [whole, fraction = ''] = value.split('.');
