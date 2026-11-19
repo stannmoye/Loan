@@ -99,3 +99,33 @@ Implement the customer overview and operations queue/case-detail interface in th
 ### Next
 
 Add a frontend CI workflow, run its build/type-check gate, fix any compiler or bundler failures, then continue with the next connected backend/customer identity stage. Keep all sample fixtures isolated until real authenticated API contracts exist.
+
+
+## 2026-11-19 — Customer portal visual design enrichment
+
+### Implemented on \`feat/customer-operations-portal-shell\`
+
+- Reworked the customer overview into a richer, customer-first financial workspace with a photographic welcome area, clearer hierarchy, application-progress visualization, next-step guidance, privacy/security messaging, activity and support sections.
+- Added a four-category illustrated discovery area for personal, education, home/property and business finance. The category artwork is bespoke local SVG; the existing customer-adviser JPEG is reused from the repository.
+- Expanded customer navigation with applications, loans, documents, help and security/profile entry points. Unimplemented destinations remain informative notices rather than pretending to be connected features.
+- Standardized the visual treatment around the approved institutional design direction: navy and blue, restrained heritage-gold accents, white and cool-neutral surfaces, Lucide financial iconography, accessible labels, visible focus, responsive layouts and reduced-motion handling.
+- Retained and restyled the operations case-review preview rather than removing it.
+- Kept the sample-data disclosure visible. No real balance, account, product offer, rate, loan decision, uploaded document or financial transaction is represented.
+
+### Files changed
+
+- Reworked \`apps/portal/src/App.tsx\` and \`apps/portal/src/styles.css\`.
+- Added \`apps/portal/public/images/personal-finance.svg\`, \`education-finance.svg\`, \`home-finance.svg\` and \`business-finance.svg\`.
+- Reused \`apps/portal/public/images/customer-adviser.jpg\`.
+- Updated portal instructions, the root README and the evidence/status register.
+
+### Verification
+
+- The earlier portal foundation CI and Stage 1 CI runs completed successfully before this visual enrichment.
+- The updated portal source is committed to the same feature branch and will be validated by a fresh Portal CI build/type-check run.
+- No browser-based visual inspection or device screenshot test has been performed in this increment. The responsive rules are implemented, but rendering must still be reviewed in an actual browser.
+- No backend integration or production-lending feature is claimed.
+
+### Next
+
+Run and inspect the updated Portal CI result. Then perform browser-based visual QA at mobile, tablet and desktop widths before treating the customer dashboard design milestone as verified.
