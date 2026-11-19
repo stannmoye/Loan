@@ -25,7 +25,7 @@ test("customer overview renders its adviser image without horizontal overflow", 
   expect(hasHorizontalOverflow).toBe(false);
 });
 
-test("customer sections are navigable and the finance library exposes all planned types", async ({ page }) => {
+test("customer sections are navigable and the finance library exposes all planned types", async ({ page }, testInfo) => {
   await page.goto("/");
   await openSection(page, "Explore loans");
   await expect(page.getByRole("heading", { name: "Understand your options." })).toBeVisible();
@@ -38,16 +38,18 @@ test("customer sections are navigable and the finance library exposes all planne
   await openSection(page, "My loans");
   await expect(page.getByRole("heading", { name: "No loan accounts are connected." })).toBeVisible();
   await expect(page.getByText(/does not hold or display real loans, balances/i)).toBeVisible();
+  await page.screenshot({ path: testInfo.outputPath("customer-my-loans.png"), fullPage: true });
 
   await openSection(page, "Documents");
   await expect(page.getByRole("heading", { name: "Know what may be needed." })).toBeVisible();
   await expect(page.getByRole("button", { name: /upload unavailable/i })).toBeDisabled();
 });
 
-test("notification centre filters sample items and opens the correct customer view", async ({ page }) => {
+test("notification centre filters sample items and opens the correct customer view", async ({ page }, testInfo) => {
   await page.goto("/");
   await page.getByRole("button", { name: "Open notifications" }).click();
   await expect(page.getByRole("heading", { name: "Your updates, organised." })).toBeVisible();
+  await page.screenshot({ path: testInfo.outputPath("customer-notifications.png"), fullPage: true });
   await page.getByRole("button", { name: "Security", exact: true }).click();
   await expect(page.getByRole("heading", { name: "A reminder about account safety" })).toBeVisible();
   await page.getByRole("button", { name: /view details/i }).click();
