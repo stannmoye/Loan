@@ -5,8 +5,9 @@ import {
   Home, Landmark, LayoutDashboard, Menu, Search,
   ShieldCheck, UserRound, WalletCards, X
 } from "lucide-react";
-import { customerTimeline, reviewCases, type CaseStatus, type ReviewCase } from "./data/fixtures";
-import { CustomerExperience, type CustomerSection } from "./customer/CustomerExperience";
+import { reviewCases, type CaseStatus, type ReviewCase } from "./data/fixtures";
+import { CustomerExperience } from "./customer/CustomerExperience";
+import type { CustomerSection } from "./customer/customer-data";
 
 type Mode = "customer" | "operations";
 
@@ -14,6 +15,15 @@ function sectionFromPath(path: string): CustomerSection {
   const candidate = path.split("/")[2] as CustomerSection | undefined;
   return candidate && ["explore", "applications", "documents", "help", "security"].includes(candidate) ? candidate : "overview";
 }
+
+const customerSectionLabels: Record<CustomerSection, string> = {
+  overview: "Your overview",
+  explore: "Explore loans",
+  applications: "My applications",
+  documents: "Documents",
+  help: "Help centre",
+  security: "Security & profile"
+};
 
 const statuses: CaseStatus[] = ["Needs review", "In progress", "Waiting for customer", "Completed"];
 
@@ -105,7 +115,7 @@ function App() {
       <main className="main-area">
         <header className="topbar">
           <button className="icon-button mobile-menu" aria-label="Open navigation" onClick={() => setMobileOpen(true)}><Menu size={20} /></button>
-          <div className="breadcrumb"><span>Northline</span><span className="crumb-separator">/</span><strong>{mode === "customer" ? ({ overview: "Your overview", explore: "Explore loans", applications: "My applications", documents: "Documents", help: "Help centre", security: "Security & profile" }[customerSection]) : "Case overview"}</strong></div>
+          <div className="breadcrumb"><span>Northline</span><span className="crumb-separator">/</span><strong>{mode === "customer" ? customerSectionLabels[customerSection] : "Case overview"}</strong></div>
           <div className="topbar-actions"><span className="preview-label"><span />Illustrative preview</span><button className="icon-button notification-button" aria-label="Notifications" onClick={() => navNotice("Notifications are illustrative in this preview; no live inbox is connected.")}><Bell size={18} /><i /></button><div className="top-avatar">{mode === "customer" ? "SC" : "SO"}</div></div>
         </header>
         <div className="content-wrap">
