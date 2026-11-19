@@ -56,7 +56,7 @@ The archived Stage 1 source has been adopted at the repository root; the source 
 - `npm run build` — PASS after correcting strict-unknown error handling in `src/plugins/admin-auth.ts`.
 - `npm test` — PASS: 9 tests using Vitest 5.1.1.
 - `npm audit` — PASS: zero reported vulnerabilities after upgrading Vitest from 3.x.
-- MySQL server — not running locally; migrations, seeds and MySQL integration assertions remain unexecuted.
-- GitHub Actions — status not yet checked.
+- MySQL server — not running locally; no local migration, seed or integration commands were run.
+- GitHub Actions `Stage 1 CI` — PASS for commit `78cdea4602c68c79e375daee386a531f2db139eb`; the workflow provisions MySQL 8.4 and runs migrations, seed and `test:mysql`.
 
-These results do not close Stage 1. Configure and positively identify a disposable MySQL 8.4 database before running migrations, seed, or integration tests. Check CI for the exact pushed commit. Stage 1 is not production-ready, and no customer lending or real payment capability is established.
+These results do not close Stage 1. Local database commands remain unrun because no MySQL server is configured in this sandbox; use only a positively identified disposable MySQL 8.4 database for future local runs. The passing CI result applies only to the cited commit. Stage 1 is not production-ready, and no customer lending or real payment capability is established.

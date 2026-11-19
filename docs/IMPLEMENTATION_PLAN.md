@@ -34,13 +34,17 @@ Baseline checks were executed from the extracted starter on 2026-11-19:
 
 - `python3 test/catalogue-integrity.py` — **PASS** (19 categories, 66 unique product types, valid category references).
 - `python3 test/stage1-invariants.py` — **PASS** (static seed-safety/transaction, product/category, publication/approval uniqueness, decision, timing and API-validation invariants).
-- Node.js available: v22.23.4.
-- `node_modules` absent; no dependency installation or full type-check/Vitest run has yet been completed.
-- MySQL CLI exists, but no running/configured isolated MySQL 8.4 instance has been demonstrated. Migration/seed/integration assertions remain unverified.
-- The starter's prior status report says registry DNS prevented dependency installation and live DB tests; this is historical starter evidence, not a fresh rerun.
-- Remote GitHub Actions status has not been checked; do not claim CI passed.
+- Node.js available: v22.23.4. Dependencies are installed and `package-lock.json` is committed.
+- At repository root, `npm run build`, `npm test` (9 tests), `npm run test:static`, and `npm audit` all pass; see the dated evidence below and `docs/FEATURE_STATUS.md`.
+- GitHub Actions `Stage 1 CI` completed successfully for commit `78cdea4602c68c79e375daee386a531f2db139eb`: the workflow provisions MySQL 8.4 and runs build, unit/static tests, migrations, seed, and `test:mysql`.
+- No local MySQL server is running in this sandbox, so local database execution remains unavailable. Use the successful CI run as commit-specific database evidence; do not imply the local commands ran.
+- The starter's earlier registry DNS and missing-dependency notes are historical and are superseded by the current successful build/test/audit evidence.
 
-**Stage 1 progress as of 2026-11-19:** the archived source has been adopted at the repository root; the ZIP and starter README/status records are retained. The complete TypeScript build, all nine current Vitest tests, both static checks, and the full npm dependency audit pass. A strict-unknown error in the admin-auth handler was corrected, and Vitest was upgraded to 5.1.1 to resolve the vulnerabilities reported in its prior 3.x dependency tree. Stage 1 remains open because no isolated MySQL 8.4 server is configured, database integration checks have not run, and GitHub Actions status has not been checked. These results and remaining blockers are also recorded in `progress.md` and `STAGE_1_STATUS.md`.
+**Stage 1 progress as of 2026-11-19:** the archived source has been adopted at the repository root; the ZIP and starter README/status records are retained. The complete TypeScript build, all nine current Vitest tests, both static checks, and the full npm dependency audit pass. A strict-unknown error in the admin-auth handler was corrected, and Vitest was upgraded to 5.1.1 to resolve the vulnerabilities reported in its prior 3.x dependency tree. GitHub Actions `Stage 1 CI` passed on commit `78cdea4602c68c79e375daee386a531f2db139eb`, including its isolated MySQL 8.4 migration, seed, and integration steps. Local MySQL execution is still unavailable. Remaining Stage 1 items include checking/closing any uncovered security and database-role hardening gaps; the passing CI result is commit-specific. These results are also recorded in `progress.md` and `STAGE_1_STATUS.md`.
+
+### 3.3 Visual identity and interaction design
+
+Follow [`DESIGN_DIRECTION.md`](DESIGN_DIRECTION.md), which captures the product owner's request for a premium financial-institution aesthetic and supplied transaction-portal reference. Build a restrained bank-grade visual system: white and cool-neutral surfaces, institutional navy, controlled blue/green status accents, aligned tabular financial values, a consistent semantic banking-icon family, and purposeful licensed imagery for customer-facing discovery/onboarding. Admin screens should prioritize compact navigation, case context, transaction facts, timeline, evidence/attachments, and clearly authorized actions; customer screens should be reassuring, responsive, and disclosure-led. Avoid generic gradient-heavy fintech/SaaS decoration, fake graphs or balances, stock-cash clichés, and icons without labels. Establish shared tokens, accessible components and responsive layouts before scaling out individual screens.
 
 ## 3. Architecture and design decisions
 
@@ -102,7 +106,7 @@ Stages are sequential at acceptance-gate level; within a stage, independent docu
 
 ### Stage 4 — Customer portal foundations
 
-**Features:** 03–08, 19, customer-facing parts of 49. Build responsive customer React/TypeScript portal with design tokens, navigation, onboarding/profile/security, dashboard, application tracking shell and persistent notification inbox. Dashboard values must derive from authoritative application, servicing and ledger records; show a clear empty state before relevant records exist.
+**Features:** 03–08, 19, customer-facing parts of 49. Build the shared design system described in `DESIGN_DIRECTION.md`, then a responsive customer React/TypeScript portal with onboarding/profile/security, dashboard, application tracking shell and persistent notification inbox. Begin with a representative customer screen and an admin case-detail screen. Dashboard values must derive from authoritative application, servicing and ledger records; show a clear empty state before relevant records exist. Use legitimate/licensed financial imagery selectively, and accessible semantic banking icons throughout.
 
 **Gate:** user can complete available registration/authentication flows, sees only own data and authorized actions, responsive layouts work across target widths, keyboard/accessibility checks are performed, and no demo amount is presented as actual customer money.
 

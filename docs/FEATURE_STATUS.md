@@ -13,7 +13,7 @@
 - `AVAILABLE IN PRODUCTION`: 0
 - Production lending/provider status: no production service evidenced; all lending jurisdictions/corridors must remain disabled.
 
-The starter archive and project have been adopted at repository root. Catalogue-related items remain `IN PROGRESS` until their individual acceptance tests pass. Static, build, unit-test and dependency-audit checks have run, but MySQL integration, CI and production readiness remain unverified.
+The starter archive and project have been adopted at repository root. Catalogue-related items remain `IN PROGRESS` until their individual acceptance tests pass. Static, build, unit-test and dependency-audit checks pass locally. The Stage 1 CI run, including isolated MySQL 8.4 migrations, seed and integration tests, passed for commit `78cdea4602c68c79e375daee386a531f2db139eb`; that commit-specific evidence does not establish production readiness.
 
 ## A. Customer accounts and experience
 
@@ -113,7 +113,7 @@ The starter archive and project have been adopted at repository root. Catalogue-
 | 57 | AI-assisted administration | NOT STARTED | No AI assist; future use must be bounded, auditable, and non-decisional for high-impact lending. |
 | 58 | API and partner integrations | IN PROGRESS | Versioned Fastify REST `/api/v1` product routes exist in Stage 1 starter; partner API contracts, adapters, auth coverage and monitoring remain. |
 | 59 | Security, privacy and disaster recovery | IN PROGRESS | Starter includes selected API hardening and RS256 checks; end-to-end privacy, encryption, retention, backup/recovery and security evidence absent. |
-| 60 | Testing, deployment and monitoring | IN PROGRESS | Static checks pass against extracted starter. Unit/build/MySQL/CI/security/performance/monitoring/rollback evidence not yet established. |
+| 60 | Testing, deployment and monitoring | IN PROGRESS | Local build, 9 unit tests, static checks and npm audit pass. GitHub Actions Stage 1 CI passed for `78cdea4602c68c79e375daee386a531f2db139eb`, including its MySQL 8.4 migration/seed/integration checks. Security/performance/monitoring/rollback evidence remains. |
 
 ## Evidence updates
 
@@ -123,5 +123,5 @@ The starter archive and project have been adopted at repository root. Catalogue-
 | 2026-11-19 | `npm run build` at repository root | PASS after fixing strict-unknown handling in the admin auth error handler. |
 | 2026-11-19 | `npm test` at repository root with Vitest 5.1.1 | PASS: 1 file, 9 tests. |
 | 2026-11-19 | `npm audit` | PASS: zero reported vulnerabilities after upgrading Vitest from the vulnerable 3.x line to 5.1.1. |
-| 2026-11-19 | `npm run db:migrate`, `npm run db:seed`, `npm run test:mysql` | NOT RUN: no MySQL server is listening locally; do not proceed until a disposable isolated MySQL 8.4 target is configured. |
-| 2026-11-19 | Remote GitHub Actions | NOT CHECKED. |
+| 2026-11-19 | Local `npm run db:migrate`, `npm run db:seed`, `npm run test:mysql` | NOT RUN: no local MySQL server is listening. |
+| 2026-11-19 | GitHub Actions `Stage 1 CI` for `78cdea4602c68c79e375daee386a531f2db139eb` | PASS: workflow provisions MySQL 8.4 and runs build, unit/static tests, migrations, seed, and `test:mysql`. [Run 44539756823](https://github.com/stannmoye/Loan/actions/runs/44539756823). |

@@ -1,6 +1,6 @@
 # AI Contributor Instructions
 
-This repository implements a regulated, multi-jurisdiction digital lending platform. Treat `docs/IMPLEMENTATION_PLAN.md` as the authoritative delivery plan, `docs/FEATURE_STATUS.md` as the evidence-based feature register, and `progress.md` as the chronological implementation record. Read those files and the Stage 1 README/status report before changing code. The detailed master specification supplied with the project is summarized in the plan; do not assume a feature exists just because it is listed there.
+This repository implements a regulated, multi-jurisdiction digital lending platform. Treat `docs/IMPLEMENTATION_PLAN.md` as the authoritative delivery plan, `docs/DESIGN_DIRECTION.md` as the owner-approved visual identity and interaction guidance, `docs/FEATURE_STATUS.md` as the evidence-based feature register, and `progress.md` as the chronological implementation record. Read those files and the Stage 1 README/status report before changing code. The `docs/AI_CONTRIBUTOR_PRESENTATION_SCRIPT.md` is a spoken onboarding brief, not a substitute for the authoritative documents. The detailed master specification supplied with the project is summarized in the plan; do not assume a feature exists just because it is listed there.
 
 ## Working contract
 
@@ -17,7 +17,7 @@ This repository implements a regulated, multi-jurisdiction digital lending platf
 
 ## Before any task
 
-- Read this file, `README.md`, `docs/IMPLEMENTATION_PLAN.md`, `docs/FEATURE_STATUS.md`, `progress.md`, `STAGE_1_STATUS.md`, and relevant files under `docs/`.
+- Read this file, `README.md`, `docs/IMPLEMENTATION_PLAN.md`, `docs/DESIGN_DIRECTION.md`, `docs/FEATURE_STATUS.md`, `progress.md`, `STAGE_1_STATUS.md`, and relevant files under `docs/`.
 - Confirm current branch and worktree status; do not discard unrelated changes.
 - Inspect current migrations and determine whether a migration is additive and safe before applying it.
 - Identify the scope and acceptance test for the specific change.

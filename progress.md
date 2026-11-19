@@ -39,3 +39,12 @@ The original static-only test run passed before dependencies were installed. The
 2. Obtain/configure a disposable MySQL 8.4 test database; run migrations, seed and MySQL integration tests after verifying the target.
 3. Check GitHub Actions for the exact commit and resolve any failures.
 4. Review the existing schema/auth/audit constraints, then begin Stage 2 only with its acceptance criteria and evidence.
+
+
+## 2026-11-19 — CI confirmation and contributor/design guidance
+
+GitHub Actions `Stage 1 CI` completed successfully for commit `78cdea4602c68c79e375daee386a531f2db139eb` (run [44539756823](https://github.com/stannmoye/Loan/actions/runs/44539756823)). Its workflow provisioned MySQL 8.4 and passed build, unit/static checks, migrations, seed, and `test:mysql`. This supersedes the earlier entry's pending/unchecked CI note; local MySQL still is not running in this sandbox.
+
+Prepared `docs/AI_CONTRIBUTOR_PRESENTATION_SCRIPT.md` as an 8–10 minute spoken onboarding for other AI contributors, covering the plan, modular-monolith/API architecture, financial integrity, 12 acceptance-gated stages, and actual status evidence. Added `docs/DESIGN_DIRECTION.md` from the product owner's screenshot reference: premium financial-institution surfaces, restrained navy/blue/status palette, purposeful licensed imagery, coherent semantic banking icons, data-first admin case views, customer reassurance, accessibility and mobile behavior. The implementation plan, contributor instructions, README, feature register and Stage 1 report now point to or reflect these choices and the exact CI evidence.
+
+These are documented design constraints, not implemented frontend screens or generated image assets. No customer/admin web UI exists yet. The UI work will follow the design system and be introduced at the planned portal stages.

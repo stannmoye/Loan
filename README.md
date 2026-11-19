@@ -16,7 +16,7 @@ Initial checks run against the extracted starter on 2026-11-19:
 | `npm test` | PASS: 9 Vitest tests |
 | `npm audit` | PASS: zero reported vulnerabilities |
 | MySQL migrations, seed and integration test | NOT RUN: no local server; disposable MySQL 8.4 is still required |
-| GitHub Actions | NOT CHECKED |
+| GitHub Actions `Stage 1 CI` on `78cdea4602c68c79e375daee386a531f2db139eb` | PASS, including MySQL 8.4 migration, seed and integration steps |
 
 These results are a baseline only. Static tests do not verify database runtime behavior, production readiness, provider connectivity, licensing, or legal approval. Lending and country/currency activation must remain disabled until the required approvals are documented.
 
@@ -24,6 +24,8 @@ These results are a baseline only. Static tests do not verify database runtime b
 
 - [AI Contributor Instructions](AGENTS.md) — mandatory read-first and implementation rules.
 - [Implementation Plan](docs/IMPLEMENTATION_PLAN.md) — full staged delivery plan and acceptance gates.
+- [Design Direction](docs/DESIGN_DIRECTION.md) — owner-requested premium financial-institution visual system.
+- [AI Contributor Presentation Script](docs/AI_CONTRIBUTOR_PRESENTATION_SCRIPT.md) — spoken briefing on the plan, architecture, design and evidence rules.
 - [Feature Status](docs/FEATURE_STATUS.md) — evidence-backed state for all 60 features.
 - [Progress log](progress.md) — dated work, checks and blockers.
 - `loan-platform-stage1-mysql-ci.zip` — preserved original Stage 1 source archive and provenance.
