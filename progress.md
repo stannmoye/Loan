@@ -253,3 +253,13 @@ The notifications inbox is sample-only, not a live message system. It has no eve
 - There is no live login/registration UI, no customer token storage in the browser and no portal-to-account API connection.
 - JWKS/key rotation, provider introspection/back-channel logout, MFA/recovery, provider contact-change reconciliation, device metadata, security settings UI, database privilege grants, encryption-key rotation, retention controls and data-subject rights remain future work.
 - The customer-declared country is not residence proof or lending eligibility. No lending product/country corridor is enabled; KYC, underwriting, contract, ledger, disbursement and payment functionality remain unimplemented.
+
+
+## 2026-11-19 — Typed customer API client added to the portal
+
+- Added `apps/portal/src/customer/customer-api.ts` with typed onboarding, profile read/update, session list/revoke and logout methods matching the Stage 2 Fastify contracts.
+- The client resolves an access token through an injected callback for every request; it does not issue or persist credentials. Requests explicitly use `credentials: "omit"`, `cache: "no-store"` and `redirect: "error"`.
+- Added response-envelope validation, safe error mapping, URL validation and session ID path encoding.
+- Added `customer-api.test.ts` covering token callback refresh, authorization headers, safe callback errors, no-token behavior, onboarding field payloads, encoded session IDs, and malformed API responses.
+- This API client is not yet connected to portal views because there is no configured customer identity provider or production identity/consent secrets. The customer UI remains sample-only and does not collect passwords or store access tokens.
+- The first portal typecheck found a narrow test-mock inference issue; the test now uses a typed request recorder rather than an untyped mock call tuple. New exact-head Portal CI [44578577612](https://github.com/stannmoye/Loan/actions/runs/44578577612) is running; the preceding Stage 1 suite passed 41 tests and MySQL 8.4 integration at [44578309573](https://github.com/stannmoye/Loan/actions/runs/44578309573). Do not mark the new client verified until the current exact-head portal run passes.
