@@ -61,9 +61,13 @@ export async function createCustomerApplication(context: CustomerContext, input:
       [input.currencyCode, input.productId]);
     if (!scopeRows.some(row => String(row.country_code) === profile.declaredResidenceCountryCode)) {\n      throw new CustomerApplicationError('This product is not enabled for your declared residence country and currency', 422);\n    }
 
-    const amount = BigInt(input.requestedAmount.replace('.', '').padEnd(input.requestedAmount.includes('.') ? input.requestedAmount.indexOf('.') + 5 : input.requestedAmount.length + 5, '0'));
-    const min = BigInt(String(product.minimum_amount).replace('.', '').padEnd(String(product.minimum_amount).includes('.') ? String(product.minimum_amount).indexOf('.') + 5 : String(product.minimum_amount).length + 5, '0'));
-    const max = BigInt(String(product.maximum_amount).replace('.', '').padEnd(String(product.maximum_amount).includes('.') ? String(product.maximum_amount).indexOf('.') + 5 : String(product.maximum_amount).length + 5, '0'));
+    const scaledAmount = (value: string) => {
+      const [whole, fraction = ''] = value.split('.');
+      return BigInt(whole!) * 10_000n + BigInt((fraction + '0000').slice(0, 4));
+    };
+    const amount = scaledAmount(input.requestedAmount);
+    const min = scaledAmount(String(product.minimum_amount));
+    const max = scaledAmount(String(product.maximum_amount));
     if (amount < min || amount > max) throw new CustomerApplicationError('Requested amount is outside the published product limits', 422);
     if (input.requestedDurationDays < Number(product.minimum_duration_days) ||
         input.requestedDurationDays > Number(product.maximum_duration_days)) {
