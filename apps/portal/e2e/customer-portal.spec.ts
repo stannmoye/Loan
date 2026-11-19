@@ -3,7 +3,7 @@ import { expect, test, type Page } from "@playwright/test";
 async function openSection(page: Page, label: string) {
   const openNavigation = page.getByRole("button", { name: "Open navigation" });
   if (await openNavigation.isVisible()) await openNavigation.click();
-  await page.getByRole("button", { name: label }).click();
+  await page.getByRole("navigation", { name: "Primary navigation" }).getByRole("button", { name: label, exact: true }).click();
 }
 
 test("customer overview renders its adviser image without horizontal overflow", async ({ page }, testInfo) => {
@@ -58,7 +58,7 @@ test("mobile navigation opens, follows a section and closes", async ({ page }) =
   if (!(await openNavigation.isVisible())) test.skip();
   await openNavigation.click();
   await expect(page.getByRole("navigation", { name: "Primary navigation" })).toBeVisible();
-  await page.getByRole("button", { name: "Help centre" }).click();
+  await page.getByRole("navigation", { name: "Primary navigation" }).getByRole("button", { name: "Help centre", exact: true }).click();
   await expect(page.getByRole("heading", { name: "Clear answers. Considered support." })).toBeVisible();
   await expect(page.locator(".sidebar")).not.toHaveClass(/sidebar-open/);
   const hasHorizontalOverflow = await page.evaluate(() =>
