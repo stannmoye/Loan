@@ -1,7 +1,9 @@
+import { describe, expect, it } from 'vitest';
+import { customerOnboardingSchema, updateCustomerProfileSchema } from '../src/domain/customer-account.js';
+
 
 describe('customer onboarding and profile validation', () => {
-  it('requires a declared country and affirmative privacy and terms acknowledgements', async () => {
-    const { customerOnboardingSchema } = await import('../src/domain/customer-account.js');
+  it('requires a declared country and affirmative privacy and terms acknowledgements', () => {
     expect(customerOnboardingSchema.safeParse({
       displayName: 'Sample Customer',
       declaredResidenceCountryCode: 'NG',
@@ -18,8 +20,7 @@ describe('customer onboarding and profile validation', () => {
     }).success).toBe(false);
   });
 
-  it('rejects identity claims or unsupported fields supplied in onboarding/profile payloads', async () => {
-    const { customerOnboardingSchema, updateCustomerProfileSchema } = await import('../src/domain/customer-account.js');
+  it('rejects identity claims or unsupported fields supplied in onboarding/profile payloads', () => {
     expect(customerOnboardingSchema.safeParse({
       displayName: 'Sample Customer',
       declaredResidenceCountryCode: 'NG',
