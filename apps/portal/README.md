@@ -36,9 +36,10 @@ The customer home uses an institutional, customer-first design system: restraine
 
 The current customer preview includes:
 - A photographic welcome area using \`public/images/customer-adviser.jpg\`.
-- Dedicated customer views for overview, finance explorer, My applications, My loans, Documents, Help centre, and Security & profile.
+- Eight dedicated customer views: overview, finance explorer, My applications, My loans, Documents, Notifications, Help centre, and Security & profile.
 - A clear sample application-progress timeline and next-step panel.
 - A loan account centre with an intentional empty state, repayment and statement sections clearly marked not connected, and no fabricated balances or payment dates.
+- A sample-only notifications inbox with category filters and navigation to related customer guidance; no real notifications or delivery status are implied.
 - Privacy and support guidance, recent activity and customer navigation.
 - Searchable educational finance explorer for all 19 planned categories and 66 planned product types, with comparison guides and custom SVG illustrations.
 - Mobile, tablet and desktop layouts, keyboard focus states and reduced-motion support.
@@ -53,11 +54,13 @@ This is still a presentation-only preview. All sample records and statuses are f
 
 Do not enter personal, identity, banking or other sensitive information into this preview. Customer-facing rates, fees, eligibility and repayment terms must come from approved, versioned, country-specific product data before they are displayed as offers.
 
-The workspace switch, seven-view customer navigation, empty loan-account centre, catalogue filters/guides, FAQ accordion, navigation notices, case search, status filter and case selection are local UI interactions only. Application status and product categories are illustrative education, not live customer or lending data. Replace fixtures with typed API clients only after the corresponding backend contracts, authentication, authorization, privacy controls, immutable audit, and acceptance tests are implemented.
+The workspace switch, eight-view customer navigation, empty loan-account centre, sample notifications inbox, catalogue filters/guides, FAQ accordion, navigation notices, case search, status filter and case selection are local UI interactions only. Application status and product categories are illustrative education, not live customer or lending data. Replace fixtures with typed API clients only after the corresponding backend contracts, authentication, authorization, privacy controls, immutable audit, and acceptance tests are implemented.
 
 
 ## Latest verification (2026-11-19)
 
-The exact portal revision `1b7f6340ce67e7ea721754240ec94676e0020a69` passed [Portal CI run 44563163473](https://github.com/stannmoye/Loan/actions/runs/44563163473): TypeScript/Vite production build, 9 component tests, and Playwright Chromium checks (7 passed, 1 intentionally skipped for the desktop-only mobile-navigation scenario). Coverage now includes the My loans empty account centre and navigation. The CI artifact contains desktop/mobile screenshots and the Playwright report: [browser QA artifact](https://github.com/stannmoye/Loan/actions/runs/44563163473/artifacts/14551077157). The earlier screenshots were reviewed at 1440×1050 and 412×915; the new My loans route is included in the passing E2E journey. The companion [Stage 1 CI run 44563163330](https://github.com/stannmoye/Loan/actions/runs/44563163330) passed backend build, root unit/static checks, and MySQL 8.4 migration, seed and integration steps.
+The latest PR source head `a6f9a19e33992e674fecf44bb8530884689a1c25` passed [Portal CI run 44564294820](https://github.com/stannmoye/Loan/actions/runs/44564294820): TypeScript/Vite production build, 10 component tests, and Playwright Chromium checks (9 passed, 1 intentionally skipped for the desktop-only mobile-navigation scenario). The browser suite covers the overview, finance explorer, My loans empty account centre, notifications filters, help/security navigation, product-type search and upload-disabled state. The CI artifact contains desktop/mobile screenshots of the overview, My loans and Notifications pages and the Playwright report: [browser QA artifact](https://github.com/stannmoye/Loan/actions/runs/44564294820/artifacts/14549567947). Those screenshots were visually inspected at desktop and mobile widths; images rendered and no-overflow assertions passed.
+
+The companion [Stage 1 CI run 44564294708](https://github.com/stannmoye/Loan/actions/runs/44564294708) passed backend build, root unit/static checks, and MySQL 8.4 migration, seed and integration steps on the same revision.
 
 These checks verify the UI preview and Stage 1 baseline only; they do not verify a complete live lending workflow or production operation.
