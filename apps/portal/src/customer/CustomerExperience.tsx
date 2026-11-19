@@ -6,7 +6,8 @@ import {
   Search, ShieldCheck, Sparkles, UploadCloud, UserRound, WalletCards, X, CalendarDays, CircleDollarSign, ClipboardList, ReceiptText
 } from "lucide-react";
 import {
-  applicationSteps, documentGuidance, financeCategories, supportQuestions, totalProductTypes,
+  applicationSteps, documentGuidance, financeCategories, supportQuestions, totalProductTypes, customerNotifications,
+  type CustomerNotificationKind,
   type CustomerSection, type FinanceCategory
 } from "./customer-data";
 
@@ -184,6 +185,44 @@ function DocumentsCentre() {
   </div>;
 }
 
+
+function NotificationsCentre({ onSectionChange }: Pick<CustomerExperienceProps, "onSectionChange">) {
+  const [filter, setFilter] = useState<"All" | "Application" | "Documents" | "Security" | "Learning">("All");
+  const visible = customerNotifications.filter((item) => filter === "All" || item.kind === filter);
+  const filters: ("All" | "Application" | "Documents" | "Security" | "Learning")[] = ["All", "Application", "Documents", "Security", "Learning"];
+  const iconFor = (kind: CustomerNotificationKind) => {
+    switch (kind) {
+      case "Application": return <FileCheck2 size={18} />;
+      case "Documents": return <FileText size={18} />;
+      case "Security": return <ShieldCheck size={18} />;
+      case "Learning": return <BookOpen size={18} />;
+    }
+  };
+  return <div className="customer-experience">
+    <PageHeading eyebrow="CUSTOMER INBOX" title="Your updates, organised." description="A place for important account notices and helpful information, with clear links to the next step." />
+    <SampleBanner compact />
+    <section className="notifications-hero">
+      <div><span className="notifications-kicker"><BellRing size={15} /> YOUR INFORMATION, IN ONE PLACE</span><h2>Stay informed<br />without the noise.</h2><p>A real inbox should show verified messages from your provider, with clear dates, secure links and an auditable history.</p><span className="notifications-count"><strong>{customerNotifications.length}</strong> illustrative examples · No live messages</span></div>
+      <div className="notifications-hero-art" aria-hidden="true"><span className="notifications-orbit notify-orbit-one" /><span className="notifications-orbit notify-orbit-two" /><span className="notifications-paper"><BellRing size={26} /><i /><i /><i /></span><span className="notifications-star notify-star-one">✦</span><span className="notifications-star notify-star-two">✧</span></div>
+    </section>
+    <section className="customer-surface notifications-list-surface">
+      <div className="customer-surface-heading"><div><Eyebrow>PREVIEW INBOX</Eyebrow><h2>Information and reminders</h2><p>Every item below is a fictional example, not a sent or received message.</p></div><span className="customer-soft-pill">Sample only</span></div>
+      <div className="notifications-filter-list" role="group" aria-label="Filter notifications">
+        {filters.map((item) => <button key={item} className={filter === item ? "notifications-filter active" : "notifications-filter"} aria-pressed={filter === item} onClick={() => setFilter(item)}>{item === "All" ? "All updates" : item}</button>)}
+      </div>
+      <div className="notifications-list" aria-live="polite">
+        {visible.map((item) => <article className="notification-entry" key={item.id}>
+          <span className={"notification-kind-icon notification-kind-" + item.kind.toLowerCase()}>{iconFor(item.kind)}</span>
+          <div className="notification-entry-copy"><div className="notification-entry-meta"><span>{item.kind}</span><span>Sample</span></div><h3>{item.title}</h3><p>{item.message}</p><time>{item.time}</time></div>
+          <button className="notification-entry-action" onClick={() => onSectionChange(item.target)}>View details <ArrowRight size={14} /></button>
+        </article>)}
+        {visible.length === 0 && <div className="notifications-empty"><BellRing size={22} /><strong>No examples in this category.</strong><span>Select All updates to see the sample inbox.</span></div>}
+      </div>
+    </section>
+    <section className="notifications-privacy-note"><ShieldCheck size={19} /><div><strong>Important messages should be verifiable.</strong><p>A live notification service must authenticate message origins, avoid exposing sensitive information in previews, record delivery status and let customers control permitted notification preferences.</p></div></section>
+  </div>;
+}
+
 function HelpCentre({ onNotice }: Pick<CustomerExperienceProps, "onNotice">) {
   const [expanded, setExpanded] = useState<number | null>(0);
   return <div className="customer-experience">
@@ -212,6 +251,7 @@ export function CustomerExperience({ section, onSectionChange, onNotice }: Custo
     case "applications": return <ApplicationJourney onSectionChange={onSectionChange} />;
     case "loans": return <MyLoansCentre onSectionChange={onSectionChange} />;
     case "documents": return <DocumentsCentre />;
+    case "notifications": return <NotificationsCentre onSectionChange={onSectionChange} />;
     case "help": return <HelpCentre onNotice={onNotice} />;
     case "security": return <SecurityProfile onNotice={onNotice} />;
     case "overview":
