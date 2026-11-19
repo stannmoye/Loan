@@ -57,17 +57,17 @@ apps/
 
 Use React/TypeScript in the interface; keep API contracts explicit and separate from demo fixture types. Prefer the existing repo’s top-level Node package for backend and tests; make frontend install/build/test scripts clear and avoid overwriting current API package scripts. Static design fixtures must be isolated, typed and visibly branded as samples. When actual API contracts become available, replace fixture reads with a typed client without changing financial rules in presentation components.
 
-A managed WebDev project is initialized at `/home/ubuntu/loanportal` with the flexible, empty web starter and no managed server/database. It is the active development and Preview workspace. Its `origin` is Manus-managed and is not the user's existing GitHub repository. The source of record remains `stannmoye/Loan`: synchronize the exact verified frontend source into `apps/portal/` there and push each meaningful increment. A preview-project checkpoint must never be reported as a push to that GitHub repository or as production integration.
+The user has directed that implementation be written directly to the existing GitHub repository. `stannmoye/Loan` is therefore the source of record. A separate preview workspace is optional and must never be treated as a substitute for committed GitHub source or as production integration. Do not claim visual inspection or a preview run unless it actually occurred.
 
 ## Work sequence
 
 1. Establish this plan and `TODO.md` in GitHub before coding; preserve the existing implementation and check branch state.
 2. Generate only planned customer-facing art assets before application coding. Use semantic vector banking icons in source, not generated icon rasters.
-3. Use the initialized managed WebDev workspace, register TypeScript diagnostics, and create the route manifest before the first dev-server start.
-4. Implement the portal in the preview workspace, then synchronize the same verified `apps/portal/` source to the existing repository. Add shared tokens, typography, logo, accessible icon wrappers, app shell, responsive navigation, sample-state disclosure and customer/operations views.
-5. Connect the views through functional navigation and safe local sample search/filter behavior. Do not implement backend actions against nonexistent routes.
-6. Run frontend diagnostics/build and existing API build/tests/static checks. Start preview through WebDev and inspect desktop/mobile rendering. Correct observed layout/contrast/accessibility issues.
-7. Commit/push each meaningful verified increment to `stannmoye/Loan` and update `TODO.md`, `docs/FEATURE_STATUS.md`, `README.md`, and `progress.md`. Report exact commit and preview status separately.
+3. Create the route manifest and frontend source directly in a dedicated GitHub feature branch before any preview run.
+4. Implement shared tokens, typography, provisional identity, accessible icon wrappers, app shell, responsive navigation, sample-state disclosure and customer/operations views directly in `apps/portal/`.
+5. Connect views through functional navigation and safe local sample search/filter behavior. Do not implement backend actions against nonexistent routes.
+6. Add a dedicated frontend CI workflow and run frontend build/type checks plus existing API build/tests/static checks. If no browser preview tool is available, explicitly leave visual inspection pending.
+7. Commit meaningful increments to `stannmoye/Loan` on a feature branch, open a reviewable PR, and update `TODO.md`, `docs/FEATURE_STATUS.md`, `README.md`, and `progress.md`. Report exact commit, CI and preview status separately.
 
 ## Project files
 

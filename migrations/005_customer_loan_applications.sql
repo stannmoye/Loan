@@ -1,0 +1,39 @@
+CREATE TABLE IF NOT EXISTS customer_loan_applications (
+  id CHAR(36) CHARACTER SET ascii COLLATE ascii_bin PRIMARY KEY,
+  customer_id CHAR(36) CHARACTER SET ascii COLLATE ascii_bin NOT NULL,
+  loan_product_id BIGINT UNSIGNED NOT NULL,
+  product_version_id BIGINT UNSIGNED NOT NULL,
+  status ENUM('draft','submitted','under_review','awaiting_documents','approved_conditionally','declined','withdrawn','cancelled','funding_pending','funded') NOT NULL DEFAULT 'draft',
+  requested_amount DECIMAL(19,4) NOT NULL,
+  currency_code CHAR(3) NOT NULL,
+  requested_duration_days INT UNSIGNED NOT NULL,
+  product_terms_snapshot JSON NOT NULL,
+  applicant_declaration_version VARCHAR(64) NOT NULL,
+  submitted_at TIMESTAMP(6) NULL,
+  decided_at TIMESTAMP(6) NULL,
+  created_at TIMESTAMP(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
+  updated_at TIMESTAMP(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6) ON UPDATE CURRENT_TIMESTAMP(6),
+  CONSTRAINT fk_customer_application_customer FOREIGN KEY (customer_id) REFERENCES customer_accounts(id) ON DELETE RESTRICT,
+  CONSTRAINT fk_customer_application_product_version FOREIGN KEY (product_version_id, loan_product_id) REFERENCES loan_product_versions(id, loan_product_id) ON DELETE RESTRICT,
+  CONSTRAINT fk_customer_application_currency FOREIGN KEY (currency_code) REFERENCES currencies(code),
+  CONSTRAINT chk_customer_application_amount CHECK (requested_amount > 0),
+  CONSTRAINT chk_customer_application_duration CHECK (requested_duration_days > 0),
+  INDEX idx_customer_applications_customer_status (customer_id, status, created_at),
+  INDEX idx_customer_applications_review_queue (status, submitted_at)
+) ENGINE=InnoDB;
+
+CREATE TABLE IF NOT EXISTS customer_loan_application_events (
+  id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+  application_id CHAR(36) CHARACTER SET ascii COLLATE ascii_bin NOT NULL,
+  customer_id CHAR(36) CHARACTER SET ascii COLLATE ascii_bin NOT NULL,
+  actor_type ENUM('customer','staff','system') NOT NULL,
+  actor_id VARCHAR(128) NOT NULL,
+  event_type VARCHAR(100) NOT NULL,
+  from_status VARCHAR(40) NULL,
+  to_status VARCHAR(40) NULL,
+  metadata_json JSON NOT NULL,
+  created_at TIMESTAMP(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
+  CONSTRAINT fk_application_event_application FOREIGN KEY (application_id) REFERENCES customer_loan_applications(id) ON DELETE RESTRICT,
+  CONSTRAINT fk_application_event_customer FOREIGN KEY (customer_id) REFERENCES customer_accounts(id) ON DELETE RESTRICT,
+  INDEX idx_application_events_timeline (application_id, created_at, id)
+) ENGINE=InnoDB;

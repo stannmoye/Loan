@@ -70,3 +70,196 @@ These are documented design constraints, not implemented frontend screens or gen
 ### Next
 
 Implement the customer overview and operations queue/case-detail interface in the managed preview workspace, synchronize identical source and evidence to `stannmoye/Loan`, run relevant quality checks, and record observed desktop/mobile preview results before the UI milestone commit.
+
+
+## 2026-11-19 — First customer and operations portal source committed to GitHub feature branch
+
+### Implemented in `feat/customer-operations-portal-shell`
+
+- Added a separately buildable React 19 / TypeScript / Vite frontend under `apps/portal/`, preserving the existing root Fastify package and scripts.
+- Added the route manifest before any dev-server start.
+- Added a shared Northline provisional product identity, responsive application shell, institutional navy/blue design direction, semantic Lucide icon usage, keyboard focus styles and reduced-motion support.
+- Added a customer overview with a clearly disclosed synthetic application journey, next-step information, sample activity and product discovery entry point.
+- Added an operations case-review workspace with synthetic case fixtures, selectable case details, local text search, status filtering, timeline and evidence checklist.
+- Added responsive layouts for mobile, tablet and desktop widths in CSS. No live balance, customer record, credit decision, approval, KYC result or payment is fabricated.
+- Added a portal README with setup and scope boundaries.
+
+### Files added
+
+`apps/portal/package.json`, `index.html`, `tsconfig.json`, `vite.config.ts`, `public/manus-routes.json`, `src/main.tsx`, `src/App.tsx`, `src/styles.css`, `src/data/fixtures.ts`, and `README.md`.
+
+### Verification status
+
+- GitHub create-file operations succeeded on the feature branch.
+- Frontend dependency installation, TypeScript build, Vite build, browser preview and responsive visual inspection have **not yet been run**.
+- No backend routes, customer identity, live application data, KYC, underwriting, contracts, ledger, balances, payments or bank integrations were added.
+- Existing API build/tests are not claimed to have been rerun in this increment.
+- The UI TODO checklist remains open until build, diagnostics and responsive inspection evidence are available.
+
+### Next
+
+Add a frontend CI workflow, run its build/type-check gate, fix any compiler or bundler failures, then continue with the next connected backend/customer identity stage. Keep all sample fixtures isolated until real authenticated API contracts exist.
+
+
+## 2026-11-19 — Customer portal visual design enrichment
+
+### Implemented on \`feat/customer-operations-portal-shell\`
+
+- Reworked the customer overview into a richer, customer-first financial workspace with a photographic welcome area, clearer hierarchy, application-progress visualization, next-step guidance, privacy/security messaging, activity and support sections.
+- Added a four-category illustrated discovery area for personal, education, home/property and business finance. The category artwork is bespoke local SVG; the existing customer-adviser JPEG is reused from the repository.
+- Expanded customer navigation with applications, loans, documents, help and security/profile entry points. Unimplemented destinations remain informative notices rather than pretending to be connected features.
+- Standardized the visual treatment around the approved institutional design direction: navy and blue, restrained heritage-gold accents, white and cool-neutral surfaces, Lucide financial iconography, accessible labels, visible focus, responsive layouts and reduced-motion handling.
+- Retained and restyled the operations case-review preview rather than removing it.
+- Kept the sample-data disclosure visible. No real balance, account, product offer, rate, loan decision, uploaded document or financial transaction is represented.
+
+### Files changed
+
+- Reworked \`apps/portal/src/App.tsx\` and \`apps/portal/src/styles.css\`.
+- Added \`apps/portal/public/images/personal-finance.svg\`, \`education-finance.svg\`, \`home-finance.svg\` and \`business-finance.svg\`.
+- Reused \`apps/portal/public/images/customer-adviser.jpg\`.
+- Updated portal instructions, the root README and the evidence/status register.
+
+### Verification
+
+- The latest visual-enrichment Portal CI passed (run 44558312757). Stage 1 CI also passed again (run 44558312945), including backend build, unit/static checks, MySQL migrations, seed and integration tests.
+- Portal CI completed successfully for frontend source commit 0d1d86df498b57991ba4d4d57a22ee38e95c6f9 (run 44558312757): dependency installation, TypeScript type-check and Vite production build all passed.
+- No browser-based visual inspection or device screenshot test has been performed in this increment. The responsive rules are implemented, but rendering must still be reviewed in an actual browser.
+- No backend integration or production-lending feature is claimed.
+
+### Next
+
+Perform browser-based visual QA at mobile, tablet and desktop widths, including keyboard navigation, image loading/cropping, narrow-screen overflow and readable content density. Keep the customer dashboard feature in progress until that inspection and later authenticated API integration are evidenced.
+
+
+## 2026-11-19 — Customer portal expansion: dedicated customer journeys and finance explorer
+
+### Implemented on `feat/customer-operations-portal-shell`
+
+- Replaced the original single-screen customer preview with six distinct customer areas: overview, finance explorer, application journey, document guidance, help centre, and security/profile guidance.
+- Implemented customer-section navigation with stable URLs, browser back/forward handling and a responsive mobile navigation drawer.
+- Expanded the finance explorer to the complete planned taxonomy: 19 categories and 66 product types. Product types are included in search; category filters, product-type counts and comparison guides are available locally.
+- Added category detail guides describing product structures and due-diligence questions. Jurisdiction-specific product names are labelled as programme-dependent; no rates, prices, offers, eligibility or credit decisions are fabricated.
+- Built an application journey page with clearly synthetic milestones; document guidance with uploads disabled; FAQ and impersonation-safety guidance; and a security/profile page that marks all controls as planned/not connected.
+- Added additional original SVG finance illustrations for medical and vehicle categories, with the existing photographic customer-adviser asset and illustrated assets retained.
+- Added Vitest + Testing Library interaction tests and explicit DOM cleanup. Root Stage 1 Vitest now excludes `apps/portal/**` so each workspace owns its dependencies and test suite.
+- Added Playwright Chromium browser coverage for desktop/mobile overview rendering, adviser-image loading, responsive overflow, direct navigation, section routing, catalogue details, and disabled document upload. CI uploads browser QA result/report artifacts.
+
+### Verification evidence and remaining gates
+
+- A pre-taxonomy portal revision passed `tsc --noEmit`, Vite production build and all 7 component interaction tests in Portal CI run [44561236303](https://github.com/stannmoye/Loan/actions/runs/44561236303).
+- The same pre-taxonomy revision passed Stage 1 CI run [44561246459](https://github.com/stannmoye/Loan/actions/runs/44561246459) after test-suite isolation.
+- The latest taxonomy and Playwright additions are undergoing fresh GitHub Actions verification; do not treat earlier passing runs as verification of those later commits.
+- Browser tests are intended to replace the prior manual-only screenshot QA gap. A successful latest Playwright run and its uploaded artifacts are required before marking the visual browser QA evidence as passed.
+- All customer data remains fictional. There is no live authentication, account profile, application service, document upload/storage, support ticket service, finance offer, underwriting, contract, ledger, balance or payment connection.
+- No feature is marked fully implemented or production available. Jurisdiction licensing, provider selection, privacy, security, ledger/reconciliation and human-review gates remain outstanding.
+
+
+## 2026-11-19 — Portal cross-device browser QA and Stage 1 regression verified
+
+### Exact branch revision
+
+- Verified PR head: `5ff59000864f22b102538beb754e993eba8bc3e3` on `feat/customer-operations-portal-shell`.
+- Draft PR: [#1 — expand customer portal and finance explorer](https://github.com/stannmoye/Loan/pull/1). It remains open and unmerged; `main` is unchanged by this feature branch.
+
+### Portal CI — PASS
+
+[Portal CI run 44562250414](https://github.com/stannmoye/Loan/actions/runs/44562250414) completed successfully for the exact PR head.
+
+- Frontend dependency installation passed.
+- `tsc --noEmit` and Vite production build passed.
+- Component tests: 2 files, 8 tests passed.
+- Playwright Chromium browser checks: 7 passed, 1 skipped. The single skip is the mobile-navigation-only case under the desktop Chromium project; the mobile Chromium version passed.
+- Browser coverage verifies adviser image loading, responsive layout without horizontal overflow, finance catalogue count and category rendering, section navigation, product-type search and guide dialog, document-upload disabled state, and mobile menu behavior.
+- The CI browser artifact contains desktop/mobile screenshots and the Playwright report: [customer-portal-browser-qa artifact](https://github.com/stannmoye/Loan/actions/runs/44562250414/artifacts/14550491683).
+- Screenshots were separately inspected at desktop 1440×1050 and mobile 412×915. Both layouts were visually reviewed; the adviser image rendered, content reflowed to mobile, and the automated overflow assertion passed.
+
+### Stage 1 regression CI — PASS
+
+[Stage 1 CI run 44562250541](https://github.com/stannmoye/Loan/actions/runs/44562250541) completed successfully for the same branch head. It passed the backend build, root unit tests, static checks, MySQL 8.4 migration, seed and MySQL integration tests. Root tests exclude the portal workspace so Stage 1 and portal test dependencies remain isolated.
+
+### Delivery boundary
+
+The customer portal is a tested presentation layer using fictional fixtures, not a live lending service. No customer authentication, profile service, live application API, credit/underwriting decision, offer, KYC, contract, secure document upload/storage, support tickets, ledger, account balance, disbursement, repayment, payment or withdrawal has been activated. The 19-category/66-product catalogue is an educational preview; it does not represent country availability, live products, rates or eligibility.
+
+Feature #05 remains `IN PROGRESS`: a verified responsive UI shell is not a complete authenticated customer dashboard. Features #07 and #19 remain `IN PROGRESS` for help guidance and a sample journey only, not live support or application workflow services. No feature is marked production available.
+
+
+## 2026-11-19 — Customer My loans account centre
+
+### Implemented on `feat/customer-operations-portal-shell`
+
+- Added the seventh customer-facing view, **My loans**, with a dedicated route at `/customer/loans`, sidebar active state, direct route resolution and browser history navigation.
+- Built a premium account-centre layout with a secure account-information hero, intentional empty-account state, and structured cards for account overview, repayment schedule, statements/receipts, and support.
+- The empty state clearly says no loan accounts are connected. Repayment, statement and account details remain marked not connected; no principal, outstanding balance, due date, payment history or loan status is fabricated.
+- Connected the page's safe next steps to the finance learning catalogue, sample application journey and help centre.
+- Added a component test for the empty account state and its route action, plus a Playwright journey assertion for My loans.
+
+### Latest verification — PASS
+
+The current portal source head `1b7f6340ce67e7ea721754240ec94676e0020a69` passed [Portal CI run 44563163473](https://github.com/stannmoye/Loan/actions/runs/44563163473): TypeScript/Vite production build, 9 component tests, and 7 Playwright desktop/mobile checks passed with one intentionally skipped desktop-project mobile-menu case. The browser suite includes My loans navigation and empty-state assertions. [Browser QA artifact](https://github.com/stannmoye/Loan/actions/runs/44563163473/artifacts/14551077157).
+
+[Stage 1 CI run 44563163330](https://github.com/stannmoye/Loan/actions/runs/44563163330) passed on the same source revision, including backend build, root tests, static checks and MySQL migration/seed/integration tests.
+
+This remains a tested presentation layer. The real account service, ledger-backed balances, servicing schedules, statements, payments, receipts, customer authentication and support ticket service are not implemented or connected.
+
+
+## 2026-11-19 — Customer notifications centre and full-page visual QA
+
+### Implemented
+
+- Added the eighth customer view, **Notifications**, with a direct `/customer/notifications` route, sidebar entry and top-bar bell navigation.
+- Added a sample inbox with four visibly labelled examples across Application, Documents, Security and Learning categories.
+- Added category filters and contextual links into the relevant customer sections. The notices are clearly marked fictional examples; no live message delivery, unread state, sender identity or customer notification preference is represented.
+- Added responsive desktop/mobile inbox artwork, type-specific icons, sample labels and privacy guidance describing the controls required for a real notification provider.
+- Added component tests for filtering and routing plus a Playwright end-to-end check from the header bell into a relevant customer section.
+- Expanded the Playwright artifact to include full-page screenshots for the Overview, My loans and Notifications views at desktop and mobile breakpoints.
+
+### Latest verification — PASS
+
+- Current branch head: `a6f9a19e33992e674fecf44bb8530884689a1c25`.
+- [Portal CI 44564294820](https://github.com/stannmoye/Loan/actions/runs/44564294820): frontend production build passed; 10 component tests passed; 9 Playwright browser checks passed and one desktop-only mobile-navigation test was intentionally skipped.
+- [Stage 1 CI 44564294708](https://github.com/stannmoye/Loan/actions/runs/44564294708): backend build, root tests, static checks, MySQL 8.4 migration, seed and integration tests passed.
+- [Browser QA artifact](https://github.com/stannmoye/Loan/actions/runs/44564294820/artifacts/14549567947) includes overview, My loans and notifications desktop/mobile full-page screenshots and the Playwright report. Screenshots were inspected; both new screens were legible and responsive, with no horizontal overflow.
+
+### Boundaries
+
+The notifications inbox is sample-only, not a live message system. It has no event store, delivery worker, email/SMS/push provider, delivery receipts, customer preferences, consent checks or sender verification service. The My loans centre has no live account data, ledger balance, repayment schedule, statements or payment history. Both screens remain UI previews.
+
+
+## 2026-11-19 — Stage 2 customer-account API and identity security foundation
+
+### Implemented on `feat/customer-operations-portal-shell`
+
+- Added the first customer-account domain: strict onboarding/profile schemas, country/locale field validation, mandatory affirmative privacy/terms acknowledgements and rejection of identity/email claims supplied by a request body.
+- Added dedicated customer RS256 access-token verification separate from the administrative JWT contract. It enforces the exact configured issuer/audience, `principal_type=customer`, verified email, subject/session claims, `iat`, signed expiry and a 15-minute maximum token lifetime with five seconds of clock tolerance.
+- Added customer account/session API routes: onboarding, authenticated `/me`, profile patch, session list, per-customer session revocation and local logout. Customer routes remain disabled unless a distinct customer identity configuration is supplied.
+- Added customer-account persistence for external identity links, active/suspended/closed lifecycle, encrypted profile blobs, hashed provider-session identifiers, versioned consent acknowledgements and security events.
+- Added AES-256-GCM profile encryption with random 96-bit nonce, authenticated customer-ID context and envelope version marker. Profile email/verification are provider-owned; profile patches cannot override them.
+- Removed the provider issuer from account-created audit/security metadata; only a non-identifying boolean and encryption version are recorded.
+- Added migration 004 to store issuer and subject strings under a binary collation, preserving exact case-sensitive identity matching. The MySQL integration script now proves that identity pairs differing by issuer/subject case remain distinct while exact duplicate identities remain rejected.
+- Added route-level onboarding rate-limit coverage (five per minute), explicit Vitest imports for the new domain test, and stronger signed-token lifetime tests.
+
+### Test and integration notes
+
+- Customer test coverage includes verified email, provider/admin principal separation, issuer/audience/expiry/issued-at checks, maximum token lifetime, bearer parsing, AES-GCM tampering/AAD isolation, onboarding consent gates, profile patch allow-lists, session ownership/revocation and logout.
+- Root CI on commit `d3f90c84198189fb1eb735342ca43a2453fa3275` passed after fixing the Vitest test file's missing explicit imports. Stage 1 CI on commit `bc530cebe1540e207de061deee258ed7a9a0dd30` also passed with the enforced JWT `iat` and 15-minute lifetime rules.
+- Two subsequent database CI attempts exposed migration-delimiter issues: a semicolon in a migration comment was split by the existing migration runner; a pre-collation integration test correctly failed because migration 004 had not yet been applied. The migration comment is now delimiter-safe, and a new exact-head CI run is in progress for `7d3085f9d46afe9057a4a9812d59f70cc834976a`. Do not mark the database change verified until that run completes.
+- Portal CI on commit `de77a645a12737ba63fe15935ff19047a9612917` passed frontend build, component tests and Playwright browser checks; the Stage 1 database migration on that same revision failed, and is being rerun against the corrected migration revision.
+
+### Explicit boundaries and remaining gaps
+
+- No external customer identity provider has been selected or configured. The API expects a provider-issued token but does not issue passwords, OTPs, MFA, recovery challenges or authentication tokens itself.
+- Customer identity keys, profile encryption key, privacy-notice version and terms-of-service version remain unset. Customer onboarding routes therefore remain unavailable by default.
+- There is no live login/registration UI, no customer token storage in the browser and no portal-to-account API connection.
+- JWKS/key rotation, provider introspection/back-channel logout, MFA/recovery, provider contact-change reconciliation, device metadata, security settings UI, database privilege grants, encryption-key rotation, retention controls and data-subject rights remain future work.
+- The customer-declared country is not residence proof or lending eligibility. No lending product/country corridor is enabled; KYC, underwriting, contract, ledger, disbursement and payment functionality remain unimplemented.
+
+
+## 2026-11-19 — Typed customer API client added to the portal
+
+- Added `apps/portal/src/customer/customer-api.ts` with typed onboarding, profile read/update, session list/revoke and logout methods matching the Stage 2 Fastify contracts.
+- The client resolves an access token through an injected callback for every request; it does not issue or persist credentials. Requests explicitly use `credentials: "omit"`, `cache: "no-store"` and `redirect: "error"`.
+- Added response-envelope validation, safe error mapping, URL validation and session ID path encoding.
+- Added `customer-api.test.ts` covering token callback refresh, authorization headers, safe callback errors, no-token behavior, onboarding field payloads, encoded session IDs, and malformed API responses.
+- This API client is not yet connected to portal views because there is no configured customer identity provider or production identity/consent secrets. The customer UI remains sample-only and does not collect passwords or store access tokens.
+- The first portal typecheck found a narrow test-mock inference issue; the test now uses a typed request recorder rather than an untyped mock call tuple. Exact-head Portal CI [44579153905](https://github.com/stannmoye/Loan/actions/runs/44579153905) passed: frontend TypeScript/Vite production build, 19 tests across 3 files, and 9 Playwright desktop/mobile checks passed with one desktop-only mobile-menu case intentionally skipped. The browser QA artifact [14556354151](https://github.com/stannmoye/Loan/actions/runs/44579153905/artifacts/14556354151) was uploaded. Stage 1 CI [44579153914](https://github.com/stannmoye/Loan/actions/runs/44579153914) passed the root TypeScript build, 41 tests across 5 files, static checks, MySQL 8.4 migrations, seed and customer identity integration. The customer API client now rejects remote HTTP API URLs, allows only HTTPS in remote environments and permits HTTP solely for local loopback development.

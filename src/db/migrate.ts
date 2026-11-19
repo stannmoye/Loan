@@ -1,6 +1,7 @@
 import { readdir, readFile } from 'node:fs/promises';
 import type { RowDataPacket } from 'mysql2/promise';
 import { pool } from './pool.js';
+import { splitSqlStatements } from './sql-statements.js';
 
 const connection = await pool.getConnection();
 const migrationLockName = 'loan_platform_schema_migrations';
@@ -26,8 +27,9 @@ try {
       'SELECT version FROM schema_migrations WHERE version = ? LIMIT 1', [file]);
     if (applied.length) continue;
     const sql = await readFile(new URL(file, migrationDirectory), 'utf8');
-    // Migration files contain ordinary DDL/DML only; no stored-program delimiter blocks.
-    for (const statement of sql.split(';').map((part) => part.trim()).filter(Boolean)) {
+    // Stored-program delimiter blocks are deliberately unsupported. The splitter
+    // ignores semicolons inside strings and comments so ordinary migrations are safe.
+    for (const statement of splitSqlStatements(sql)) {
       await connection.query(statement);
     }
     await connection.query('INSERT INTO schema_migrations (version) VALUES (?)', [file]);
