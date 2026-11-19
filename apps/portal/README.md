@@ -17,6 +17,19 @@ Build and type-check:
 npm run build
 \`\`\`
 
+Run component tests:
+
+\`\`\`sh
+npm test
+\`\`\`
+
+Run the desktop and mobile Chromium browser checks (after installing Playwright's browser):
+
+\`\`\`sh
+npx playwright install chromium
+npm run test:e2e
+\`\`\`
+
 ## Customer experience design
 
 The customer home uses an institutional, customer-first design system: restrained navy and blue, generous white surfaces, precise typography, accessible Lucide outline icons, visible workflow states, responsive navigation and clear privacy language.
@@ -38,4 +51,4 @@ This is still a presentation-only preview. All sample records and statuses are f
 
 Do not enter personal, identity, banking or other sensitive information into this preview. Customer-facing rates, fees, eligibility and repayment terms must come from approved, versioned, country-specific product data before they are displayed as offers.
 
-The workspace switch, navigation notices, case search, status filter and case selection are local UI interactions only. Replace fixtures with typed API clients only after the corresponding backend contracts, authentication, authorization, audit controls and acceptance tests are implemented.
+The workspace switch, customer navigation, catalogue filters/guides, FAQ accordion, navigation notices, case search, status filter and case selection are local UI interactions only. Application status and product categories are illustrative education, not live customer or lending data. Replace fixtures with typed API clients only after the corresponding backend contracts, authentication, authorization, privacy controls, immutable audit, and acceptance tests are implemented.
