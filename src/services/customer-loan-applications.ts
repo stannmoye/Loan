@@ -53,6 +53,7 @@ export async function createCustomerApplication(context: CustomerContext, input:
       'SELECT encrypted_profile FROM customer_profiles WHERE customer_id = ? FOR SHARE', [context.customerId]);
     if (!profileRows[0]) throw new CustomerApplicationError('Customer profile must be completed before applying', 409);
     const profile = decryptCustomerProfile(Buffer.from(profileRows[0].encrypted_profile), encryptionKeyHex, context.customerId);
+    const profile = decryptCustomerProfile(Buffer.from(profileRows[0].encrypted_profile), encryptionKeyHex, context.customerId);
 
     const [scopeRows] = await connection.execute<RowDataPacket[]>(
       `SELECT pc.country_code FROM loan_product_countries pc
