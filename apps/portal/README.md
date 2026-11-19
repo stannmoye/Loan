@@ -77,3 +77,12 @@ These checks verify the UI preview and Stage 1 baseline only; they do not verify
 The client resolves a current access token through an injected `getAccessToken` callback on every call. It does not implement authentication, persist tokens, use localStorage/cookies, or select an identity provider. It sends requests with `credentials: "omit"`, `cache: "no-store"` and `redirect: "error"`, and refuses to send requests without a token. Callback/network errors are mapped to generic safe errors rather than exposing provider details.
 
 Unit tests cover token resolution, sensitive header handling, no-token behavior, error mapping, URL validation, request payload scope, session-ID encoding and invalid API envelopes. The client is not yet wired into the customer screens; they remain in clearly marked sample mode until the identity provider is selected, configured and reviewed.
+
+
+## Latest customer API client verification
+
+The customer API client and its typed request recorder passed [Portal CI 44578577612](https://github.com/stannmoye/Loan/actions/runs/44578577612): production TypeScript/Vite build, 18 tests across 3 files, and Playwright Chromium checks (9 passed, 1 desktop-only mobile navigation case skipped). [Browser QA artifact 14557817445](https://github.com/stannmoye/Loan/actions/runs/44578577612/artifacts/14557817445).
+
+The companion [Stage 1 CI 44578577610](https://github.com/stannmoye/Loan/actions/runs/44578577610) passed backend build, 41 tests across 5 files, static checks, MySQL 8.4 migration, seed, and customer identity integration checks. The documentation-only follow-up Stage 1 run [44578722065](https://github.com/stannmoye/Loan/actions/runs/44578722065) also passed. Portal CI for the documentation-only head remains the current outstanding run.
+
+This still verifies a typed client and backend API foundation, not a live sign-in experience. No identity provider is configured, and the portal views remain in sample mode.
