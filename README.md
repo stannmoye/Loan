@@ -4,7 +4,7 @@ This repository contains the implementation of a global digital lending platform
 
 ## Current status
 
-The Stage 1 starter has been adopted at the repository root; its original archive remains as `loan-platform-stage1-mysql-ci.zip`. The starter is a Node.js 22+/TypeScript/Fastify API foundation, MySQL 8.4/InnoDB product catalogue and approval workflow, with static checks. It does not constitute a complete lending system. Customer/staff identity, portals, applications, verification, underwriting, contracts, loan servicing, ledger, balances, payment integrations and production operations are not yet evidenced as implemented.
+The Stage 1 starter has been adopted at the repository root; its original archive remains as `loan-platform-stage1-mysql-ci.zip`. The starter is a Node.js 22+/TypeScript/Fastify API foundation, MySQL 8.4/InnoDB product catalogue and approval workflow, with static checks. It does not constitute a complete lending system. A first React/TypeScript portal preview has now been added under `apps/portal/` on the feature branch `feat/customer-operations-portal-shell`. It contains a synthetic customer overview and operations case-review workspace with local navigation/search/filter interactions only. It is not connected to customer identity, applications, verification, underwriting, contracts, loan servicing, ledger, balances, payments or production operations.
 
 Initial checks run against the extracted starter on 2026-11-19:
 
@@ -25,6 +25,7 @@ These results are a baseline only. Static tests do not verify database runtime b
 - [AI Contributor Instructions](AGENTS.md) — mandatory read-first and implementation rules.
 - [Implementation Plan](docs/IMPLEMENTATION_PLAN.md) — full staged delivery plan and acceptance gates.
 - [Design Direction](docs/DESIGN_DIRECTION.md) — owner-requested premium financial-institution visual system.
+- [`apps/portal/README.md`](apps/portal/README.md) — first UI preview scope and run instructions.
 - [AI Contributor Presentation Script](docs/AI_CONTRIBUTOR_PRESENTATION_SCRIPT.md) — spoken briefing on the plan, architecture, design and evidence rules.
 - [Feature Status](docs/FEATURE_STATUS.md) — evidence-backed state for all 60 features.
 - [Progress log](progress.md) — dated work, checks and blockers.
