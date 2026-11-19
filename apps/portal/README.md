@@ -74,9 +74,9 @@ These checks verify the UI preview and Stage 1 baseline only; they do not verify
 - customer-owned session listing and revocation;
 - local API-session logout.
 
-The client resolves a current access token through an injected `getAccessToken` callback on every call. It does not implement authentication, persist tokens, use localStorage/cookies, or select an identity provider. It sends requests with `credentials: "omit"`, `cache: "no-store"` and `redirect: "error"`, and refuses to send requests without a token. Callback/network errors are mapped to generic safe errors rather than exposing provider details.
+The client resolves a current access token through an injected `getAccessToken` callback on every call. It does not implement authentication, persist tokens, use localStorage/cookies, or select an identity provider. It requires HTTPS for remote API origins and permits HTTP only for `localhost`, `127.0.0.1` and IPv6 loopback development. It sends requests with `credentials: "omit"`, `cache: "no-store"` and `redirect: "error"`, and refuses to send requests without a token. Callback/network errors are mapped to generic safe errors rather than exposing provider details.
 
-Unit tests cover token resolution, sensitive header handling, no-token behavior, error mapping, URL validation, request payload scope, session-ID encoding and invalid API envelopes. The client is not yet wired into the customer screens; they remain in clearly marked sample mode until the identity provider is selected, configured and reviewed.
+Unit tests cover token resolution on every call, sensitive header handling, no-token behavior, safe callback/network errors, HTTPS enforcement and loopback development, request payload scope, profile/session/logout methods, session-ID encoding and invalid API envelopes. The client is not yet wired into the customer screens; they remain in clearly marked sample mode until the identity provider is selected, configured and reviewed.
 
 
 ## Latest customer API client verification
@@ -86,3 +86,12 @@ The customer API client and its typed request recorder passed [Portal CI 4457857
 The companion [Stage 1 CI 44578577610](https://github.com/stannmoye/Loan/actions/runs/44578577610) passed backend build, 41 tests across 5 files, static checks, MySQL 8.4 migration, seed, and customer identity integration checks. The documentation-only follow-up Stage 1 run [44578722065](https://github.com/stannmoye/Loan/actions/runs/44578722065) also passed. Portal CI for the documentation-only head remains the current outstanding run.
 
 This still verifies a typed client and backend API foundation, not a live sign-in experience. No identity provider is configured, and the portal views remain in sample mode.
+
+
+## Latest identity-client verification
+
+Exact-head [Portal CI 44579153905](https://github.com/stannmoye/Loan/actions/runs/44579153905) passed frontend production build, 19 tests across 3 files and Playwright desktop/mobile checks (9 passed, one desktop-only navigation check skipped). The [browser QA artifact](https://github.com/stannmoye/Loan/actions/runs/44579153905/artifacts/14556354151) was uploaded.
+
+Exact-head [Stage 1 CI 44579153914](https://github.com/stannmoye/Loan/actions/runs/44579153914) passed root build, 41 tests across 5 files, static invariants, MySQL 8.4 migrations, seed and customer identity integration.
+
+These checks validate the client contract and API foundation; the customer-facing screens still use sample data until an external identity provider is selected, configured and reviewed.
