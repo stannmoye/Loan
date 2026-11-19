@@ -1,14 +1,20 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import {
   Activity, ArrowDownRight, ArrowRight, Bell, BriefcaseBusiness,
   ChevronDown, CircleHelp, Clock3, FileCheck2, FileText, Filter,
-  Home, Landmark, LayoutDashboard, Menu, MessageCircle, Search,
-  ShieldCheck, Sparkles, UserRound, WalletCards, X
+  Home, Landmark, LayoutDashboard, Menu, Search,
+  ShieldCheck, UserRound, WalletCards, X
 } from "lucide-react";
 import { customerTimeline, reviewCases, type CaseStatus, type ReviewCase } from "./data/fixtures";
 import { CustomerExperience, type CustomerSection } from "./customer/CustomerExperience";
 
 type Mode = "customer" | "operations";
+
+function sectionFromPath(path: string): CustomerSection {
+  const candidate = path.split("/")[2] as CustomerSection | undefined;
+  return candidate && ["explore", "applications", "documents", "help", "security"].includes(candidate) ? candidate : "overview";
+}
+
 const statuses: CaseStatus[] = ["Needs review", "In progress", "Waiting for customer", "Completed"];
 
 function StatusPill({ status }: { status: CaseStatus }) {
@@ -21,13 +27,25 @@ function Brand() {
 }
 
 function App() {
-  const [mode, setMode] = useState<Mode>(window.location.pathname === "/operations" ? "operations" : "customer");
+  const [mode, setMode] = useState<Mode>(() => window.location.pathname === "/operations" ? "operations" : "customer");
   const [query, setQuery] = useState("");
   const [filter, setFilter] = useState<"All" | CaseStatus>("All");
   const [selected, setSelected] = useState<ReviewCase>(reviewCases[0]);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [notice, setNotice] = useState("");
-  const [customerSection, setCustomerSection] = useState<CustomerSection>("overview");
+  const [customerSection, setCustomerSection] = useState<CustomerSection>(() => sectionFromPath(window.location.pathname));
+
+  useEffect(() => {
+    const handlePopState = () => {
+      const path = window.location.pathname;
+      setMode(path === "/operations" ? "operations" : "customer");
+      setCustomerSection(sectionFromPath(path));
+      setMobileOpen(false);
+      setNotice("");
+    };
+    window.addEventListener("popstate", handlePopState);
+    return () => window.removeEventListener("popstate", handlePopState);
+  }, []);
 
   const filteredCases = useMemo(() => reviewCases.filter((item) => {
     const matchesText = [item.customer, item.product, item.reference, item.stage].join(" ").toLowerCase().includes(query.toLowerCase());
@@ -38,7 +56,15 @@ function App() {
     setMode(next);
     setMobileOpen(false);
     setNotice("");
-    window.history.replaceState({}, "", next === "operations" ? "/operations" : "/");
+    if (next === "customer") setCustomerSection("overview");
+    window.history.pushState({}, "", next === "operations" ? "/operations" : "/");
+  }
+
+  function changeCustomerSection(next: CustomerSection) {
+    setCustomerSection(next);
+    setMobileOpen(false);
+    setNotice("");
+    window.history.pushState({}, "", next === "overview" ? "/" : "/customer/" + next);
   }
 
   const navNotice = (message: string) => { setNotice(message); setMobileOpen(false); };
@@ -52,14 +78,14 @@ function App() {
         <nav className="side-nav" aria-label="Primary navigation">
           {mode === "customer" ? <>
             <span className="nav-section">YOUR ACCOUNT</span>
-            <button className={customerSection === "overview" ? "nav-item active" : "nav-item"} aria-current={customerSection === "overview" ? "page" : undefined} onClick={() => setCustomerSection("overview")}><Home size={17} />Overview</button>
-            <button className={customerSection === "explore" ? "nav-item active" : "nav-item"} aria-current={customerSection === "explore" ? "page" : undefined} onClick={() => setCustomerSection("explore")}><Landmark size={17} />Explore loans</button>
-            <button className={customerSection === "applications" ? "nav-item active" : "nav-item"} aria-current={customerSection === "applications" ? "page" : undefined} onClick={() => setCustomerSection("applications")}><FileText size={17} />My applications</button>
+            <button className={customerSection === "overview" ? "nav-item active" : "nav-item"} aria-current={customerSection === "overview" ? "page" : undefined} onClick={() => changeCustomerSection("overview")}><Home size={17} />Overview</button>
+            <button className={customerSection === "explore" ? "nav-item active" : "nav-item"} aria-current={customerSection === "explore" ? "page" : undefined} onClick={() => changeCustomerSection("explore")}><Landmark size={17} />Explore loans</button>
+            <button className={customerSection === "applications" ? "nav-item active" : "nav-item"} aria-current={customerSection === "applications" ? "page" : undefined} onClick={() => changeCustomerSection("applications")}><FileText size={17} />My applications</button>
             <button className="nav-item" onClick={() => navNotice("Loan servicing and payment history are not connected in this preview.")}><WalletCards size={17} />My loans</button>
-            <button className={customerSection === "documents" ? "nav-item active" : "nav-item"} aria-current={customerSection === "documents" ? "page" : undefined} onClick={() => setCustomerSection("documents")}><FileCheck2 size={17} />Documents</button>
+            <button className={customerSection === "documents" ? "nav-item active" : "nav-item"} aria-current={customerSection === "documents" ? "page" : undefined} onClick={() => changeCustomerSection("documents")}><FileCheck2 size={17} />Documents</button>
             <span className="nav-section nav-section-spaced">HELP & SETTINGS</span>
-            <button className={customerSection === "help" ? "nav-item active" : "nav-item"} aria-current={customerSection === "help" ? "page" : undefined} onClick={() => setCustomerSection("help")}><CircleHelp size={17} />Help centre</button>
-            <button className={customerSection === "security" ? "nav-item active" : "nav-item"} aria-current={customerSection === "security" ? "page" : undefined} onClick={() => setCustomerSection("security")}><ShieldCheck size={17} />Security & profile</button>
+            <button className={customerSection === "help" ? "nav-item active" : "nav-item"} aria-current={customerSection === "help" ? "page" : undefined} onClick={() => changeCustomerSection("help")}><CircleHelp size={17} />Help centre</button>
+            <button className={customerSection === "security" ? "nav-item active" : "nav-item"} aria-current={customerSection === "security" ? "page" : undefined} onClick={() => changeCustomerSection("security")}><ShieldCheck size={17} />Security & profile</button>
           </> : <>
             <span className="nav-section">OPERATIONS</span>
             <button className="nav-item active" aria-current="page"><LayoutDashboard size={17} />Case overview</button>
@@ -85,7 +111,7 @@ function App() {
         <div className="content-wrap">
           <div className="mode-switch" role="group" aria-label="Preview workspace"><button className={mode === "customer" ? "mode-active" : ""} onClick={() => changeMode("customer")}>Customer view</button><button className={mode === "operations" ? "mode-active" : ""} onClick={() => changeMode("operations")}>Operations view</button></div>
           {notice && <div className="notice-banner" role="status"><span>{notice}</span><button aria-label="Dismiss notice" onClick={() => setNotice("")}><X size={16} /></button></div>}
-          {mode === "customer" ? <CustomerExperience section={customerSection} onSectionChange={setCustomerSection} onNotice={setNotice} /> : <OperationsView query={query} setQuery={setQuery} filter={filter} setFilter={setFilter} cases={filteredCases} selected={selected} setSelected={setSelected} onNotice={setNotice} />}
+          {mode === "customer" ? <CustomerExperience section={customerSection} onSectionChange={changeCustomerSection} onNotice={setNotice} /> : <OperationsView query={query} setQuery={setQuery} filter={filter} setFilter={setFilter} cases={filteredCases} selected={selected} setSelected={setSelected} onNotice={setNotice} />}
           <footer className="page-footer"><span>Northline is a product concept for a lending platform.</span><span>Illustrative interface · No live financial services</span></footer>
         </div>
       </main>
