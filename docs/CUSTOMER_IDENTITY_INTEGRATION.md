@@ -20,7 +20,7 @@ The provider must:
 - Set sub to a stable, opaque provider subject. It must not contain a name, email address, phone number or other directly identifying information.
 - Set sid to a stable, opaque per-provider-session identifier with at least 128 bits of unpredictability. This identifies a provider session; it is not an account number or a human-readable device name.
 - Set email to a syntactically valid email address and email_verified to the boolean true only after the provider has verified ownership.
-- Include iss, aud, iat and exp standard claims. Access-token lifetime should be short and governed by provider policy. The API enforces the signed expiration and allows only a small clock tolerance.
+- Include iss, aud, iat and exp standard claims. Access-token lifetime should be short and governed by provider policy. The API requires a valid iat, allows five seconds of clock tolerance, and rejects tokens whose exp - iat lifetime exceeds 15 minutes.
 - Publish public-key rotation information operationally. Rotation requires a coordinated overlap of trusted public keys; this first increment accepts a configured SPKI public key and does not yet implement remote JWKS discovery or automatic key rotation.
 
 The API never accepts customer identity, subject, verified-email flag, or session ID from a request body. Those fields are derived exclusively from the verified token.
@@ -34,7 +34,8 @@ Required signed JWT claims:
 | iss | Exact configured customer issuer | Trust-domain binding |
 | aud | Exact configured customer API audience | Prevent token reuse at the admin API or another service |
 | sub | Stable opaque provider subject | Link an external identity to one internal customer |
-| exp | Future Unix timestamp | Bound token lifetime |
+| iat | Integer Unix timestamp, not materially in the future | Establish token age and lifetime |
+| exp | Future Unix timestamp, no more than 15 minutes after iat | Bound token lifetime |
 | principal_type | customer | Enforce customer/admin principal separation |
 | sid | Stable opaque provider-session ID | Link requests to a revocable application session |
 | email | Valid email address | Provider-asserted verified contact |
@@ -42,7 +43,7 @@ Required signed JWT claims:
 
 RS256 is the only accepted signing algorithm. Algorithm negotiation, none, HS256, token-supplied keys, unsigned claims and request-body identity overrides are not supported.
 
-The current API validates a configured PEM public key. It does not yet fetch provider JWKS, handle multiple simultaneous signing keys, query provider introspection, or receive provider back-channel logout events. These must be addressed before a provider rotation or global revocation policy is deployed.
+The current API validates a configured PEM public key and enforces a 15-minute maximum access-token lifetime. The provider may issue shorter-lived tokens; it must not issue longer-lived tokens for this API. It does not yet fetch provider JWKS, handle multiple simultaneous signing keys, query provider introspection, or receive provider back-channel logout events. These must be addressed before a provider rotation or global revocation policy is deployed.
 
 ## 3. Required environment configuration
 
@@ -122,7 +123,7 @@ The customer-declared residence country is a profile field only. It must not ena
 
 The Stage 1 CI pipeline now runs the numbered MySQL migrations and the customer schema integration checks against a disposable MySQL 8.4 service. The expanded integration script uses synthetic identifiers inside a transaction that is rolled back. It checks unique provider identity mappings, customer-session mapping uniqueness, consent version uniqueness, profile-row persistence, security-event recording and session revocation.
 
-The Vitest suite covers signed RS256 customer token validation, admin/customer principal separation, verified-email requirements, issuer/audience/expiry checks, bearer parsing, AES-256-GCM round trips, ciphertext tampering and customer-ID AAD isolation. Fastify route tests cover configuration-off behavior, onboarding consent gates, authenticated profile/session views, profile patch validation, session revocation and logout.
+The Vitest suite covers signed RS256 customer token validation, admin/customer principal separation, verified-email requirements, issuer/audience/expiry checks, bearer parsing, required issued-at/future-issued-at/maximum token-lifetime checks, AES-256-GCM round trips, ciphertext tampering and customer-ID AAD isolation. Fastify route tests cover configuration-off behavior, onboarding consent gates, authenticated profile/session views, profile patch validation, session revocation and logout.
 
 Passing test and CI results do not mean a real identity provider, production keys, privacy notice, terms, legal review, MFA, KYC or lending country is configured. This integration boundary must remain disabled until the provider, keys, documents, grants, privacy and jurisdiction controls are deliberately configured and independently reviewed.
 
