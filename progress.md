@@ -182,3 +182,22 @@ Perform browser-based visual QA at mobile, tablet and desktop widths, including 
 The customer portal is a tested presentation layer using fictional fixtures, not a live lending service. No customer authentication, profile service, live application API, credit/underwriting decision, offer, KYC, contract, secure document upload/storage, support tickets, ledger, account balance, disbursement, repayment, payment or withdrawal has been activated. The 19-category/66-product catalogue is an educational preview; it does not represent country availability, live products, rates or eligibility.
 
 Feature #05 remains `IN PROGRESS`: a verified responsive UI shell is not a complete authenticated customer dashboard. Features #07 and #19 remain `IN PROGRESS` for help guidance and a sample journey only, not live support or application workflow services. No feature is marked production available.
+
+
+## 2026-11-19 — Customer My loans account centre
+
+### Implemented on `feat/customer-operations-portal-shell`
+
+- Added the seventh customer-facing view, **My loans**, with a dedicated route at `/customer/loans`, sidebar active state, direct route resolution and browser history navigation.
+- Built a premium account-centre layout with a secure account-information hero, intentional empty-account state, and structured cards for account overview, repayment schedule, statements/receipts, and support.
+- The empty state clearly says no loan accounts are connected. Repayment, statement and account details remain marked not connected; no principal, outstanding balance, due date, payment history or loan status is fabricated.
+- Connected the page's safe next steps to the finance learning catalogue, sample application journey and help centre.
+- Added a component test for the empty account state and its route action, plus a Playwright journey assertion for My loans.
+
+### Latest verification — PASS
+
+The current portal source head `1b7f6340ce67e7ea721754240ec94676e0020a69` passed [Portal CI run 44563163473](https://github.com/stannmoye/Loan/actions/runs/44563163473): TypeScript/Vite production build, 9 component tests, and 7 Playwright desktop/mobile checks passed with one intentionally skipped desktop-project mobile-menu case. The browser suite includes My loans navigation and empty-state assertions. [Browser QA artifact](https://github.com/stannmoye/Loan/actions/runs/44563163473/artifacts/14551077157).
+
+[Stage 1 CI run 44563163330](https://github.com/stannmoye/Loan/actions/runs/44563163330) passed on the same source revision, including backend build, root tests, static checks and MySQL migration/seed/integration tests.
+
+This remains a tested presentation layer. The real account service, ledger-backed balances, servicing schedules, statements, payments, receipts, customer authentication and support ticket service are not implemented or connected.
