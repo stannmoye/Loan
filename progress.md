@@ -201,3 +201,26 @@ The current portal source head `1b7f6340ce67e7ea721754240ec94676e0020a69` passed
 [Stage 1 CI run 44563163330](https://github.com/stannmoye/Loan/actions/runs/44563163330) passed on the same source revision, including backend build, root tests, static checks and MySQL migration/seed/integration tests.
 
 This remains a tested presentation layer. The real account service, ledger-backed balances, servicing schedules, statements, payments, receipts, customer authentication and support ticket service are not implemented or connected.
+
+
+## 2026-11-19 — Customer notifications centre and full-page visual QA
+
+### Implemented
+
+- Added the eighth customer view, **Notifications**, with a direct `/customer/notifications` route, sidebar entry and top-bar bell navigation.
+- Added a sample inbox with four visibly labelled examples across Application, Documents, Security and Learning categories.
+- Added category filters and contextual links into the relevant customer sections. The notices are clearly marked fictional examples; no live message delivery, unread state, sender identity or customer notification preference is represented.
+- Added responsive desktop/mobile inbox artwork, type-specific icons, sample labels and privacy guidance describing the controls required for a real notification provider.
+- Added component tests for filtering and routing plus a Playwright end-to-end check from the header bell into a relevant customer section.
+- Expanded the Playwright artifact to include full-page screenshots for the Overview, My loans and Notifications views at desktop and mobile breakpoints.
+
+### Latest verification — PASS
+
+- Current branch head: `a6f9a19e33992e674fecf44bb8530884689a1c25`.
+- [Portal CI 44564294820](https://github.com/stannmoye/Loan/actions/runs/44564294820): frontend production build passed; 10 component tests passed; 9 Playwright browser checks passed and one desktop-only mobile-navigation test was intentionally skipped.
+- [Stage 1 CI 44564294708](https://github.com/stannmoye/Loan/actions/runs/44564294708): backend build, root tests, static checks, MySQL 8.4 migration, seed and integration tests passed.
+- [Browser QA artifact](https://github.com/stannmoye/Loan/actions/runs/44564294820/artifacts/14549567947) includes overview, My loans and notifications desktop/mobile full-page screenshots and the Playwright report. Screenshots were inspected; both new screens were legible and responsive, with no horizontal overflow.
+
+### Boundaries
+
+The notifications inbox is sample-only, not a live message system. It has no event store, delivery worker, email/SMS/push provider, delivery receipts, customer preferences, consent checks or sender verification service. The My loans centre has no live account data, ledger balance, repayment schedule, statements or payment history. Both screens remain UI previews.
