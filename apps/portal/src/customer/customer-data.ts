@@ -9,7 +9,7 @@ import {
   type LucideIcon
 } from "lucide-react";
 
-export type CustomerSection = "overview" | "explore" | "applications" | "loans" | "documents" | "help" | "security";
+export type CustomerSection = "overview" | "explore" | "applications" | "loans" | "documents" | "notifications" | "help" | "security";
 
 export type FinanceCategory = {
   id: string;
@@ -236,6 +236,51 @@ export const financeCategories: FinanceCategory[] = [
 ];
 
 export const totalProductTypes = financeCategories.reduce((sum, category) => sum + category.productTypes.length, 0);
+
+export type CustomerNotificationKind = "Application" | "Documents" | "Security" | "Learning";
+
+export const customerNotifications: {
+  id: string;
+  kind: CustomerNotificationKind;
+  title: string;
+  message: string;
+  time: string;
+  target: CustomerSection;
+}[] = [
+  {
+    id: "sample-notice-001",
+    kind: "Application",
+    title: "An application journey example",
+    message: "See how a provider could explain the stages that follow receipt of an application.",
+    time: "Illustrative · 19 November",
+    target: "applications"
+  },
+  {
+    id: "sample-notice-002",
+    kind: "Documents",
+    title: "Document sharing guidance",
+    message: "Learn why a secure provider channel should explain the purpose and handling of requested documents.",
+    time: "Illustrative · 18 November",
+    target: "documents"
+  },
+  {
+    id: "sample-notice-003",
+    kind: "Security",
+    title: "A reminder about account safety",
+    message: "Never share passwords, one-time codes or full payment credentials with an unverified contact.",
+    time: "Illustrative · 17 November",
+    target: "security"
+  },
+  {
+    id: "sample-notice-004",
+    kind: "Learning",
+    title: "Compare finance options carefully",
+    message: "Review total cost, repayment timing and product conditions before considering any borrowing.",
+    time: "Illustrative · 16 November",
+    target: "explore"
+  }
+];
+
 
 export const applicationSteps = [
   { title: "Application received", detail: "A sample application reference was created in this demonstration.", state: "complete" as const, date: "19 Nov · 09:10" },
