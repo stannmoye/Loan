@@ -61,7 +61,7 @@ describe("customer API client", () => {
     const api = createCustomerApiClient({
       baseUrl: "https://api.example.test",
       getAccessToken: async () => "signed-customer-access-token",
-      fetchImpl: fetchImpl as unknown as typeof fetch,
+      fetchImpl,
     });
     const input = {
       displayName: "Sample Customer",
@@ -76,6 +76,29 @@ describe("customer API client", () => {
     expect(init?.method).toBe("POST");
     expect(init?.body).toBe(JSON.stringify(input));
     expect((init?.headers as Record<string, string>)["Content-Type"]).toBe("application/json");
+  });
+
+  it("requests a fresh token from the provider adapter for every API call", async () => {
+    const getAccessToken = vi.fn(async () => "short-lived-customer-token");
+    const api = createCustomerApiClient({
+      baseUrl: "https://api.example.test",
+      getAccessToken,
+      fetchImpl: vi.fn(async () => response(200, { data: account })) as unknown as typeof fetch,
+    });
+    await api.getMe();
+    await api.getMe();
+    expect(getAccessToken).toHaveBeenCalledTimes(2);
+  });
+
+  it("does not expose identity-provider callback errors to callers", async () => {
+    const api = createCustomerApiClient({
+      baseUrl: "https://api.example.test",
+      getAccessToken: async () => { throw new Error("sensitive provider detail"); },
+      fetchImpl: vi.fn() as unknown as typeof fetch,
+    });
+    const error = await api.getMe().catch((value: unknown) => value);
+    expect(error).toMatchObject({ statusCode: 503 });
+    expect((error as Error).message).not.toContain("sensitive provider detail");
   });
 
   it("never sends a request without a current access token", async () => {
