@@ -177,11 +177,12 @@ async function createOrResumeCustomerAccountAttempt(
     }
 
     if (created) {
+      // Keep provider issuer/subject and contact details out of event metadata.
+      // The identity link itself is stored in its protected, access-controlled table.
       await writeSecurityEvent(connection, customerId, 'customer.account.created', {
-        identityIssuer: identity.issuer,
+        identityProviderLinked: true,
       });
       await writeAudit(connection, customerId, 'customer.account.created', 'customer_account', customerId, {
-        identityIssuer: identity.issuer,
         profileEncryptionVersion: 1,
       });
     }
