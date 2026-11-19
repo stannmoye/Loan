@@ -26,6 +26,10 @@ export class CustomerAuthError extends Error {
 }
 
 const emailSchema = z.string().email().max(254);
+// Customer API access tokens are intentionally short-lived. The identity provider
+// may choose a shorter lifetime, but tokens longer than this are rejected.
+export const MAX_CUSTOMER_ACCESS_TOKEN_LIFETIME_SECONDS = 15 * 60;
+const CLOCK_TOLERANCE_SECONDS = 5;
 const identityField = z.string().min(1).max(255).refine(
   (value) => !/[\u0000-\u001f\u007f]/.test(value),
   'Identity claim contains unsupported control characters',
@@ -57,8 +61,8 @@ export async function verifyCustomerAccessToken(
       issuer: config.issuer,
       audience: config.audience,
       algorithms: ['RS256'],
-      clockTolerance: 5,
-      requiredClaims: ['sub', 'exp'],
+      clockTolerance: CLOCK_TOLERANCE_SECONDS,
+      requiredClaims: ['sub', 'iat', 'exp'],
     });
 
     if (payload.principal_type !== 'customer') {
@@ -74,8 +78,18 @@ export async function verifyCustomerAccessToken(
     if (!subject.success || !sessionId.success || !email.success) {
       throw new CustomerAuthError('Customer identity token is missing required claims');
     }
-    if (typeof payload.exp !== 'number' || payload.exp <= Math.floor(now / 1000)) {
+    const nowSeconds = Math.floor(now / 1000);
+    if (typeof payload.iat !== 'number' || !Number.isSafeInteger(payload.iat)) {
+      throw new CustomerAuthError('Customer identity token issued-at claim is invalid');
+    }
+    if (payload.iat > nowSeconds + CLOCK_TOLERANCE_SECONDS) {
+      throw new CustomerAuthError('Customer identity token issued-at time is in the future');
+    }
+    if (typeof payload.exp !== 'number' || !Number.isSafeInteger(payload.exp) || payload.exp <= nowSeconds) {
       throw new CustomerAuthError('Customer identity token has expired');
+    }
+    if (payload.exp <= payload.iat || payload.exp - payload.iat > MAX_CUSTOMER_ACCESS_TOKEN_LIFETIME_SECONDS) {
+      throw new CustomerAuthError('Customer identity token lifetime exceeds the allowed limit');
     }
     if (typeof payload.iss !== 'string' || payload.iss !== config.issuer) {
       throw new CustomerAuthError('Customer identity token issuer is invalid');
