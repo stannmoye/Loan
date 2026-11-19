@@ -27,12 +27,12 @@ export class CustomerAuthError extends Error {
 
 const emailSchema = z.string().email().max(254);
 const identityField = z.string().min(1).max(255).refine(
-  (value) => !/[\\u0000-\\u001f\\u007f]/.test(value),
+  (value) => !/[\u0000-\u001f\u007f]/.test(value),
   'Identity claim contains unsupported control characters',
 );
 
 export function extractBearerToken(authorization: string | undefined): string {
-  const match = authorization?.match(/^Bearer ([^\\s]+)$/i);
+  const match = authorization?.match(/^Bearer ([^\s]+)$/i);
   if (!match || match[1]!.length > 8192) {
     throw new CustomerAuthError('A valid bearer token is required');
   }
@@ -52,7 +52,7 @@ export async function verifyCustomerAccessToken(
   }
 
   try {
-    const publicKey = await importSPKI(config.publicKeyPem.replace(/\\\\n/g, '\\n'), 'RS256');
+    const publicKey = await importSPKI(config.publicKeyPem.replace(/\\n/g, '\n'), 'RS256');
     const { payload } = await jwtVerify(token, publicKey, {
       issuer: config.issuer,
       audience: config.audience,
