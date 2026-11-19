@@ -1,4 +1,10 @@
-import { expect, test } from "@playwright/test";
+import { expect, test, type Page } from "@playwright/test";
+
+async function openSection(page: Page, label: string) {
+  const openNavigation = page.getByRole("button", { name: "Open navigation" });
+  if (await openNavigation.isVisible()) await openNavigation.click();
+  await page.getByRole("button", { name: label }).click();
+}
 
 test("customer overview renders its adviser image without horizontal overflow", async ({ page }, testInfo) => {
   await page.goto("/");
@@ -21,15 +27,15 @@ test("customer overview renders its adviser image without horizontal overflow", 
 
 test("customer sections are navigable and the finance library exposes all planned types", async ({ page }) => {
   await page.goto("/");
-  await page.getByRole("button", { name: "Explore loans" }).click();
+  await openSection(page, "Explore loans");
   await expect(page.getByRole("heading", { name: "Understand your options." })).toBeVisible();
   await expect(page.getByText("19 categories · 66 planned product types")).toBeVisible();
   await expect(page.locator(".explore-card")).toHaveCount(19);
 
-  await page.getByRole("button", { name: "My applications" }).click();
+  await openSection(page, "My applications");
   await expect(page.getByRole("heading", { name: "Follow your application." })).toBeVisible();
 
-  await page.getByRole("button", { name: "Documents" }).click();
+  await openSection(page, "Documents");
   await expect(page.getByRole("heading", { name: "Know what may be needed." })).toBeVisible();
   await expect(page.getByRole("button", { name: /upload unavailable/i })).toBeDisabled();
 });
