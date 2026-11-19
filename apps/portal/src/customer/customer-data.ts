@@ -9,7 +9,7 @@ import {
   type LucideIcon
 } from "lucide-react";
 
-export type CustomerSection = "overview" | "explore" | "applications" | "documents" | "help" | "security";
+export type CustomerSection = "overview" | "explore" | "applications" | "loans" | "documents" | "help" | "security";
 
 export type FinanceCategory = {
   id: string;
