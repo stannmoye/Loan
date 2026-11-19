@@ -64,3 +64,16 @@ The latest PR source head `a6f9a19e33992e674fecf44bb8530884689a1c25` passed [Por
 The companion [Stage 1 CI run 44564294708](https://github.com/stannmoye/Loan/actions/runs/44564294708) passed backend build, root unit/static checks, and MySQL 8.4 migration, seed and integration steps on the same revision.
 
 These checks verify the UI preview and Stage 1 baseline only; they do not verify a complete live lending workflow or production operation.
+
+
+## Typed customer API client — provider wiring pending
+
+`src/customer/customer-api.ts` provides a typed client for the Stage 2 customer account API:
+- onboarding and versioned-consent submission;
+- authenticated customer profile retrieval and allow-listed profile patch;
+- customer-owned session listing and revocation;
+- local API-session logout.
+
+The client resolves a current access token through an injected `getAccessToken` callback on every call. It does not implement authentication, persist tokens, use localStorage/cookies, or select an identity provider. It sends requests with `credentials: "omit"`, `cache: "no-store"` and `redirect: "error"`, and refuses to send requests without a token. Callback/network errors are mapped to generic safe errors rather than exposing provider details.
+
+Unit tests cover token resolution, sensitive header handling, no-token behavior, error mapping, URL validation, request payload scope, session-ID encoding and invalid API envelopes. The client is not yet wired into the customer screens; they remain in clearly marked sample mode until the identity provider is selected, configured and reviewed.
