@@ -219,7 +219,7 @@ export async function onboardCustomer(
 
 export async function findActiveCustomerContext(identity: CustomerIdentity): Promise<CustomerContext> {
   const [rows] = await pool.execute<RowDataPacket[]>(
-    'SELECT ca.id AS customer_id, ca.status AS account_status, cs.id AS session_id FROM customer_identity_links il JOIN customer_accounts ca ON ca.id = il.customer_id JOIN customer_sessions cs ON cs.customer_id = ca.id AND cs.session_key_hash = ? AND cs.revoked_at IS NULL AND cs.expires_at > CURRENT_TIMESTAMP(6) WHERE il.issuer = ? AND il.external_subject = ? LIMIT 1',
+    'SELECT ca.id AS customer_id, ca.status AS account_status, cs.id AS session_id FROM customer_identity_links il JOIN customer_accounts ca ON ca.id = il.customer_id JOIN customer_sessions cs ON cs.customer_id = ca.id AND cs.session_key_hash = ? AND cs.revoked_at IS NULL WHERE il.issuer = ? AND il.external_subject = ? LIMIT 1',
     [sessionHash(identity), identity.issuer, identity.subject],
   );
 
@@ -236,8 +236,8 @@ export async function findActiveCustomerContext(identity: CustomerIdentity): Pro
   };
 
   await pool.execute(
-    'UPDATE customer_sessions SET last_seen_at = CURRENT_TIMESTAMP(6) WHERE id = ? AND last_seen_at < CURRENT_TIMESTAMP(6) - INTERVAL 5 MINUTE',
-    [context.currentSessionId],
+    'UPDATE customer_sessions SET expires_at = ?, last_seen_at = CASE WHEN last_seen_at < CURRENT_TIMESTAMP(6) - INTERVAL 5 MINUTE THEN CURRENT_TIMESTAMP(6) ELSE last_seen_at END WHERE id = ? AND revoked_at IS NULL',
+    [identity.expiresAt, context.currentSessionId],
   );
 
   return context;
