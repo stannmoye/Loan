@@ -3,7 +3,7 @@ import {
   ArrowRight, ArrowUpRight, BellRing, BookOpen, Check, CheckCircle2,
   ChevronDown, CircleHelp, FileCheck2, FileLock2, FileText,
   FolderCheck, Headphones, HeartHandshake, Info, LockKeyhole, MessageCircle,
-  Search, ShieldCheck, Sparkles, UploadCloud, UserRound, WalletCards, X
+  Search, ShieldCheck, Sparkles, UploadCloud, UserRound, WalletCards, X, CalendarDays, CircleDollarSign, ClipboardList, ReceiptText
 } from "lucide-react";
 import {
   applicationSteps, documentGuidance, financeCategories, supportQuestions, totalProductTypes,
@@ -132,6 +132,47 @@ function ApplicationJourney({ onSectionChange }: Pick<CustomerExperienceProps, "
   </div>;
 }
 
+
+function MyLoansCentre({ onSectionChange }: Pick<CustomerExperienceProps, "onSectionChange">) {
+  return <div className="customer-experience">
+    <PageHeading eyebrow="LOAN CENTRE" title="Your loan accounts, in one place." description="A clear home for account information, repayment schedules, statements and support." />
+    <SampleBanner compact />
+    <section className="loan-centre-hero">
+      <div className="loan-centre-hero-copy">
+        <span className="loan-centre-kicker"><ShieldCheck size={14} /> ACCOUNT INFORMATION, CLEARLY PRESENTED</span>
+        <h2>Stay informed.<br />Know where you stand.</h2>
+        <p>A live loan centre should give you an accurate, up-to-date view of each account and its next steps, based on verified servicing records.</p>
+      </div>
+      <div className="loan-centre-hero-art" aria-hidden="true">
+        <span className="loan-centre-orbit loan-orbit-one" />
+        <span className="loan-centre-orbit loan-orbit-two" />
+        <span className="loan-centre-wallet"><WalletCards size={39} /></span>
+        <span className="loan-centre-art-chip chip-one"><CalendarDays size={16} /></span>
+        <span className="loan-centre-art-chip chip-two"><ReceiptText size={16} /></span>
+      </div>
+    </section>
+    <section className="loan-empty-state">
+      <div className="loan-empty-illustration"><span><WalletCards size={35} /></span><i /><i /></div>
+      <div className="loan-empty-copy">
+        <Eyebrow>ACCOUNT CONNECTION</Eyebrow>
+        <h2>No loan accounts are connected.</h2>
+        <p>When an authenticated loan-servicing service is connected, verified account details and repayment information will appear here. This preview does not hold or display real loans, balances, due dates or repayment obligations.</p>
+        <div className="loan-empty-actions"><button className="button-primary" onClick={() => onSectionChange("explore")}>Explore finance basics <ArrowRight size={15} /></button><button className="customer-outline-button" onClick={() => onSectionChange("applications")}>View application journey <ArrowRight size={15} /></button></div>
+      </div>
+    </section>
+    <section className="loan-account-tools">
+      <div className="customer-section-heading"><div><Eyebrow>YOUR ACCOUNT TOOLS</Eyebrow><h2>Everything organised in one place.</h2><p>These areas will use verified servicing data when the relevant backend services are implemented.</p></div></div>
+      <div className="loan-tools-grid">
+        <article className="loan-tool-card"><span className="loan-tool-icon loan-tool-blue"><CircleDollarSign size={20} /></span><div><strong>Account overview</strong><p>Principal, outstanding amounts and account status will appear after reconciliation.</p><span className="loan-tool-state">Not connected</span></div></article>
+        <article className="loan-tool-card"><span className="loan-tool-icon loan-tool-gold"><CalendarDays size={20} /></span><div><strong>Repayment schedule</strong><p>Verified due dates, instalments and payment status from the servicing ledger.</p><span className="loan-tool-state">Not connected</span></div></article>
+        <article className="loan-tool-card"><span className="loan-tool-icon loan-tool-green"><ReceiptText size={20} /></span><div><strong>Statements & receipts</strong><p>Downloadable statements and transaction receipts from recorded account activity.</p><span className="loan-tool-state">Not connected</span></div></article>
+        <article className="loan-tool-card"><span className="loan-tool-icon loan-tool-violet"><ClipboardList size={20} /></span><div><strong>Account support</strong><p>Ask questions, raise a dispute or request hardship guidance through secure support.</p><button className="loan-tool-link" onClick={() => onSectionChange("help")}>Visit help centre <ArrowRight size={13} /></button></div></article>
+      </div>
+    </section>
+    <section className="loan-integrity-note"><ShieldCheck size={19} /><div><strong>Accuracy comes before account figures.</strong><p>Balances and repayments must come from posted, reconciled ledger entries—not from a display estimate or a manual status change. No financial amount is fabricated in this preview.</p></div></section>
+  </div>;
+}
+
 function DocumentsCentre() {
   return <div className="customer-experience">
     <PageHeading eyebrow="DOCUMENT CENTRE" title="Know what may be needed." description="Understand common document categories and how a secure request process should work." />
@@ -169,6 +210,7 @@ export function CustomerExperience({ section, onSectionChange, onNotice }: Custo
   switch (section) {
     case "explore": return <ExploreFinance onNotice={onNotice} />;
     case "applications": return <ApplicationJourney onSectionChange={onSectionChange} />;
+    case "loans": return <MyLoansCentre onSectionChange={onSectionChange} />;
     case "documents": return <DocumentsCentre />;
     case "help": return <HelpCentre onNotice={onNotice} />;
     case "security": return <SecurityProfile onNotice={onNotice} />;
