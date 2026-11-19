@@ -129,3 +129,26 @@ Add a frontend CI workflow, run its build/type-check gate, fix any compiler or b
 ### Next
 
 Perform browser-based visual QA at mobile, tablet and desktop widths, including keyboard navigation, image loading/cropping, narrow-screen overflow and readable content density. Keep the customer dashboard feature in progress until that inspection and later authenticated API integration are evidenced.
+
+
+## 2026-11-19 — Customer portal expansion: dedicated customer journeys and finance explorer
+
+### Implemented on `feat/customer-operations-portal-shell`
+
+- Replaced the original single-screen customer preview with six distinct customer areas: overview, finance explorer, application journey, document guidance, help centre, and security/profile guidance.
+- Implemented customer-section navigation with stable URLs, browser back/forward handling and a responsive mobile navigation drawer.
+- Expanded the finance explorer to the complete planned taxonomy: 19 categories and 66 product types. Product types are included in search; category filters, product-type counts and comparison guides are available locally.
+- Added category detail guides describing product structures and due-diligence questions. Jurisdiction-specific product names are labelled as programme-dependent; no rates, prices, offers, eligibility or credit decisions are fabricated.
+- Built an application journey page with clearly synthetic milestones; document guidance with uploads disabled; FAQ and impersonation-safety guidance; and a security/profile page that marks all controls as planned/not connected.
+- Added additional original SVG finance illustrations for medical and vehicle categories, with the existing photographic customer-adviser asset and illustrated assets retained.
+- Added Vitest + Testing Library interaction tests and explicit DOM cleanup. Root Stage 1 Vitest now excludes `apps/portal/**` so each workspace owns its dependencies and test suite.
+- Added Playwright Chromium browser coverage for desktop/mobile overview rendering, adviser-image loading, responsive overflow, direct navigation, section routing, catalogue details, and disabled document upload. CI uploads browser QA result/report artifacts.
+
+### Verification evidence and remaining gates
+
+- A pre-taxonomy portal revision passed `tsc --noEmit`, Vite production build and all 7 component interaction tests in Portal CI run [44561236303](https://github.com/stannmoye/Loan/actions/runs/44561236303).
+- The same pre-taxonomy revision passed Stage 1 CI run [44561246459](https://github.com/stannmoye/Loan/actions/runs/44561246459) after test-suite isolation.
+- The latest taxonomy and Playwright additions are undergoing fresh GitHub Actions verification; do not treat earlier passing runs as verification of those later commits.
+- Browser tests are intended to replace the prior manual-only screenshot QA gap. A successful latest Playwright run and its uploaded artifacts are required before marking the visual browser QA evidence as passed.
+- All customer data remains fictional. There is no live authentication, account profile, application service, document upload/storage, support ticket service, finance offer, underwriting, contract, ledger, balance or payment connection.
+- No feature is marked fully implemented or production available. Jurisdiction licensing, provider selection, privacy, security, ledger/reconciliation and human-review gates remain outstanding.
