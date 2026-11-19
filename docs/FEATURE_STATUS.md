@@ -23,7 +23,7 @@ The starter archive and project have been adopted at repository root. Catalogue-
 | 02 | Secure authentication | NOT STARTED | Starter has RS256 JWT permission-claim checking for admin product operations; no customer login, session lifecycle, MFA, or staff authentication flow. |
 | 03 | Customer profile management | NOT STARTED | No profile domain/routes. |
 | 04 | Country-aware onboarding | NOT STARTED | Country/currency reference catalogue is not customer country detection or residence proof. |
-| 05 | Customer dashboard | IN PROGRESS | Initial responsive customer overview exists under `apps/portal/`; it uses explicitly synthetic fixtures and has no authenticated customer API or authoritative financial projection. |
+| 05 | Customer dashboard | IN PROGRESS | Expanded responsive customer experience preview under `apps/portal/` includes a photographic welcome area, sample application journey, next-step guidance, privacy/support areas and illustrated product-category discovery. It remains synthetic and has no authenticated customer API or authoritative financial projection. |
 | 06 | Customer notifications | NOT STARTED | No notification records or providers. |
 | 07 | Customer support | NOT STARTED | No ticket/message/attachment module. |
 | 08 | Customer security settings | NOT STARTED | No device/session/customer security controls. |
@@ -126,4 +126,4 @@ The starter archive and project have been adopted at repository root. Catalogue-
 | 2026-11-19 | Local `npm run db:migrate`, `npm run db:seed`, `npm run test:mysql` | NOT RUN: no local MySQL server is listening. |
 | 2026-11-19 | GitHub Actions `Stage 1 CI` for `78cdea4602c68c79e375daee386a531f2db139eb` | PASS: workflow provisions MySQL 8.4 and runs build, unit/static tests, migrations, seed, and `test:mysql`. [Run 44539756823](https://github.com/stannmoye/Loan/actions/runs/44539756823). |
 
-| 2026-11-19 | Portal UI source on `feat/customer-operations-portal-shell` (PR #1) | IMPLEMENTED PREVIEW ONLY: responsive customer overview and operations case-review views, local navigation/search/filter and sample fixtures. Frontend build/CI and browser inspection remain pending; no live domain integration is claimed. |
+| 2026-11-19 | Portal UI source on `feat/customer-operations-portal-shell` (PR #1) | IMPLEMENTED PREVIEW ONLY: enriched customer-first overview, photographic adviser image, four local SVG finance-category illustrations, sample application progress, support/privacy content, responsive styling and retained operations case-review UI. Fresh CI and browser inspection for this enrichment remain pending; no live domain integration is claimed. |
