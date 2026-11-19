@@ -121,11 +121,11 @@ Add a frontend CI workflow, run its build/type-check gate, fix any compiler or b
 
 ### Verification
 
-- The earlier portal foundation CI and Stage 1 CI runs completed successfully before this visual enrichment.
-- The updated portal source is committed to the same feature branch and will be validated by a fresh Portal CI build/type-check run.
+- The latest visual-enrichment Portal CI passed (run 44558312757). Stage 1 CI also passed again (run 44558312945), including backend build, unit/static checks, MySQL migrations, seed and integration tests.
+- Portal CI completed successfully for frontend source commit 0d1d86df498b57991ba4d4d57a22ee38e95c6f9 (run 44558312757): dependency installation, TypeScript type-check and Vite production build all passed.
 - No browser-based visual inspection or device screenshot test has been performed in this increment. The responsive rules are implemented, but rendering must still be reviewed in an actual browser.
 - No backend integration or production-lending feature is claimed.
 
 ### Next
 
-Run and inspect the updated Portal CI result. Then perform browser-based visual QA at mobile, tablet and desktop widths before treating the customer dashboard design milestone as verified.
+Perform browser-based visual QA at mobile, tablet and desktop widths, including keyboard navigation, image loading/cropping, narrow-screen overflow and readable content density. Keep the customer dashboard feature in progress until that inspection and later authenticated API integration are evidenced.
