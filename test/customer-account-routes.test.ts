@@ -1,4 +1,5 @@
 import Fastify from 'fastify';
+import rateLimit from '@fastify/rate-limit';
 import { describe, expect, it, vi } from 'vitest';
 import type { CustomerProfile } from '../src/domain/customer-account.js';
 import type { CustomerIdentity } from '../src/plugins/customer-auth.js';
@@ -86,6 +87,7 @@ function makeOptions(overrides: Partial<CustomerAccountRouteOptions> = {}) {
 
 async function createApp(options: CustomerAccountRouteOptions) {
   const app = Fastify({ logger: false });
+  await app.register(rateLimit);
   await app.register(buildCustomerAccountRoutes(options));
   await app.ready();
   return app;
@@ -130,6 +132,31 @@ describe('customer account API route contracts', () => {
     });
     expect(response.statusCode).toBe(400);
     expect(service.onboard).not.toHaveBeenCalled();
+    await app.close();
+  });
+
+  it('rate limits repeated customer onboarding attempts', async () => {
+    const { options, service } = makeOptions();
+    const app = await createApp(options);
+    const payload = {
+      displayName: 'Sample Customer',
+      declaredResidenceCountryCode: 'NG',
+      preferredLocale: 'en-NG',
+      privacyNoticeAccepted: true,
+      termsOfServiceAccepted: true,
+    };
+    const responses = [];
+    for (let attempt = 0; attempt < 6; attempt += 1) {
+      responses.push(await app.inject({
+        method: 'POST',
+        url: '/api/v1/customer/onboarding',
+        headers: { authorization: 'Bearer valid-customer-test-token' },
+        payload,
+      }));
+    }
+    expect(responses.slice(0, 5).every((response) => response.statusCode === 201)).toBe(true);
+    expect(responses[5]?.statusCode).toBe(429);
+    expect(service.onboard).toHaveBeenCalledTimes(5);
     await app.close();
   });
 
