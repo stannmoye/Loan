@@ -184,6 +184,43 @@ describe('customer account API route contracts', () => {
     await app.close();
   });
 
+  it('updates only supported profile fields for the authenticated customer', async () => {
+    const { options, service } = makeOptions();
+    const app = await createApp(options);
+    const response = await app.inject({
+      method: 'PATCH',
+      url: '/api/v1/customer/me/profile',
+      headers: { authorization: 'Bearer valid-customer-test-token' },
+      payload: { displayName: 'Updated Sample Customer', preferredLocale: 'en' },
+    });
+    expect(response.statusCode).toBe(200);
+    expect(response.json().data.profile).toMatchObject({
+      email: identity.email,
+      displayName: 'Updated Sample Customer',
+      preferredLocale: 'en',
+    });
+    expect(service.updateProfile).toHaveBeenCalledWith(
+      customerContext,
+      { displayName: 'Updated Sample Customer', preferredLocale: 'en' },
+      '4a'.repeat(32),
+    );
+    await app.close();
+  });
+
+  it('rejects empty or unsupported profile patches', async () => {
+    const { options, service } = makeOptions();
+    const app = await createApp(options);
+    const response = await app.inject({
+      method: 'PATCH',
+      url: '/api/v1/customer/me/profile',
+      headers: { authorization: 'Bearer valid-customer-test-token' },
+      payload: { email: 'attacker@example.test', emailVerified: true },
+    });
+    expect(response.statusCode).toBe(400);
+    expect(service.updateProfile).not.toHaveBeenCalled();
+    await app.close();
+  });
+
   it('validates session identifiers before invoking the revocation service', async () => {
     const { options, service } = makeOptions();
     const app = await createApp(options);
@@ -194,6 +231,25 @@ describe('customer account API route contracts', () => {
     });
     expect(response.statusCode).toBe(400);
     expect(service.revokeSession).not.toHaveBeenCalled();
+    await app.close();
+  });
+
+  it('allows a customer to revoke a session belonging to their own account', async () => {
+    const { options, service } = makeOptions();
+    const app = await createApp(options);
+    const otherSessionId = 'bd2d3408-ec69-4b77-8de6-71ac22542f98';
+    const response = await app.inject({
+      method: 'POST',
+      url: '/api/v1/customer/me/sessions/' + otherSessionId + '/revoke',
+      headers: { authorization: 'Bearer valid-customer-test-token' },
+    });
+    expect(response.statusCode).toBe(200);
+    expect(response.json().data).toMatchObject({
+      sessionId: otherSessionId,
+      revoked: true,
+      currentSession: false,
+    });
+    expect(service.revokeSession).toHaveBeenCalledWith(customerContext, otherSessionId);
     await app.close();
   });
 
