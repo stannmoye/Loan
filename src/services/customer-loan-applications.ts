@@ -1,6 +1,6 @@
 import { randomUUID } from 'node:crypto';
 import type { PoolConnection, ResultSetHeader, RowDataPacket } from 'mysql2/promise';
-import { pool } from '../db/pool.js';
+import { pool } from '../db/pool.js';\nimport { decryptCustomerProfile } from './customer-profile-crypto.js';
 import type { CustomerContext } from './customer-identity.js';
 import type { CreateCustomerLoanApplicationInput } from '../domain/customer-loan-application.js';
 
@@ -26,7 +26,7 @@ async function audit(connection: PoolConnection, customerId: string, application
   );
 }
 
-export async function createCustomerApplication(context: CustomerContext, input: CreateCustomerLoanApplicationInput) {
+export async function createCustomerApplication(context: CustomerContext, input: CreateCustomerLoanApplicationInput, encryptionKeyHex: string) {
   const connection = await pool.getConnection();
   const id = randomUUID();
   try {
@@ -59,7 +59,7 @@ export async function createCustomerApplication(context: CustomerContext, input:
          JOIN country_currencies cc ON cc.country_code = pc.country_code AND cc.currency_code = ? AND cc.enabled = 1
         WHERE pc.loan_product_id = ? AND pc.enabled = 1`,
       [input.currencyCode, input.productId]);
-    if (scopeRows.length === 0) throw new CustomerApplicationError('This product has no active country and currency corridor', 422);
+    if (!scopeRows.some(row => String(row.country_code) === profile.declaredResidenceCountryCode)) {\n      throw new CustomerApplicationError('This product is not enabled for your declared residence country and currency', 422);\n    }
 
     const amount = BigInt(input.requestedAmount.replace('.', '').padEnd(input.requestedAmount.includes('.') ? input.requestedAmount.indexOf('.') + 5 : input.requestedAmount.length + 5, '0'));
     const min = BigInt(String(product.minimum_amount).replace('.', '').padEnd(String(product.minimum_amount).includes('.') ? String(product.minimum_amount).indexOf('.') + 5 : String(product.minimum_amount).length + 5, '0'));
