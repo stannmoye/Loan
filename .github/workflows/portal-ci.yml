@@ -1,9 +1,7 @@
 name: Portal CI
 
 on:
-  push:
-    branches:
-      - feat/customer-operations-portal-shell
+  workflow_dispatch:
   pull_request:
     branches: [main]
     paths:
