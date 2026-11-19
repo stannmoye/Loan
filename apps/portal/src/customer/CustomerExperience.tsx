@@ -1,7 +1,7 @@
-import { useMemo, useState } from "react";
+import { useMemo, useState, type ReactNode } from "react";
 import {
-  ArrowLeft, ArrowRight, ArrowUpRight, BellRing, BookOpen, Check, CheckCircle2,
-  ChevronDown, ChevronRight, CircleHelp, Clock3, FileCheck2, FileLock2, FileText,
+  ArrowRight, ArrowUpRight, BellRing, BookOpen, Check, CheckCircle2,
+  ChevronDown, CircleHelp, FileCheck2, FileLock2, FileText,
   FolderCheck, Headphones, HeartHandshake, Info, LockKeyhole, MessageCircle,
   Search, ShieldCheck, Sparkles, UploadCloud, UserRound, WalletCards, X
 } from "lucide-react";
@@ -16,7 +16,7 @@ type CustomerExperienceProps = {
   onNotice: (message: string) => void;
 };
 
-function Eyebrow({ children }: { children: React.ReactNode }) {
+function Eyebrow({ children }: { children: ReactNode }) {
   return <span className="eyebrow">{children}</span>;
 }
 
