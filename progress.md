@@ -48,3 +48,25 @@ GitHub Actions `Stage 1 CI` completed successfully for commit `78cdea4602c68c79e
 Prepared `docs/AI_CONTRIBUTOR_PRESENTATION_SCRIPT.md` as an 8–10 minute spoken onboarding for other AI contributors, covering the plan, modular-monolith/API architecture, financial integrity, 12 acceptance-gated stages, and actual status evidence. Added `docs/DESIGN_DIRECTION.md` from the product owner's screenshot reference: premium financial-institution surfaces, restrained navy/blue/status palette, purposeful licensed imagery, coherent semantic banking icons, data-first admin case views, customer reassurance, accessibility and mobile behavior. The implementation plan, contributor instructions, README, feature register and Stage 1 report now point to or reflect these choices and the exact CI evidence.
 
 These are documented design constraints, not implemented frontend screens or generated image assets. No customer/admin web UI exists yet. The UI work will follow the design system and be introduced at the planned portal stages.
+
+
+## 2026-11-19 — First actual UI design stage opened
+
+### Preparation published before application source
+
+- Published the stage-specific implementation plan and full outcomes checklist in commit `eae1abf` before UI implementation; the repository worktree was clean after that push.
+- Initialized the managed WebDev project `loanportal` for actual responsive React/TypeScript interface work and live preview. It has no managed server or database. The WebDev workspace is not the user's existing GitHub repository; `stannmoye/Loan` remains the authoritative source and progress destination.
+- Registered the Sandbox-managed TypeScript diagnostics for the WebDev workspace before application source edits (`registered: true`, language `typescript`).
+- Generated one original editorial finance-consultation image for the planned customer product-discovery panel. It contains no text, bank/provider marks, fabricated account evidence, cash, or approval promise. The 2368×1776 generated PNG was normalized to a 1600×1200, 193 KiB progressive JPEG at `apps/portal/public/images/customer-adviser.jpg`; the same image was uploaded into WebDev storage at `/manus-storage/customer-adviser_3f68ba2e.jpg`.
+- Updated `plan.md` to record the actual preview/source relationship and existing repository sync requirement.
+
+### Checks and blockers at this point
+
+- Existing origin remains `https://github.com/stannmoye/Loan.git`; branch `main` was clean at the start of this stage.
+- Sandbox versions are Node.js `v22.23.4`, npm `10.9.9`, and pnpm `11.25.0`. Registry metadata lookup for Vite succeeded.
+- **No React application source, UI routes, backend route, or dev server has been created or started yet.** No new frontend build/tests or existing API tests have run for this UI stage.
+- The first UI is confined to synthetic view data and presentation. The customer identity, applications, case management, ledger, balances, payments, approvals and provider integrations remain absent until separately implemented and evidenced.
+
+### Next
+
+Implement the customer overview and operations queue/case-detail interface in the managed preview workspace, synchronize identical source and evidence to `stannmoye/Loan`, run relevant quality checks, and record observed desktop/mobile preview results before the UI milestone commit.
