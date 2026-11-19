@@ -6,7 +6,7 @@ import { financeCategories, totalProductTypes } from "./customer-data";
 const onSectionChange = vi.fn();
 const onNotice = vi.fn();
 
-function renderSection(section: "overview" | "explore" | "applications" | "loans" | "documents" | "help" | "security") {
+function renderSection(section: "overview" | "explore" | "applications" | "loans" | "documents" | "notifications" | "help" | "security") {
   return render(<CustomerExperience section={section} onSectionChange={onSectionChange} onNotice={onNotice} />);
 }
 
