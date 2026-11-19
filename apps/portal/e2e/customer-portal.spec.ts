@@ -44,6 +44,16 @@ test("customer sections are navigable and the finance library exposes all planne
   await expect(page.getByRole("button", { name: /upload unavailable/i })).toBeDisabled();
 });
 
+test("notification centre filters sample items and opens the correct customer view", async ({ page }) => {
+  await page.goto("/");
+  await page.getByRole("button", { name: "Open notifications" }).click();
+  await expect(page.getByRole("heading", { name: "Your updates, organised." })).toBeVisible();
+  await page.getByRole("button", { name: "Security", exact: true }).click();
+  await expect(page.getByRole("heading", { name: "A reminder about account safety" })).toBeVisible();
+  await page.getByRole("button", { name: /view details/i }).click();
+  await expect(page.getByRole("heading", { name: "Your information matters." })).toBeVisible();
+});
+
 test("category details can be searched and opened", async ({ page }) => {
   await page.goto("/customer/explore");
   await page.getByRole("textbox", { name: /search finance categories/i }).fill("HELOC");
