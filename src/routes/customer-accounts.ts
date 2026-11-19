@@ -168,7 +168,7 @@ export function buildCustomerAccountRoutes(options: CustomerAccountRouteOptions)
       const context = await requireContext(identity);
       const parsed = createCustomerLoanApplicationSchema.safeParse(request.body);
       if (!parsed.success) return reply.code(400).send({ error: 'Invalid loan application', details: parsed.error.flatten() });
-      const result = await createCustomerApplication(context, parsed.data);
+      const result = await createCustomerApplication(context, parsed.data, requireProfileEncryptionKey());
       return reply.code(201).send({ data: result });
     });
 
