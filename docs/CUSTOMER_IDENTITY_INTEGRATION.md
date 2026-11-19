@@ -85,7 +85,7 @@ Logout revokes the application's local session. It does not claim to terminate t
 
 Migration 003_customer_identity_and_accounts.sql creates:
 - customer_accounts: internal UUID account ID and lifecycle state.
-- customer_identity_links: unique (issuer, external_subject) link to the internal account.
+- customer_identity_links: unique, case-sensitive (issuer, external_subject) link to the internal account. Identifier columns use a binary collation so provider-defined issuer/subject values are compared exactly.
 - customer_profiles: encrypted profile blob and encryption format version.
 - customer_sessions: internal session record, SHA-256 hash of issuer + provider session ID, expiration, activity timestamp and local revocation timestamp.
 - customer_consents: immutable acknowledgement rows tied to a customer and session, with document type, version and acceptance time.
@@ -102,7 +102,7 @@ The current encrypted-record format uses version 1. Production operation require
 ## 6. Account and session behavior
 
 - New accounts begin active as account records only. This does not mean a customer has passed KYC, credit assessment, affordability review or loan approval.
-- A unique database constraint on (issuer, external_subject) prevents the same provider identity from creating two internal accounts at the same issuer.
+- A unique database constraint on the exact, case-sensitive pair (issuer, external_subject) prevents the same provider identity from creating two internal accounts at the same issuer. Case variants remain distinct identifiers, as required by the provider token contract.
 - Accounts linked through different identity providers are not automatically merged. Account linking, duplicate-person resolution and assisted recovery require a separate verified process.
 - A session record is associated with a provider's opaque sid. The database stores a one-way SHA-256 digest of issuer plus session ID, not the raw session claim.
 - A valid, fresh, signed token can refresh the local session expiration. A locally revoked session remains revoked even if a token has not yet expired.
@@ -121,7 +121,7 @@ The customer-declared residence country is a profile field only. It must not ena
 
 ## 8. Verification performed
 
-The Stage 1 CI pipeline now runs the numbered MySQL migrations and the customer schema integration checks against a disposable MySQL 8.4 service. The expanded integration script uses synthetic identifiers inside a transaction that is rolled back. It checks unique provider identity mappings, customer-session mapping uniqueness, consent version uniqueness, profile-row persistence, security-event recording and session revocation.
+The Stage 1 CI pipeline now runs the numbered MySQL migrations and the customer schema integration checks against a disposable MySQL 8.4 service. The expanded integration script uses synthetic identifiers inside a transaction that is rolled back. It checks case-sensitive unique provider identity mappings, customer-session mapping uniqueness, consent version uniqueness, profile-row persistence, security-event recording and session revocation.
 
 The Vitest suite covers signed RS256 customer token validation, admin/customer principal separation, verified-email requirements, issuer/audience/expiry checks, bearer parsing, required issued-at/future-issued-at/maximum token-lifetime checks, AES-256-GCM round trips, ciphertext tampering and customer-ID AAD isolation. Fastify route tests cover configuration-off behavior, onboarding consent gates, authenticated profile/session views, profile patch validation, session revocation and logout.
 
