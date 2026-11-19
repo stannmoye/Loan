@@ -55,9 +55,13 @@ describe("customer API client", () => {
   });
 
   it("submits only the supported onboarding fields to the provider-backed route", async () => {
-    const fetchImpl = vi.fn(async () => response(201, {
-      data: { customerId: "customer-sample-001", created: true, onboardingStatus: "completed" },
-    }));
+    const requests: Array<{ input: RequestInfo | URL; init?: RequestInit }> = [];
+    const fetchImpl: typeof fetch = async (input, init) => {
+      requests.push({ input, init });
+      return response(201, {
+        data: { customerId: "customer-sample-001", created: true, onboardingStatus: "completed" },
+      });
+    };
     const api = createCustomerApiClient({
       baseUrl: "https://api.example.test",
       getAccessToken: async () => "signed-customer-access-token",
@@ -72,10 +76,11 @@ describe("customer API client", () => {
     };
 
     await expect(api.onboard(input)).resolves.toMatchObject({ created: true });
-    const init = fetchImpl.mock.calls[0]?.[1];
-    expect(init?.method).toBe("POST");
-    expect(init?.body).toBe(JSON.stringify(input));
-    expect((init?.headers as Record<string, string>)["Content-Type"]).toBe("application/json");
+    const request = requests[0];
+    expect(request?.input).toBe("https://api.example.test/api/v1/customer/onboarding");
+    expect(request?.init?.method).toBe("POST");
+    expect(request?.init?.body).toBe(JSON.stringify(input));
+    expect((request?.init?.headers as Record<string, string>)["Content-Type"]).toBe("application/json");
   });
 
   it("requests a fresh token from the provider adapter for every API call", async () => {
