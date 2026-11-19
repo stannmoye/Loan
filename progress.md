@@ -152,3 +152,33 @@ Perform browser-based visual QA at mobile, tablet and desktop widths, including 
 - Browser tests are intended to replace the prior manual-only screenshot QA gap. A successful latest Playwright run and its uploaded artifacts are required before marking the visual browser QA evidence as passed.
 - All customer data remains fictional. There is no live authentication, account profile, application service, document upload/storage, support ticket service, finance offer, underwriting, contract, ledger, balance or payment connection.
 - No feature is marked fully implemented or production available. Jurisdiction licensing, provider selection, privacy, security, ledger/reconciliation and human-review gates remain outstanding.
+
+
+## 2026-11-19 — Portal cross-device browser QA and Stage 1 regression verified
+
+### Exact branch revision
+
+- Verified PR head: `5ff59000864f22b102538beb754e993eba8bc3e3` on `feat/customer-operations-portal-shell`.
+- Draft PR: [#1 — expand customer portal and finance explorer](https://github.com/stannmoye/Loan/pull/1). It remains open and unmerged; `main` is unchanged by this feature branch.
+
+### Portal CI — PASS
+
+[Portal CI run 44562250414](https://github.com/stannmoye/Loan/actions/runs/44562250414) completed successfully for the exact PR head.
+
+- Frontend dependency installation passed.
+- `tsc --noEmit` and Vite production build passed.
+- Component tests: 2 files, 8 tests passed.
+- Playwright Chromium browser checks: 7 passed, 1 skipped. The single skip is the mobile-navigation-only case under the desktop Chromium project; the mobile Chromium version passed.
+- Browser coverage verifies adviser image loading, responsive layout without horizontal overflow, finance catalogue count and category rendering, section navigation, product-type search and guide dialog, document-upload disabled state, and mobile menu behavior.
+- The CI browser artifact contains desktop/mobile screenshots and the Playwright report: [customer-portal-browser-qa artifact](https://github.com/stannmoye/Loan/actions/runs/44562250414/artifacts/14550491683).
+- Screenshots were separately inspected at desktop 1440×1050 and mobile 412×915. Both layouts were visually reviewed; the adviser image rendered, content reflowed to mobile, and the automated overflow assertion passed.
+
+### Stage 1 regression CI — PASS
+
+[Stage 1 CI run 44562250541](https://github.com/stannmoye/Loan/actions/runs/44562250541) completed successfully for the same branch head. It passed the backend build, root unit tests, static checks, MySQL 8.4 migration, seed and MySQL integration tests. Root tests exclude the portal workspace so Stage 1 and portal test dependencies remain isolated.
+
+### Delivery boundary
+
+The customer portal is a tested presentation layer using fictional fixtures, not a live lending service. No customer authentication, profile service, live application API, credit/underwriting decision, offer, KYC, contract, secure document upload/storage, support tickets, ledger, account balance, disbursement, repayment, payment or withdrawal has been activated. The 19-category/66-product catalogue is an educational preview; it does not represent country availability, live products, rates or eligibility.
+
+Feature #05 remains `IN PROGRESS`: a verified responsive UI shell is not a complete authenticated customer dashboard. Features #07 and #19 remain `IN PROGRESS` for help guidance and a sample journey only, not live support or application workflow services. No feature is marked production available.
