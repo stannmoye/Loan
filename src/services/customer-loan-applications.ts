@@ -1,6 +1,7 @@
 import { randomUUID } from 'node:crypto';
 import type { PoolConnection, ResultSetHeader, RowDataPacket } from 'mysql2/promise';
-import { pool } from '../db/pool.js';\nimport { decryptCustomerProfile } from './customer-profile-crypto.js';
+import { pool } from '../db/pool.js';
+import { decryptCustomerProfile } from './customer-profile-crypto.js';
 import type { CustomerContext } from './customer-identity.js';
 import type { CreateCustomerLoanApplicationInput } from '../domain/customer-loan-application.js';
 
@@ -53,7 +54,6 @@ export async function createCustomerApplication(context: CustomerContext, input:
       'SELECT encrypted_profile FROM customer_profiles WHERE customer_id = ? FOR SHARE', [context.customerId]);
     if (!profileRows[0]) throw new CustomerApplicationError('Customer profile must be completed before applying', 409);
     const profile = decryptCustomerProfile(Buffer.from(profileRows[0].encrypted_profile), encryptionKeyHex, context.customerId);
-    const profile = decryptCustomerProfile(Buffer.from(profileRows[0].encrypted_profile), encryptionKeyHex, context.customerId);
 
     const [scopeRows] = await connection.execute<RowDataPacket[]>(
       `SELECT pc.country_code FROM loan_product_countries pc
@@ -61,7 +61,9 @@ export async function createCustomerApplication(context: CustomerContext, input:
          JOIN country_currencies cc ON cc.country_code = pc.country_code AND cc.currency_code = ? AND cc.enabled = 1
         WHERE pc.loan_product_id = ? AND pc.enabled = 1`,
       [input.currencyCode, input.productId]);
-    if (!scopeRows.some(row => String(row.country_code) === profile.declaredResidenceCountryCode)) {\n      throw new CustomerApplicationError('This product is not enabled for your declared residence country and currency', 422);\n    }
+    if (!scopeRows.some(row => String(row.country_code) === profile.declaredResidenceCountryCode)) {
+      throw new CustomerApplicationError('This product is not enabled for your declared residence country and currency', 422);
+    }
 
     const scaledAmount = (value: string) => {
       const [whole, fraction = ''] = value.split('.');
