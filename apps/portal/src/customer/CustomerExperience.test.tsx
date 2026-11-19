@@ -47,6 +47,17 @@ describe("CustomerExperience", () => {
     expect(onSectionChange).toHaveBeenCalledWith("explore");
   });
 
+  it("filters sample notifications and navigates to the linked customer area", () => {
+    renderSection("notifications");
+    expect(screen.getByRole("heading", { name: "Your updates, organised." })).toBeInTheDocument();
+    expect(screen.getAllByText("Sample", { exact: true })).toHaveLength(4);
+    fireEvent.click(screen.getByRole("button", { name: "Security" }));
+    expect(screen.getByRole("heading", { name: "A reminder about account safety" })).toBeInTheDocument();
+    expect(screen.queryByRole("heading", { name: "An application journey example" })).not.toBeInTheDocument();
+    fireEvent.click(screen.getByRole("button", { name: /view details/i }));
+    expect(onSectionChange).toHaveBeenCalledWith("security");
+  });
+
   it("shows document upload as unavailable and warns against sharing sensitive files", () => {
     renderSection("documents");
     expect(screen.getByRole("button", { name: /upload unavailable/i })).toBeDisabled();
