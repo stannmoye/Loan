@@ -30,3 +30,16 @@ jobs:
         run: npm run build
       - name: Run customer portal interaction tests
         run: npm test
+      - name: Install Chromium for browser checks
+        run: npx playwright install --with-deps chromium
+      - name: Run desktop and mobile browser checks
+        run: npm run test:e2e
+      - name: Upload browser QA artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: customer-portal-browser-qa
+          path: |
+            apps/portal/test-results/
+            apps/portal/playwright-report/
+          if-no-files-found: ignore
