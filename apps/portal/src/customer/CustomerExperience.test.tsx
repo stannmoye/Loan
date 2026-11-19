@@ -6,7 +6,7 @@ import { financeCategories, totalProductTypes } from "./customer-data";
 const onSectionChange = vi.fn();
 const onNotice = vi.fn();
 
-function renderSection(section: "overview" | "explore" | "applications" | "documents" | "help" | "security") {
+function renderSection(section: "overview" | "explore" | "applications" | "loans" | "documents" | "help" | "security") {
   return render(<CustomerExperience section={section} onSectionChange={onSectionChange} onNotice={onNotice} />);
 }
 
@@ -35,6 +35,16 @@ describe("CustomerExperience", () => {
     expect(within(dialog).getByText(/fixed or variable rate terms/i)).toBeInTheDocument();
     fireEvent.click(within(dialog).getByRole("button", { name: /close guide/i }));
     expect(screen.queryByRole("dialog")).not.toBeInTheDocument();
+  });
+
+  it("shows a clear empty loan-account centre without invented balances", () => {
+    renderSection("loans");
+    expect(screen.getByRole("heading", { name: "Your loan accounts, in one place." })).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: "No loan accounts are connected." })).toBeInTheDocument();
+    expect(screen.getAllByText("Not connected").length).toBeGreaterThan(0);
+    expect(screen.getByText(/does not hold or display real loans, balances, due dates or repayment obligations/i)).toBeInTheDocument();
+    fireEvent.click(screen.getByRole("button", { name: /explore finance basics/i }));
+    expect(onSectionChange).toHaveBeenCalledWith("explore");
   });
 
   it("shows document upload as unavailable and warns against sharing sensitive files", () => {
