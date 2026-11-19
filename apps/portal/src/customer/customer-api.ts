@@ -68,8 +68,12 @@ function isRecord(value: unknown): value is Record<string, unknown> {
 
 export function createCustomerApiClient(options: CustomerApiClientOptions) {
   const parsedBase = new URL(options.baseUrl);
-  if (!["http:", "https:"].includes(parsedBase.protocol)) {
-    throw new Error("Customer API base URL must use HTTP or HTTPS");
+  const isLoopback = parsedBase.hostname === "localhost" ||
+    parsedBase.hostname === "127.0.0.1" ||
+    parsedBase.hostname === "[::1]" ||
+    parsedBase.hostname === "::1";
+  if (parsedBase.protocol !== "https:" && !(parsedBase.protocol === "http:" && isLoopback)) {
+    throw new Error("Customer API base URL must use HTTPS except for local loopback development");
   }
   if (parsedBase.username || parsedBase.password || parsedBase.search || parsedBase.hash) {
     throw new Error("Customer API base URL must not contain credentials, query parameters or fragments");
