@@ -1,0 +1,37 @@
+{
+  "name": "loan-platform-stage1",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "dev": "tsx watch src/server.ts",
+    "build": "tsc -p tsconfig.json",
+    "start": "node dist/server.js",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "db:migrate": "tsx src/db/migrate.ts",
+    "db:seed": "tsx src/db/seed.ts",
+    "test:catalogue": "python3 test/catalogue-integrity.py",
+    "test:static": "python3 test/catalogue-integrity.py && python3 test/stage1-invariants.py",
+    "test:mysql": "node test/stage1-mysql.integration.mjs"
+  },
+  "dependencies": {
+    "@fastify/cors": "^11.0.1",
+    "@fastify/helmet": "^13.0.1",
+    "@fastify/rate-limit": "^10.3.0",
+    "dotenv": "^16.6.1",
+    "fastify": "^5.4.0",
+    "jose": "^6.0.12",
+    "mysql2": "^3.14.3",
+    "zod": "^4.0.5"
+  },
+  "devDependencies": {
+    "@types/node": "^22.15.30",
+    "tsx": "^4.20.3",
+    "typescript": "^5.8.3",
+    "vitest": "^5.1.1"
+  }
+}

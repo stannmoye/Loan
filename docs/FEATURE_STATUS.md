@@ -6,14 +6,14 @@
 ## Summary
 
 - Features in scope: 60
-- `NOT STARTED`: 47
-- `IN PROGRESS`: 13
+- `NOT STARTED`: 46
+- `IN PROGRESS`: 14
 - `IMPLEMENTED — NOT VERIFIED`: 0
 - `VERIFIED IN TEST ENVIRONMENT`: 0
 - `AVAILABLE IN PRODUCTION`: 0
 - Production lending/provider status: no production service evidenced; all lending jurisdictions/corridors must remain disabled.
 
-The starter archive describes partial Stage 1 product-catalogue foundations, but its full dependencies and MySQL integration checks have not run in this environment. Accordingly, catalogue-related items remain `IN PROGRESS` until implementation has been adopted at repository root and each feature's acceptance tests pass. Two static scripts passed against the extracted archive; that does not verify live DB behavior, full typing, CI, or production readiness.
+The starter archive and project have been adopted at repository root. Catalogue-related items remain `IN PROGRESS` until their individual acceptance tests pass. Static, build, unit-test and dependency-audit checks have run, but MySQL integration, CI and production readiness remain unverified.
 
 ## A. Customer accounts and experience
 
@@ -119,6 +119,9 @@ The starter archive describes partial Stage 1 product-catalogue foundations, but
 
 | Date | Evidence | Outcome |
 |---|---|---|
-| 2026-11-19 | `python3 test/catalogue-integrity.py` in extracted Stage 1 source | PASS: 19 categories; 66 unique product types; valid category references. |
-| 2026-11-19 | `python3 test/stage1-invariants.py` in extracted Stage 1 source | PASS: static seed, product, approval, publication timing and validation invariants. |
-| 2026-11-19 | `npm run build`, `npm test`, `npm run db:migrate`, `npm run db:seed`, `npm run test:mysql`, remote CI | NOT RUN: dependencies absent; isolated configured MySQL not demonstrated; CI status not checked. |
+| 2026-11-19 | `npm run test:static` at repository root | PASS: 19 categories, 66 unique product types, valid references, and starter static invariants. |
+| 2026-11-19 | `npm run build` at repository root | PASS after fixing strict-unknown handling in the admin auth error handler. |
+| 2026-11-19 | `npm test` at repository root with Vitest 5.1.1 | PASS: 1 file, 9 tests. |
+| 2026-11-19 | `npm audit` | PASS: zero reported vulnerabilities after upgrading Vitest from the vulnerable 3.x line to 5.1.1. |
+| 2026-11-19 | `npm run db:migrate`, `npm run db:seed`, `npm run test:mysql` | NOT RUN: no MySQL server is listening locally; do not proceed until a disposable isolated MySQL 8.4 target is configured. |
+| 2026-11-19 | Remote GitHub Actions | NOT CHECKED. |

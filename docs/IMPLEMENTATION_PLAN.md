@@ -40,7 +40,7 @@ Baseline checks were executed from the extracted starter on 2026-11-19:
 - The starter's prior status report says registry DNS prevented dependency installation and live DB tests; this is historical starter evidence, not a fresh rerun.
 - Remote GitHub Actions status has not been checked; do not claim CI passed.
 
-**Immediate implementation priority:** incorporate the archived Stage 1 project at the repository root without losing the original archive or its documentation, establish the root-level contributor guide/status documents, then close the available Stage 1 quality gaps. Every extraction/adoption change must be committed and pushed separately from this initial plan commit.
+**Stage 1 progress as of 2026-11-19:** the archived source has been adopted at the repository root; the ZIP and starter README/status records are retained. The complete TypeScript build, all nine current Vitest tests, both static checks, and the full npm dependency audit pass. A strict-unknown error in the admin-auth handler was corrected, and Vitest was upgraded to 5.1.1 to resolve the vulnerabilities reported in its prior 3.x dependency tree. Stage 1 remains open because no isolated MySQL 8.4 server is configured, database integration checks have not run, and GitHub Actions status has not been checked. These results and remaining blockers are also recorded in `progress.md` and `STAGE_1_STATUS.md`.
 
 ## 3. Architecture and design decisions
 
