@@ -6,8 +6,8 @@
 ## Summary
 
 - Features in scope: 60
-- `NOT STARTED`: 46
-- `IN PROGRESS`: 14
+- `NOT STARTED`: 44
+- `IN PROGRESS`: 16
 - `IMPLEMENTED — NOT VERIFIED`: 0
 - `VERIFIED IN TEST ENVIRONMENT`: 0
 - `AVAILABLE IN PRODUCTION`: 0
@@ -23,9 +23,9 @@ The starter archive and project have been adopted at repository root. Catalogue-
 | 02 | Secure authentication | NOT STARTED | Starter has RS256 JWT permission-claim checking for admin product operations; no customer login, session lifecycle, MFA, or staff authentication flow. |
 | 03 | Customer profile management | NOT STARTED | No profile domain/routes. |
 | 04 | Country-aware onboarding | NOT STARTED | Country/currency reference catalogue is not customer country detection or residence proof. |
-| 05 | Customer dashboard | IN PROGRESS | Expanded responsive customer experience preview under `apps/portal/` includes a photographic welcome area, sample application journey, next-step guidance, privacy/support areas and illustrated product-category discovery. It remains synthetic and has no authenticated customer API or authoritative financial projection. |
+| 05 | Customer dashboard | IN PROGRESS | Expanded responsive customer workspace under `apps/portal/` includes six customer views, photographic welcome area, synthetic application journey, document guidance (uploads disabled), FAQ, planned security/profile guidance and searchable educational finance discovery across 19 planned categories/66 product types. Component and browser tests are being added; it remains synthetic and has no authenticated customer API or authoritative financial projection. |
 | 06 | Customer notifications | NOT STARTED | No notification records or providers. |
-| 07 | Customer support | NOT STARTED | No ticket/message/attachment module. |
+| 07 | Customer support | IN PROGRESS | Customer portal includes a plain-language FAQ, support guidance and secure-channel safety content. No live ticket, messaging, attachment or support-routing service exists. |
 | 08 | Customer security settings | NOT STARTED | No device/session/customer security controls. |
 
 ## B. Loan marketplace and product management
@@ -47,7 +47,7 @@ The starter archive and project have been adopted at repository root. Catalogue-
 |---|---|---|---|
 | 17 | Digital loan applications | NOT STARTED | No application domain identified. |
 | 18 | Dynamic application forms | NOT STARTED | No versioned form builder. |
-| 19 | Application tracking | NOT STARTED | No customer application lifecycle/UI. |
+| 19 | Application tracking | IN PROGRESS | Customer portal includes a synthetic sample journey and staged timeline with direct navigation. No authoritative application domain, workflow API, event history or authenticated customer tracking exists. |
 | 20 | Configurable workflow stages | NOT STARTED | Product approval workflow is not a general application workflow builder. |
 | 21 | Customer-specific workflows | NOT STARTED | No per-customer workflow instance. |
 | 22 | Document collection and resubmission | NOT STARTED | No secure document lifecycle. |
