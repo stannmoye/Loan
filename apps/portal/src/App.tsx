@@ -13,7 +13,7 @@ type Mode = "customer" | "operations";
 
 function sectionFromPath(path: string): CustomerSection {
   const candidate = path.split("/")[2] as CustomerSection | undefined;
-  return candidate && ["explore", "applications", "loans", "documents", "help", "security"].includes(candidate) ? candidate : "overview";
+  return candidate && ["explore", "applications", "loans", "documents", "notifications", "help", "security"].includes(candidate) ? candidate : "overview";
 }
 
 const customerSectionLabels: Record<CustomerSection, string> = {
@@ -22,6 +22,7 @@ const customerSectionLabels: Record<CustomerSection, string> = {
   applications: "My applications",
   loans: "My loans",
   documents: "Documents",
+  notifications: "Notifications",
   help: "Help centre",
   security: "Security & profile"
 };
@@ -94,6 +95,7 @@ function App() {
             <button className={customerSection === "applications" ? "nav-item active" : "nav-item"} aria-current={customerSection === "applications" ? "page" : undefined} onClick={() => changeCustomerSection("applications")}><FileText size={17} />My applications</button>
             <button className={customerSection === "loans" ? "nav-item active" : "nav-item"} aria-current={customerSection === "loans" ? "page" : undefined} onClick={() => changeCustomerSection("loans")}><WalletCards size={17} />My loans</button>
             <button className={customerSection === "documents" ? "nav-item active" : "nav-item"} aria-current={customerSection === "documents" ? "page" : undefined} onClick={() => changeCustomerSection("documents")}><FileCheck2 size={17} />Documents</button>
+            <button className={customerSection === "notifications" ? "nav-item active" : "nav-item"} aria-current={customerSection === "notifications" ? "page" : undefined} onClick={() => changeCustomerSection("notifications")}><Bell size={17} />Notifications</button>
             <span className="nav-section nav-section-spaced">HELP & SETTINGS</span>
             <button className={customerSection === "help" ? "nav-item active" : "nav-item"} aria-current={customerSection === "help" ? "page" : undefined} onClick={() => changeCustomerSection("help")}><CircleHelp size={17} />Help centre</button>
             <button className={customerSection === "security" ? "nav-item active" : "nav-item"} aria-current={customerSection === "security" ? "page" : undefined} onClick={() => changeCustomerSection("security")}><ShieldCheck size={17} />Security & profile</button>
@@ -117,7 +119,7 @@ function App() {
         <header className="topbar">
           <button className="icon-button mobile-menu" aria-label="Open navigation" onClick={() => setMobileOpen(true)}><Menu size={20} /></button>
           <div className="breadcrumb"><span>Northline</span><span className="crumb-separator">/</span><strong>{mode === "customer" ? customerSectionLabels[customerSection] : "Case overview"}</strong></div>
-          <div className="topbar-actions"><span className="preview-label"><span />Illustrative preview</span><button className="icon-button notification-button" aria-label="Notifications" onClick={() => navNotice("Notifications are illustrative in this preview; no live inbox is connected.")}><Bell size={18} /><i /></button><div className="top-avatar">{mode === "customer" ? "SC" : "SO"}</div></div>
+          <div className="topbar-actions"><span className="preview-label"><span />Illustrative preview</span><button className="icon-button notification-button" aria-label="Open notifications" onClick={() => mode === "customer" ? changeCustomerSection("notifications") : navNotice("Operations notifications are not connected in this preview.")}><Bell size={18} /></button><div className="top-avatar">{mode === "customer" ? "SC" : "SO"}</div></div>
         </header>
         <div className="content-wrap">
           <div className="mode-switch" role="group" aria-label="Preview workspace"><button className={mode === "customer" ? "mode-active" : ""} onClick={() => changeMode("customer")}>Customer view</button><button className={mode === "operations" ? "mode-active" : ""} onClick={() => changeMode("operations")}>Operations view</button></div>
