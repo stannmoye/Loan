@@ -24,7 +24,7 @@ import {
   type CustomerContext,
 } from '../services/customer-identity.js';
 
-type CustomerAccountService = {
+export type CustomerAccountService = {
   onboard: typeof onboardCustomer;
   findContext: typeof findActiveCustomerContext;
   getProfile: typeof getCustomerProfile;
