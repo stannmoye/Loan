@@ -28,10 +28,10 @@ beforeAll(async () => {
 
 async function tokenFor(
   claims: Record<string, unknown> = {},
-  overrides: { issuer?: string; audience?: string; expiresAt?: number } = {},
+  overrides: { issuer?: string; audience?: string; expiresAt?: number; issuedAt?: number | null } = {},
 ) {
   const now = Math.floor(Date.now() / 1000);
-  return new SignJWT({
+  const builder = new SignJWT({
     principal_type: 'customer',
     email_verified: true,
     email: 'Customer.Sample@Example.test',
@@ -41,8 +41,13 @@ async function tokenFor(
     .setProtectedHeader({ alg: 'RS256' })
     .setIssuer(overrides.issuer ?? issuer)
     .setAudience(overrides.audience ?? audience)
-    .setSubject('provider-subject-0001')
-    .setIssuedAt(now)
+    .setSubject('provider-subject-0001');
+
+  if (overrides.issuedAt !== null) {
+    builder.setIssuedAt(overrides.issuedAt ?? now);
+  }
+
+  return builder
     .setExpirationTime(overrides.expiresAt ?? now + 300)
     .sign(privateKey);
 }
@@ -86,6 +91,23 @@ describe('customer access token verification', () => {
   it('rejects an expired signed token', async () => {
     const token = await tokenFor({}, { expiresAt: Math.floor(Date.now() / 1000) - 30 });
     await expect(verifyCustomerAccessToken(token, config)).rejects.toMatchObject({ statusCode: 401 });
+  });
+
+  it('rejects tokens missing the issued-at claim', async () => {
+    const token = await tokenFor({}, { issuedAt: null });
+    await expect(verifyCustomerAccessToken(token, config)).rejects.toMatchObject({ statusCode: 401 });
+  });
+
+  it('rejects tokens with an excessive lifetime', async () => {
+    const now = Math.floor(Date.now() / 1000);
+    const token = await tokenFor({}, { expiresAt: now + 16 * 60 });
+    await expect(verifyCustomerAccessToken(token, config)).rejects.toThrow(/lifetime exceeds/i);
+  });
+
+  it('rejects a token issued materially in the future', async () => {
+    const now = Math.floor(Date.now() / 1000);
+    const token = await tokenFor({}, { issuedAt: now + 30, expiresAt: now + 300 });
+    await expect(verifyCustomerAccessToken(token, config)).rejects.toThrow(/issued-at time is in the future/i);
   });
 
   it('requires a bearer token and rejects oversized token material', () => {
