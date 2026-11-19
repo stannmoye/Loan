@@ -1,4 +1,4 @@
-import { useMemo, useState, type ReactNode } from "react";
+import { useEffect, useMemo, useRef, useState, type ReactNode } from "react";
 import {
   ArrowRight, ArrowUpRight, BellRing, BookOpen, Check, CheckCircle2,
   ChevronDown, CircleHelp, FileCheck2, FileLock2, FileText,
@@ -32,7 +32,7 @@ function PageHeading({ eyebrow, title, description }: { eyebrow: string; title: 
   return <header className="customer-page-heading"><div><Eyebrow>{eyebrow}</Eyebrow><h1>{title}</h1><p>{description}</p></div><span className="customer-heading-mark"><ShieldCheck size={22} /></span></header>;
 }
 
-function CustomerOverview({ onSectionChange, onNotice }: Pick<CustomerExperienceProps, "onSectionChange" | "onNotice">) {
+function CustomerOverview({ onSectionChange }: Pick<CustomerExperienceProps, "onSectionChange">) {
   const stepsComplete = applicationSteps.filter((step) => step.state === "complete").length;
 
   return <div className="customer-experience overview-experience">
@@ -64,7 +64,6 @@ function CustomerOverview({ onSectionChange, onNotice }: Pick<CustomerExperience
     <section className="customer-discovery-section"><div className="customer-section-heading"><div><Eyebrow>EXPLORE POSSIBILITIES</Eyebrow><h2>Finance for life's next chapter.</h2><p>Learn the differences between finance categories and the questions worth asking.</p></div><button className="customer-text-link" onClick={() => onSectionChange("explore")}>View all categories <ArrowRight size={15} /></button></div><div className="customer-category-grid">{financeCategories.slice(0, 4).map((category) => <CategoryCard key={category.id} category={category} onSelect={() => onSectionChange("explore")} />)}</div><p className="customer-disclaimer">Learning content only. Availability and terms depend on supported products, provider criteria and local laws. This preview does not show live offers or eligibility.</p></section>
     <section className="customer-bottom-banner"><span className="bottom-banner-icon"><MessageCircle size={22} /></span><div><strong>It's okay to ask questions before making a decision.</strong><p>Explore the help centre for plain-language information about documents, applications and responsible borrowing.</p></div><button onClick={() => onSectionChange("help")}>Visit help centre <ArrowRight size={15} /></button></section>
     <div className="customer-footer-note"><ShieldCheck size={14} /> A good borrowing decision starts with clear terms, realistic repayment planning and time to compare options.</div>
-    <button className="visually-hidden" onClick={() => onNotice("This is a sample-only customer environment.")}>Preview information</button>
   </div>;
 }
 
@@ -77,6 +76,32 @@ function ExploreFinance({ onNotice }: Pick<CustomerExperienceProps, "onNotice">)
   const [query, setQuery] = useState("");
   const [categoryFilter, setCategoryFilter] = useState("all");
   const [selectedCategory, setSelectedCategory] = useState<FinanceCategory | null>(null);
+  const dialogRef = useRef<HTMLElement | null>(null);
+  useEffect(() => {
+    if (!selectedCategory) return;
+    const dialog = dialogRef.current;
+    dialog?.focus();
+    const handleDialogKeys = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        setSelectedCategory(null);
+        return;
+      }
+      if (event.key !== "Tab" || !dialog) return;
+      const controls = Array.from(dialog.querySelectorAll<HTMLElement>('button:not([disabled]), a[href], input:not([disabled]), [tabindex]:not([tabindex="-1"])'));
+      if (controls.length === 0) return;
+      const first = controls[0];
+      const last = controls[controls.length - 1];
+      if (event.shiftKey && document.activeElement === first) {
+        event.preventDefault();
+        last.focus();
+      } else if (!event.shiftKey && document.activeElement === last) {
+        event.preventDefault();
+        first.focus();
+      }
+    };
+    window.addEventListener("keydown", handleDialogKeys);
+    return () => window.removeEventListener("keydown", handleDialogKeys);
+  }, [selectedCategory]);
   const visibleCategories = useMemo(() => financeCategories.filter((category) => {
     const matchesCategory = categoryFilter === "all" || category.id === categoryFilter;
     const matchesQuery = [category.title, category.description, category.label].join(" ").toLowerCase().includes(query.toLowerCase());
@@ -92,7 +117,7 @@ function ExploreFinance({ onNotice }: Pick<CustomerExperienceProps, "onNotice">)
     <div className="customer-category-grid explore-category-grid">{visibleCategories.map((category) => <article className="customer-category-card explore-card" key={category.id}><div className="category-card-art"><img src={category.image} alt="" loading="lazy" /></div><div className="category-card-copy"><span className="category-card-label">{category.label.toUpperCase()}</span><h3>{category.title}</h3><p>{category.description}</p><button className="category-card-link" onClick={() => setSelectedCategory(category)}>What should I compare? <ArrowRight size={14} /></button></div></article>)}</div>
     {visibleCategories.length === 0 && <div className="explore-empty"><Search size={25} /><strong>No categories match that search.</strong><span>Try a broader term or select All topics.</span><button onClick={() => { setQuery(""); setCategoryFilter("all"); }}>Clear filters</button></div>}
     <section className="responsible-borrowing-note"><span><ShieldCheck size={20} /></span><div><strong>Take time to understand the commitment.</strong><p>Only consider borrowing after reviewing the full local disclosure and assessing whether repayments remain manageable alongside essential expenses. Support and legal protections vary by jurisdiction.</p></div></section>
-    {selectedCategory && <div className="customer-modal-backdrop" onMouseDown={(event) => { if (event.target === event.currentTarget) setSelectedCategory(null); }}><section className="customer-category-dialog" role="dialog" aria-modal="true" aria-labelledby="category-dialog-title"><button className="dialog-close" onClick={() => setSelectedCategory(null)} aria-label="Close category details"><X size={19} /></button><span className="dialog-kicker">FINANCE BASICS · {selectedCategory.label.toUpperCase()}</span><h2 id="category-dialog-title">{selectedCategory.title}</h2><p>{selectedCategory.overview}</p><h3>Questions worth comparing</h3><ul>{selectedCategory.compare.map((item) => <li key={item}><CheckCircle2 size={16} />{item}</li>)}</ul><div className="dialog-disclaimer"><Info size={16} /> This guide is general education, not a product offer, eligibility result or personal financial recommendation.</div><button className="button-primary dialog-done" onClick={() => { setSelectedCategory(null); onNotice("Finance learning content is available in this preview. No product, rate or application has been selected."); }}>Close guide <Check size={15} /></button></section></div>}
+    {selectedCategory && <div className="customer-modal-backdrop" onMouseDown={(event) => { if (event.target === event.currentTarget) setSelectedCategory(null); }}><section ref={dialogRef} className="customer-category-dialog" role="dialog" aria-modal="true" aria-labelledby="category-dialog-title" tabIndex={-1}><button className="dialog-close" onClick={() => setSelectedCategory(null)} aria-label="Close category details"><X size={19} /></button><span className="dialog-kicker">FINANCE BASICS · {selectedCategory.label.toUpperCase()}</span><h2 id="category-dialog-title">{selectedCategory.title}</h2><p>{selectedCategory.overview}</p><h3>Questions worth comparing</h3><ul>{selectedCategory.compare.map((item) => <li key={item}><CheckCircle2 size={16} />{item}</li>)}</ul><div className="dialog-disclaimer"><Info size={16} /> This guide is general education, not a product offer, eligibility result or personal financial recommendation.</div><button className="button-primary dialog-done" onClick={() => { setSelectedCategory(null); onNotice("Finance learning content is available in this preview. No product, rate or application has been selected."); }}>Close guide <Check size={15} /></button></section></div>}
   </div>;
 }
 
@@ -148,6 +173,6 @@ export function CustomerExperience({ section, onSectionChange, onNotice }: Custo
     case "help": return <HelpCentre onNotice={onNotice} />;
     case "security": return <SecurityProfile onNotice={onNotice} />;
     case "overview":
-    default: return <CustomerOverview onSectionChange={onSectionChange} onNotice={onNotice} />;
+    default: return <CustomerOverview onSectionChange={onSectionChange} />;
   }
 }
