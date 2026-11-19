@@ -1,0 +1,6 @@
+{
+  "routes": [
+    { "path": "/", "name": "Customer overview", "mode": "customer" },
+    { "path": "/operations", "name": "Operations workspace", "mode": "operations" }
+  ]
+}
