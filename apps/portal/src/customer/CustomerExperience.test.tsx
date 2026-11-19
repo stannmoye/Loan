@@ -25,7 +25,7 @@ describe("CustomerExperience", () => {
     fireEvent.click(screen.getByRole("button", { name: /what should i compare/i }));
     const dialog = screen.getByRole("dialog");
     expect(within(dialog).getByRole("heading", { name: "Education finance" })).toBeInTheDocument();
-    expect(within(dialog).getByText(/total amount repayable/i)).toBeInTheDocument();
+    expect(within(dialog).getByText(/institution and course are supported/i)).toBeInTheDocument();
     fireEvent.click(within(dialog).getByRole("button", { name: /close guide/i }));
     expect(screen.queryByRole("dialog")).not.toBeInTheDocument();
   });
