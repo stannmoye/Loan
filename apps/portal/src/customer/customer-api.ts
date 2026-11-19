@@ -82,7 +82,12 @@ export function createCustomerApiClient(options: CustomerApiClientOptions) {
     method: "GET" | "POST" | "PATCH",
     body?: unknown,
   ): Promise<T> {
-    const token = await options.getAccessToken();
+    let token: string | null;
+    try {
+      token = await options.getAccessToken();
+    } catch {
+      throw new CustomerApiError("Customer session could not be verified", 503);
+    }
     if (!token || token.trim() !== token || /\s/.test(token)) {
       throw new CustomerApiError("A signed-in customer session is required", 401);
     }
