@@ -70,3 +70,32 @@ These are documented design constraints, not implemented frontend screens or gen
 ### Next
 
 Implement the customer overview and operations queue/case-detail interface in the managed preview workspace, synchronize identical source and evidence to `stannmoye/Loan`, run relevant quality checks, and record observed desktop/mobile preview results before the UI milestone commit.
+
+
+## 2026-11-19 — First customer and operations portal source committed to GitHub feature branch
+
+### Implemented in `feat/customer-operations-portal-shell`
+
+- Added a separately buildable React 19 / TypeScript / Vite frontend under `apps/portal/`, preserving the existing root Fastify package and scripts.
+- Added the route manifest before any dev-server start.
+- Added a shared Northline provisional product identity, responsive application shell, institutional navy/blue design direction, semantic Lucide icon usage, keyboard focus styles and reduced-motion support.
+- Added a customer overview with a clearly disclosed synthetic application journey, next-step information, sample activity and product discovery entry point.
+- Added an operations case-review workspace with synthetic case fixtures, selectable case details, local text search, status filtering, timeline and evidence checklist.
+- Added responsive layouts for mobile, tablet and desktop widths in CSS. No live balance, customer record, credit decision, approval, KYC result or payment is fabricated.
+- Added a portal README with setup and scope boundaries.
+
+### Files added
+
+`apps/portal/package.json`, `index.html`, `tsconfig.json`, `vite.config.ts`, `public/manus-routes.json`, `src/main.tsx`, `src/App.tsx`, `src/styles.css`, `src/data/fixtures.ts`, and `README.md`.
+
+### Verification status
+
+- GitHub create-file operations succeeded on the feature branch.
+- Frontend dependency installation, TypeScript build, Vite build, browser preview and responsive visual inspection have **not yet been run**.
+- No backend routes, customer identity, live application data, KYC, underwriting, contracts, ledger, balances, payments or bank integrations were added.
+- Existing API build/tests are not claimed to have been rerun in this increment.
+- The UI TODO checklist remains open until build, diagnostics and responsive inspection evidence are available.
+
+### Next
+
+Add a frontend CI workflow, run its build/type-check gate, fix any compiler or bundler failures, then continue with the next connected backend/customer identity stage. Keep all sample fixtures isolated until real authenticated API contracts exist.
