@@ -104,7 +104,7 @@ function ExploreFinance({ onNotice }: Pick<CustomerExperienceProps, "onNotice">)
   }, [selectedCategory]);
   const visibleCategories = useMemo(() => financeCategories.filter((category) => {
     const matchesCategory = categoryFilter === "all" || category.id === categoryFilter;
-    const matchesQuery = [category.title, category.description, category.label].join(" ").toLowerCase().includes(query.toLowerCase());
+    const matchesQuery = [category.title, category.description, category.label, ...category.productTypes].join(" ").toLowerCase().includes(query.toLowerCase());
     return matchesCategory && matchesQuery;
   }), [categoryFilter, query]);
 
