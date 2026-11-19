@@ -1,6 +1,7 @@
 import { fireEvent, render, screen, within } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
 import { CustomerExperience } from "./CustomerExperience";
+import { financeCategories, totalProductTypes } from "./customer-data";
 
 const onSectionChange = vi.fn();
 const onNotice = vi.fn();
@@ -10,6 +11,11 @@ function renderSection(section: "overview" | "explore" | "applications" | "docum
 }
 
 describe("CustomerExperience", () => {
+  it("exposes the complete planned finance catalogue", () => {
+    expect(financeCategories).toHaveLength(19);
+    expect(totalProductTypes).toBe(66);
+    expect(financeCategories.flatMap((category) => category.productTypes)).toHaveLength(66);
+  });
   it("clearly identifies the overview as sample data and routes customers to the application journey", () => {
     renderSection("overview");
     expect(screen.getByText(/illustrative preview — not a live account/i)).toBeInTheDocument();
@@ -19,13 +25,14 @@ describe("CustomerExperience", () => {
 
   it("filters finance topics and opens an educational comparison guide", () => {
     renderSection("explore");
-    fireEvent.change(screen.getByRole("textbox", { name: /search finance categories/i }), { target: { value: "education" } });
-    expect(screen.getByRole("heading", { name: "Education finance" })).toBeInTheDocument();
+    fireEvent.change(screen.getByRole("textbox", { name: /search finance categories/i }), { target: { value: "HELOC" } });
+    expect(screen.getByRole("heading", { name: "Home finance" })).toBeInTheDocument();
     expect(screen.queryByRole("heading", { name: "Medical finance" })).not.toBeInTheDocument();
     fireEvent.click(screen.getByRole("button", { name: /what should i compare/i }));
     const dialog = screen.getByRole("dialog");
-    expect(within(dialog).getByRole("heading", { name: "Education finance" })).toBeInTheDocument();
-    expect(within(dialog).getByText(/institution and course are supported/i)).toBeInTheDocument();
+    expect(within(dialog).getByRole("heading", { name: "Home finance" })).toBeInTheDocument();
+    expect(within(dialog).getByText(/home equity line of credit \(HELOC\)/i)).toBeInTheDocument();
+    expect(within(dialog).getByText(/fixed or variable rate terms/i)).toBeInTheDocument();
     fireEvent.click(within(dialog).getByRole("button", { name: /close guide/i }));
     expect(screen.queryByRole("dialog")).not.toBeInTheDocument();
   });
