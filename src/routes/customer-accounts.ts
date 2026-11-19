@@ -5,6 +5,8 @@ import {
   updateCustomerProfileSchema,
 } from '../domain/customer-account.js';
 import { env } from '../config/env.js';
+import { applicationIdSchema, createCustomerLoanApplicationSchema } from '../domain/customer-loan-application.js';
+import { createCustomerApplication, getCustomerApplication, listCustomerApplications, submitCustomerApplication, withdrawCustomerApplication } from '../services/customer-loan-applications.js';
 import {
   CustomerAuthError,
   extractBearerToken,
@@ -201,7 +203,8 @@ export function buildCustomerAccountRoutes(options: CustomerAccountRouteOptions)
       if (!parsed.success) return reply.code(400).send({ error: 'Invalid application identifier' });
       return { data: await withdrawCustomerApplication(context, parsed.data) };
     });
-\n    app.post('/api/v1/customer/auth/logout', async (request) => {
+
+    app.post('/api/v1/customer/auth/logout', async (request) => {
       const identity = await requireIdentity(request);
       const context = await requireContext(identity);
       const result = await service.revokeSession(context, context.currentSessionId);
