@@ -79,6 +79,25 @@ try {
       'INSERT INTO customer_identity_links (customer_id, issuer, external_subject) VALUES (?, ?, ?)',
       [customerId, issuer, externalSubject],
     );
+
+    const caseSubjectCustomerId = randomUUID();
+    const caseIssuerCustomerId = randomUUID();
+    await db.execute("INSERT INTO customer_accounts (id, status) VALUES (?, 'active'), (?, 'active')", [
+      caseSubjectCustomerId, caseIssuerCustomerId,
+    ]);
+    await db.execute(
+      'INSERT INTO customer_identity_links (customer_id, issuer, external_subject) VALUES (?, ?, ?)',
+      [caseSubjectCustomerId, issuer, externalSubject.toUpperCase()],
+    );
+    await db.execute(
+      'INSERT INTO customer_identity_links (customer_id, issuer, external_subject) VALUES (?, ?, ?)',
+      [caseIssuerCustomerId, issuer.toUpperCase(), externalSubject],
+    );
+    const [[{ caseSensitiveMappings }]] = await db.query(
+      'SELECT COUNT(*) AS caseSensitiveMappings FROM customer_identity_links WHERE (issuer = ? AND external_subject = ?) OR (issuer = ? AND external_subject = ?)',
+      [issuer, externalSubject.toUpperCase(), issuer.toUpperCase(), externalSubject],
+    );
+    assert.equal(Number(caseSensitiveMappings), 2, 'issuer and subject matching must be case-sensitive');
     await expectReject(
       () => db.execute(
         'INSERT INTO customer_identity_links (customer_id, issuer, external_subject) VALUES (?, ?, ?)',
@@ -160,7 +179,7 @@ try {
     throw error;
   }
 
-  console.log('MySQL 8.4 integration checks passed: catalogue seed, disabled corridors, product approval constraints, rollback, customer identity uniqueness, encrypted-profile storage, customer sessions, consent history and security events.');
+  console.log('MySQL 8.4 integration checks passed: catalogue seed, disabled corridors, product approval constraints, rollback, case-sensitive customer issuer/subject mappings, encrypted-profile storage, customer sessions, consent history and security events.');
 } finally {
   await db.end();
 }
