@@ -13,13 +13,14 @@ type Mode = "customer" | "operations";
 
 function sectionFromPath(path: string): CustomerSection {
   const candidate = path.split("/")[2] as CustomerSection | undefined;
-  return candidate && ["explore", "applications", "documents", "help", "security"].includes(candidate) ? candidate : "overview";
+  return candidate && ["explore", "applications", "loans", "documents", "help", "security"].includes(candidate) ? candidate : "overview";
 }
 
 const customerSectionLabels: Record<CustomerSection, string> = {
   overview: "Your overview",
   explore: "Explore loans",
   applications: "My applications",
+  loans: "My loans",
   documents: "Documents",
   help: "Help centre",
   security: "Security & profile"
@@ -91,7 +92,7 @@ function App() {
             <button className={customerSection === "overview" ? "nav-item active" : "nav-item"} aria-current={customerSection === "overview" ? "page" : undefined} onClick={() => changeCustomerSection("overview")}><Home size={17} />Overview</button>
             <button className={customerSection === "explore" ? "nav-item active" : "nav-item"} aria-current={customerSection === "explore" ? "page" : undefined} onClick={() => changeCustomerSection("explore")}><Landmark size={17} />Explore loans</button>
             <button className={customerSection === "applications" ? "nav-item active" : "nav-item"} aria-current={customerSection === "applications" ? "page" : undefined} onClick={() => changeCustomerSection("applications")}><FileText size={17} />My applications</button>
-            <button className="nav-item" onClick={() => navNotice("Loan servicing and payment history are not connected in this preview.")}><WalletCards size={17} />My loans</button>
+            <button className={customerSection === "loans" ? "nav-item active" : "nav-item"} aria-current={customerSection === "loans" ? "page" : undefined} onClick={() => changeCustomerSection("loans")}><WalletCards size={17} />My loans</button>
             <button className={customerSection === "documents" ? "nav-item active" : "nav-item"} aria-current={customerSection === "documents" ? "page" : undefined} onClick={() => changeCustomerSection("documents")}><FileCheck2 size={17} />Documents</button>
             <span className="nav-section nav-section-spaced">HELP & SETTINGS</span>
             <button className={customerSection === "help" ? "nav-item active" : "nav-item"} aria-current={customerSection === "help" ? "page" : undefined} onClick={() => changeCustomerSection("help")}><CircleHelp size={17} />Help centre</button>
