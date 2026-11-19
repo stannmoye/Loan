@@ -35,6 +35,10 @@ test("customer sections are navigable and the finance library exposes all planne
   await openSection(page, "My applications");
   await expect(page.getByRole("heading", { name: "Follow your application." })).toBeVisible();
 
+  await openSection(page, "My loans");
+  await expect(page.getByRole("heading", { name: "No loan accounts are connected." })).toBeVisible();
+  await expect(page.getByText(/does not hold or display real loans, balances/i)).toBeVisible();
+
   await openSection(page, "Documents");
   await expect(page.getByRole("heading", { name: "Know what may be needed." })).toBeVisible();
   await expect(page.getByRole("button", { name: /upload unavailable/i })).toBeDisabled();
