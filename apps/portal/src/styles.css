@@ -783,3 +783,63 @@ button:disabled { cursor: not-allowed; opacity: .55; }
 .product-type-chip-list { display:flex; flex-wrap:wrap; gap:7px; margin:10px 0 0; }
 .product-type-chip { display:inline-flex; align-items:center; padding:6px 8px; border:1px solid #e0e7ef; border-radius:7px; background:#f8fafc; color:#53667e; font-size:9px; line-height:1.3; }
 .customer-category-dialog .product-type-chip { background:#f7f9fc; }
+
+
+/* Customer loan centre: intentionally empty until authoritative servicing data exists */
+.loan-centre-hero { display:grid; grid-template-columns:1.2fr .8fr; min-height:196px; align-items:center; gap:20px; padding:23px 27px; overflow:hidden; position:relative; border-radius:16px; background:linear-gradient(112deg,#18334f 0%,#214665 100%); color:#fff; }
+.loan-centre-hero-copy { position:relative; z-index:1; }
+.loan-centre-kicker { display:inline-flex; align-items:center; gap:7px; color:#c8d9ea; font-size:9px; font-weight:800; letter-spacing:.9px; }
+.loan-centre-hero h2 { margin:12px 0 8px; color:#fff; font-size:clamp(25px,2.8vw,34px); line-height:1.08; letter-spacing:-1px; }
+.loan-centre-hero p { max-width:470px; margin:0; color:#d1deeb; font-size:10px; line-height:1.7; }
+.loan-centre-hero-art { height:150px; display:grid; place-items:center; position:relative; }
+.loan-centre-orbit { position:absolute; border:1px solid rgba(222,235,248,.2); border-radius:50%; }
+.loan-orbit-one { width:118px; height:118px; }
+.loan-orbit-two { width:168px; height:168px; }
+.loan-centre-wallet { z-index:1; width:79px; height:79px; display:grid; place-items:center; border:1px solid rgba(255,255,255,.7); border-radius:23px; background:rgba(255,255,255,.96); color:#315f91; box-shadow:0 15px 34px rgba(5,18,34,.22); transform:rotate(-7deg); }
+.loan-centre-art-chip { z-index:2; position:absolute; width:34px; height:34px; display:grid; place-items:center; border:1px solid rgba(255,255,255,.65); border-radius:11px; background:#f8fbff; color:#3b6b9c; box-shadow:0 7px 18px rgba(5,18,34,.18); }
+.loan-centre-art-chip.chip-one { top:15px; left:25%; transform:rotate(8deg); }
+.loan-centre-art-chip.chip-two { right:24%; bottom:12px; transform:rotate(-8deg); }
+.loan-empty-state { display:grid; grid-template-columns:180px minmax(0,1fr); align-items:center; gap:22px; padding:22px 25px; border:1px solid #dce6f0; border-radius:15px; background:#fff; box-shadow:var(--shadow-soft); }
+.loan-empty-illustration { height:147px; display:grid; place-items:center; position:relative; overflow:hidden; border-radius:12px; background:linear-gradient(140deg,#f1f6fc,#eaf1f8); }
+.loan-empty-illustration > span { z-index:1; width:68px; height:68px; display:grid; place-items:center; border:1px solid #d2deec; border-radius:18px; background:#fff; color:#376b9f; box-shadow:0 9px 19px rgba(39,71,109,.11); transform:rotate(-6deg); }
+.loan-empty-illustration > i { position:absolute; width:112px; height:112px; border:1px solid #dce6f0; border-radius:50%; }
+.loan-empty-illustration > i:last-child { width:153px; height:153px; }
+.loan-empty-copy h2 { margin:7px 0; color:var(--navy); font-size:20px; letter-spacing:-.6px; }
+.loan-empty-copy p { max-width:700px; margin:0; color:#79889b; font-size:10px; line-height:1.7; }
+.loan-empty-actions { display:flex; flex-wrap:wrap; align-items:center; gap:9px; margin-top:15px; }
+.loan-empty-actions .button-primary, .loan-empty-actions .customer-outline-button { min-height:38px; width:auto; justify-content:center; padding:0 12px; }
+.loan-account-tools { padding-top:4px; }
+.loan-tools-grid { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:11px; }
+.loan-tool-card { display:flex; align-items:flex-start; gap:10px; min-width:0; padding:14px; border:1px solid var(--line); border-radius:12px; background:#fff; box-shadow:0 3px 11px rgba(20,36,61,.025); }
+.loan-tool-icon { width:36px; height:36px; flex:0 0 auto; display:grid; place-items:center; border-radius:10px; }
+.loan-tool-blue { background:#edf4ff; color:#315f9b; }
+.loan-tool-gold { background:#fbf5e9; color:#94713b; }
+.loan-tool-green { background:#edf7f1; color:#347752; }
+.loan-tool-violet { background:#f2effb; color:#67559b; }
+.loan-tool-card > div { min-width:0; }
+.loan-tool-card strong { display:block; color:#2b415b; font-size:10px; line-height:1.4; }
+.loan-tool-card p { margin:6px 0 9px; color:#8390a2; font-size:9px; line-height:1.6; }
+.loan-tool-state { display:inline-flex; padding:4px 6px; border-radius:6px; background:#f2f4f7; color:#8793a3; font-size:8px; font-weight:700; }
+.loan-tool-link { display:inline-flex; align-items:center; gap:5px; border:0; padding:0; background:transparent; color:#315f98; font-size:9px; font-weight:750; }
+.loan-integrity-note { display:flex; align-items:flex-start; gap:10px; padding:13px 14px; border:1px solid #dce8f1; border-radius:11px; background:#f7fbfe; color:#436e92; }
+.loan-integrity-note > svg { flex:0 0 auto; }
+.loan-integrity-note strong { color:#314e69; font-size:10px; }
+.loan-integrity-note p { margin:4px 0 0; color:#7b8b9d; font-size:9px; line-height:1.6; }
+@media (max-width: 1100px) {
+  .loan-tools-grid { grid-template-columns:repeat(2,minmax(0,1fr)); }
+}
+@media (max-width: 680px) {
+  .loan-centre-hero { grid-template-columns:1fr; gap:9px; padding:20px; }
+  .loan-centre-hero h2 { font-size:27px; }
+  .loan-centre-hero-art { height:105px; }
+  .loan-orbit-one { width:90px; height:90px; }
+  .loan-orbit-two { width:128px; height:128px; }
+  .loan-centre-wallet { width:58px; height:58px; border-radius:16px; }
+  .loan-centre-wallet svg { width:29px; }
+  .loan-empty-state { grid-template-columns:1fr; gap:14px; padding:15px; }
+  .loan-empty-illustration { height:104px; }
+  .loan-empty-copy h2 { font-size:17px; }
+  .loan-empty-actions { align-items:stretch; flex-direction:column; }
+  .loan-empty-actions .button-primary, .loan-empty-actions .customer-outline-button { width:100%; }
+  .loan-tools-grid { grid-template-columns:1fr; }
+}
