@@ -1,8 +1,8 @@
 import { useMemo, useState } from "react";
 import {
-  Activity, ArrowDownRight, ArrowRight, Bell, BriefcaseBusiness, Check, CheckCircle2,
-  ChevronDown, CircleHelp, Clock3, FileCheck2, FileText, Filter, GraduationCap,
-  HeartHandshake, Home, Landmark, LayoutDashboard, Menu, MessageCircle, Search,
+  Activity, ArrowDownRight, ArrowRight, Bell, BriefcaseBusiness,
+  ChevronDown, CircleHelp, Clock3, FileCheck2, FileText, Filter,
+  Home, Landmark, LayoutDashboard, Menu, MessageCircle, Search,
   ShieldCheck, Sparkles, UserRound, WalletCards, X
 } from "lucide-react";
 import { customerTimeline, reviewCases, type CaseStatus, type ReviewCase } from "./data/fixtures";
