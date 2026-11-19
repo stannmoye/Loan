@@ -224,3 +224,32 @@ This remains a tested presentation layer. The real account service, ledger-backe
 ### Boundaries
 
 The notifications inbox is sample-only, not a live message system. It has no event store, delivery worker, email/SMS/push provider, delivery receipts, customer preferences, consent checks or sender verification service. The My loans centre has no live account data, ledger balance, repayment schedule, statements or payment history. Both screens remain UI previews.
+
+
+## 2026-11-19 — Stage 2 customer-account API and identity security foundation
+
+### Implemented on `feat/customer-operations-portal-shell`
+
+- Added the first customer-account domain: strict onboarding/profile schemas, country/locale field validation, mandatory affirmative privacy/terms acknowledgements and rejection of identity/email claims supplied by a request body.
+- Added dedicated customer RS256 access-token verification separate from the administrative JWT contract. It enforces the exact configured issuer/audience, `principal_type=customer`, verified email, subject/session claims, `iat`, signed expiry and a 15-minute maximum token lifetime with five seconds of clock tolerance.
+- Added customer account/session API routes: onboarding, authenticated `/me`, profile patch, session list, per-customer session revocation and local logout. Customer routes remain disabled unless a distinct customer identity configuration is supplied.
+- Added customer-account persistence for external identity links, active/suspended/closed lifecycle, encrypted profile blobs, hashed provider-session identifiers, versioned consent acknowledgements and security events.
+- Added AES-256-GCM profile encryption with random 96-bit nonce, authenticated customer-ID context and envelope version marker. Profile email/verification are provider-owned; profile patches cannot override them.
+- Removed the provider issuer from account-created audit/security metadata; only a non-identifying boolean and encryption version are recorded.
+- Added migration 004 to store issuer and subject strings under a binary collation, preserving exact case-sensitive identity matching. The MySQL integration script now proves that identity pairs differing by issuer/subject case remain distinct while exact duplicate identities remain rejected.
+- Added route-level onboarding rate-limit coverage (five per minute), explicit Vitest imports for the new domain test, and stronger signed-token lifetime tests.
+
+### Test and integration notes
+
+- Customer test coverage includes verified email, provider/admin principal separation, issuer/audience/expiry/issued-at checks, maximum token lifetime, bearer parsing, AES-GCM tampering/AAD isolation, onboarding consent gates, profile patch allow-lists, session ownership/revocation and logout.
+- Root CI on commit `d3f90c84198189fb1eb735342ca43a2453fa3275` passed after fixing the Vitest test file's missing explicit imports. Stage 1 CI on commit `bc530cebe1540e207de061deee258ed7a9a0dd30` also passed with the enforced JWT `iat` and 15-minute lifetime rules.
+- Two subsequent database CI attempts exposed migration-delimiter issues: a semicolon in a migration comment was split by the existing migration runner; a pre-collation integration test correctly failed because migration 004 had not yet been applied. The migration comment is now delimiter-safe, and a new exact-head CI run is in progress for `7d3085f9d46afe9057a4a9812d59f70cc834976a`. Do not mark the database change verified until that run completes.
+- Portal CI on commit `de77a645a12737ba63fe15935ff19047a9612917` passed frontend build, component tests and Playwright browser checks; the Stage 1 database migration on that same revision failed, and is being rerun against the corrected migration revision.
+
+### Explicit boundaries and remaining gaps
+
+- No external customer identity provider has been selected or configured. The API expects a provider-issued token but does not issue passwords, OTPs, MFA, recovery challenges or authentication tokens itself.
+- Customer identity keys, profile encryption key, privacy-notice version and terms-of-service version remain unset. Customer onboarding routes therefore remain unavailable by default.
+- There is no live login/registration UI, no customer token storage in the browser and no portal-to-account API connection.
+- JWKS/key rotation, provider introspection/back-channel logout, MFA/recovery, provider contact-change reconciliation, device metadata, security settings UI, database privilege grants, encryption-key rotation, retention controls and data-subject rights remain future work.
+- The customer-declared country is not residence proof or lending eligibility. No lending product/country corridor is enabled; KYC, underwriting, contract, ledger, disbursement and payment functionality remain unimplemented.
