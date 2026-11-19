@@ -2,7 +2,6 @@ import Fastify from 'fastify';
 import { describe, expect, it, vi } from 'vitest';
 import type { CustomerProfile } from '../src/domain/customer-account.js';
 import type { CustomerIdentity } from '../src/plugins/customer-auth.js';
-import { registerAuthErrorHandler } from '../src/plugins/admin-auth.js';
 import {
   buildCustomerAccountRoutes,
   type CustomerAccountRouteOptions,
@@ -87,7 +86,6 @@ function makeOptions(overrides: Partial<CustomerAccountRouteOptions> = {}) {
 
 async function createApp(options: CustomerAccountRouteOptions) {
   const app = Fastify({ logger: false });
-  registerAuthErrorHandler(app);
   await app.register(buildCustomerAccountRoutes(options));
   await app.ready();
   return app;
