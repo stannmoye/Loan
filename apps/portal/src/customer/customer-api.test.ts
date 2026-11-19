@@ -149,11 +149,48 @@ describe("customer API client", () => {
     );
   });
 
+  it("supports allow-listed profile updates, session listing and local logout", async () => {
+    const requests: Array<{ input: RequestInfo | URL; init?: RequestInit }> = [];
+    const payloads: unknown[] = [
+      { customerId: "customer-sample-001", profile: account.profile },
+      [{ id: "session-001", createdAt: "2026-11-19T10:00:00.000Z", lastSeenAt: "2026-11-19T10:01:00.000Z", expiresAt: "2026-11-19T10:05:00.000Z", revokedAt: null, current: true }],
+      { loggedOut: true },
+    ];
+    const fetchImpl: typeof fetch = async (input, init) => {
+      requests.push({ input, init });
+      return response(200, { data: payloads.shift() });
+    };
+    const api = createCustomerApiClient({
+      baseUrl: "https://api.example.test",
+      getAccessToken: async () => "fresh-customer-token",
+      fetchImpl,
+    });
+
+    await api.updateProfile({ displayName: "Updated Sample", preferredLocale: "en" });
+    await api.listSessions();
+    await expect(api.logout()).resolves.toEqual({ loggedOut: true });
+
+    expect(requests[0]?.init?.method).toBe("PATCH");
+    expect(requests[0]?.init?.body).toBe(JSON.stringify({ displayName: "Updated Sample", preferredLocale: "en" }));
+    expect(requests[1]?.init?.method).toBe("GET");
+    expect(requests[1]?.input).toBe("https://api.example.test/api/v1/customer/me/sessions");
+    expect(requests[2]?.init?.method).toBe("POST");
+    expect(requests[2]?.input).toBe("https://api.example.test/api/v1/customer/auth/logout");
+  });
+
   it("rejects unsafe API base URLs and invalid response envelopes", async () => {
     expect(() => createCustomerApiClient({
       baseUrl: "javascript:alert(1)",
       getAccessToken: async () => "token",
-    })).toThrow(/HTTP or HTTPS/i);
+    })).toThrow(/HTTPS except for local loopback/i);
+    expect(() => createCustomerApiClient({
+      baseUrl: "http://api.example.test",
+      getAccessToken: async () => "token",
+    })).toThrow(/HTTPS except for local loopback/i);
+    expect(() => createCustomerApiClient({
+      baseUrl: "http://localhost:3000",
+      getAccessToken: async () => "token",
+    })).not.toThrow();
 
     const api = createCustomerApiClient({
       baseUrl: "https://api.example.test",
