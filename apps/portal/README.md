@@ -1,20 +1,41 @@
-# Northline Portal — First UI increment
+# Northline Portal
 
-A separately buildable React + TypeScript + Vite frontend for the customer overview and operations case-review preview.
+A responsive React + TypeScript + Vite application containing the customer experience preview and a separate operations case-review preview.
 
-## Run
+## Run locally
 
 From this directory:
 
-```sh
+\`\`\`sh
 npm install
 npm run dev
-```
+\`\`\`
 
-Build with `npm run build`.
+Build and type-check:
+
+\`\`\`sh
+npm run build
+\`\`\`
+
+## Customer experience design
+
+The customer home uses an institutional, customer-first design system: restrained navy and blue, generous white surfaces, precise typography, accessible Lucide outline icons, visible workflow states, responsive navigation and clear privacy language.
+
+The current customer preview includes:
+- A photographic welcome area using \`public/images/customer-adviser.jpg\`.
+- A clear sample application-progress timeline and next-step panel.
+- Privacy and support guidance, recent activity and customer navigation.
+- Original SVG illustrations for personal, education, home and business finance discovery.
+- Mobile, tablet and desktop layouts, keyboard focus states and reduced-motion support.
+
+## Operations preview
+
+The operations workspace retains synthetic case search, status filtering, case selection, a case timeline and an evidence checklist. It does not expose decision, approval or financial transaction actions.
 
 ## Important scope boundary
 
-This increment is presentation and safe local interaction only. Every record is synthetic and marked as sample/illustrative. It does not connect customer identity, application, underwriting, document, ledger, payment, KYC or provider services. No approval, disbursement, repayment or withdrawal can be performed. Do not treat the preview as a production lending interface.
+This is still a presentation-only preview. All sample records and statuses are fictional. It does not connect customer identity, applications, underwriting, document storage, KYC, contracts, loan servicing, a ledger, balances, payments or provider services. It does not make lending decisions, accept applications, approve loans, disburse funds, collect repayments or process withdrawals.
 
-The customer/operations switch, case search, status filter, case selection and informational notices are local UI interactions. Replace fixtures with a typed API client only after the relevant backend contracts, authorization and acceptance tests exist.
+Do not enter personal, identity, banking or other sensitive information into this preview. Customer-facing rates, fees, eligibility and repayment terms must come from approved, versioned, country-specific product data before they are displayed as offers.
+
+The workspace switch, navigation notices, case search, status filter and case selection are local UI interactions only. Replace fixtures with typed API clients only after the corresponding backend contracts, authentication, authorization, audit controls and acceptance tests are implemented.
