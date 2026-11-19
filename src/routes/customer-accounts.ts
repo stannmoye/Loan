@@ -162,7 +162,46 @@ export function buildCustomerAccountRoutes(options: CustomerAccountRouteOptions)
       return { data: result };
     });
 
-    app.post('/api/v1/customer/auth/logout', async (request) => {
+
+    app.post('/api/v1/customer/me/applications', async (request, reply) => {
+      const identity = await requireIdentity(request);
+      const context = await requireContext(identity);
+      const parsed = createCustomerLoanApplicationSchema.safeParse(request.body);
+      if (!parsed.success) return reply.code(400).send({ error: 'Invalid loan application', details: parsed.error.flatten() });
+      const result = await createCustomerApplication(context, parsed.data);
+      return reply.code(201).send({ data: result });
+    });
+
+    app.get('/api/v1/customer/me/applications', async (request) => {
+      const identity = await requireIdentity(request);
+      const context = await requireContext(identity);
+      return { data: await listCustomerApplications(context) };
+    });
+
+    app.get<{ Params: { applicationId: string } }>('/api/v1/customer/me/applications/:applicationId', async (request, reply) => {
+      const identity = await requireIdentity(request);
+      const context = await requireContext(identity);
+      const parsed = applicationIdSchema.safeParse(request.params.applicationId);
+      if (!parsed.success) return reply.code(400).send({ error: 'Invalid application identifier' });
+      return { data: await getCustomerApplication(context, parsed.data) };
+    });
+
+    app.post<{ Params: { applicationId: string } }>('/api/v1/customer/me/applications/:applicationId/submit', async (request, reply) => {
+      const identity = await requireIdentity(request);
+      const context = await requireContext(identity);
+      const parsed = applicationIdSchema.safeParse(request.params.applicationId);
+      if (!parsed.success) return reply.code(400).send({ error: 'Invalid application identifier' });
+      return { data: await submitCustomerApplication(context, parsed.data) };
+    });
+
+    app.post<{ Params: { applicationId: string } }>('/api/v1/customer/me/applications/:applicationId/withdraw', async (request, reply) => {
+      const identity = await requireIdentity(request);
+      const context = await requireContext(identity);
+      const parsed = applicationIdSchema.safeParse(request.params.applicationId);
+      if (!parsed.success) return reply.code(400).send({ error: 'Invalid application identifier' });
+      return { data: await withdrawCustomerApplication(context, parsed.data) };
+    });
+\n    app.post('/api/v1/customer/auth/logout', async (request) => {
       const identity = await requireIdentity(request);
       const context = await requireContext(identity);
       const result = await service.revokeSession(context, context.currentSessionId);
