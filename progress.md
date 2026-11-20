@@ -501,3 +501,12 @@ The notifications inbox is sample-only, not a live message system. It has no eve
 - Reinforced that the timeline is illustrative and performs no checks, verification or lending assessment.
 - No application workflow, status mutation, underwriting or customer record behavior was changed.
 - Tests and browser verification remain deferred under the design-first direction; this increment is not runtime-verified.
+
+
+## 2026-11-20 — My Loans Centre account snapshot visual
+
+- Added a compact account snapshot panel to the Loan Centre hero artwork, giving the dashboard a stronger financial-workspace visual.
+- The preview explicitly labels account balance and next repayment as unavailable and shows that a secure connection is still pending; it introduces no sample figures or implied account activity.
+- Added responsive sizing for smaller customer screens while preserving the existing account readiness cards, navigation shortcuts, information-source framework and account tools.
+- No servicing API, ledger, repayment, statement, payment or account mutation behavior was added.
+- Tests and browser verification remain deferred under the design-first direction; this increment is not runtime-verified.
