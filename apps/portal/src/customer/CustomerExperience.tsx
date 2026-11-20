@@ -294,6 +294,11 @@ function MyLoansCentre({ onSectionChange }: Pick<CustomerExperienceProps, "onSec
         <span className="loan-centre-art-chip chip-two"><ReceiptText size={16} /></span>
       </div>
     </section>
+    <section className="loan-readiness-grid" aria-label="Loan account data availability">
+      <article className="loan-readiness-card"><span className="loan-readiness-icon"><WalletCards size={18} /></span><div><small>ACCOUNT RECORDS</small><strong>No connected accounts</strong><p>Verified servicing data will appear here.</p></div><span className="loan-readiness-status">Not connected</span></article>
+      <article className="loan-readiness-card"><span className="loan-readiness-icon"><CalendarDays size={18} /></span><div><small>REPAYMENT INFORMATION</small><strong>No schedule available</strong><p>Due dates must come from the servicing ledger.</p></div><span className="loan-readiness-status">Unavailable</span></article>
+      <article className="loan-readiness-card"><span className="loan-readiness-icon"><ReceiptText size={18} /></span><div><small>STATEMENTS & RECEIPTS</small><strong>No records available</strong><p>Documents appear after verified account activity.</p></div><span className="loan-readiness-status">Unavailable</span></article>
+    </section>
     <section className="loan-empty-state">
       <div className="loan-empty-illustration"><span><WalletCards size={35} /></span><i /><i /></div>
       <div className="loan-empty-copy">
@@ -321,6 +326,14 @@ function DocumentsCentre() {
     <PageHeading eyebrow="DOCUMENT CENTRE" title="Know what may be needed." description="Understand common document categories and how a secure request process should work." />
     <SampleBanner compact />
     <section className="document-security-hero"><span className="document-security-icon"><FileLock2 size={26} /></span><div><Eyebrow>SECURE DOCUMENT HANDLING</Eyebrow><h2>Your documents deserve careful handling.</h2><p>This preview does not accept, upload or store files. A live document service must verify access, explain the purpose of each request and protect information throughout its lifecycle.</p></div><span className="document-lock-watermark"><LockKeyhole size={74} /></span></section>
+    <section className="document-principles-section" aria-label="Safe document sharing principles">
+      <div className="document-principles-heading"><Eyebrow>BEFORE YOU SHARE</Eyebrow><h2>A safer document journey has clear steps.</h2><p>These are design principles for a future secure service, not active upload controls.</p></div>
+      <div className="document-principles-grid">
+        <article className="document-principle-card"><span className="document-principle-number">01</span><span className="document-principle-icon"><Info size={18} /></span><strong>Understand the request</strong><p>Know why the information is needed and which organisation is asking.</p></article>
+        <article className="document-principle-card"><span className="document-principle-number">02</span><span className="document-principle-icon"><ShieldCheck size={18} /></span><strong>Verify the channel</strong><p>Use an independently verified provider channel before sharing anything.</p></article>
+        <article className="document-principle-card"><span className="document-principle-number">03</span><span className="document-principle-icon"><LockKeyhole size={18} /></span><strong>Check access and retention</strong><p>Understand who can view the file and how long it may be kept.</p></article>
+      </div>
+    </section>
     <div className="document-centre-grid"><section className="customer-surface document-list-surface"><div className="customer-surface-heading"><div><Eyebrow>DOCUMENT GUIDANCE</Eyebrow><h2>Common evidence categories</h2><p>What a provider may ask for depends on the product and applicable law.</p></div><span className="customer-soft-pill">Guide only</span></div>{documentGuidance.map((item,index) => <article className="document-guidance-row" key={item.title}><span className="document-guidance-icon">{index === 0 ? <UserRound size={18} /> : index === 1 ? <FileCheck2 size={18} /> : index === 2 ? <WalletCards size={18} /> : <FolderCheck size={18} />}</span><div><strong>{item.title}</strong><p>{item.detail}</p></div><span className="document-guidance-status">Not requested</span></article>)}</section>
       <aside className="customer-surface document-upload-surface"><div className="upload-empty-art"><span><UploadCloud size={28} /></span><i /><i /></div><h2>Secure sharing is not connected yet.</h2><p>There is no file upload, identity collection or document storage in this demonstration. Do not enter or attach personal information.</p><button disabled className="disabled-upload-button"><UploadCloud size={16} /> Upload unavailable</button><small>Enabled only after secure storage, access controls, malware scanning, retention and audit are implemented.</small></aside></div>
     <section className="document-privacy-note"><ShieldCheck size={19} /><p><strong>Share only what is requested.</strong> A responsible process should explain why a document is needed, who can access it, how long it is retained and how to ask for correction or deletion where permitted.</p></section>
@@ -347,6 +360,12 @@ function NotificationsCentre({ onSectionChange }: Pick<CustomerExperienceProps, 
       <div><span className="notifications-kicker"><BellRing size={15} /> YOUR INFORMATION, IN ONE PLACE</span><h2>Stay informed<br />without the noise.</h2><p>A real inbox should show verified messages from your provider, with clear dates, secure links and an auditable history.</p><span className="notifications-count"><strong>{customerNotifications.length}</strong> illustrative examples · No live messages</span></div>
       <div className="notifications-hero-art" aria-hidden="true"><span className="notifications-orbit notify-orbit-one" /><span className="notifications-orbit notify-orbit-two" /><span className="notifications-paper"><BellRing size={26} /><i /><i /><i /></span><span className="notifications-star notify-star-one">✦</span><span className="notifications-star notify-star-two">✧</span></div>
     </section>
+    <section className="notification-status-grid" aria-label="Notification preview status">
+      <article className="notification-status-card"><span className="notification-status-icon"><BellRing size={18} /></span><div><small>PREVIEW ITEMS</small><strong>{customerNotifications.length}</strong><p>Fictional examples</p></div></article>
+      <article className="notification-status-card"><span className="notification-status-icon"><BookOpen size={18} /></span><div><small>TOPIC GROUPS</small><strong>{new Set(customerNotifications.map((item) => item.kind)).size}</strong><p>Illustrative categories</p></div></article>
+      <article className="notification-status-card"><span className="notification-status-icon"><MessageCircle size={18} /></span><div><small>LIVE DELIVERY</small><strong>Not connected</strong><p>No messages are sent</p></div></article>
+      <article className="notification-status-card"><span className="notification-status-icon"><ShieldCheck size={18} /></span><div><small>DELIVERY RECEIPTS</small><strong>Unavailable</strong><p>No delivery tracking</p></div></article>
+    </section>
     <section className="customer-surface notifications-list-surface">
       <div className="customer-surface-heading"><div><Eyebrow>PREVIEW INBOX</Eyebrow><h2>Information and reminders</h2><p>Every item below is a fictional example, not a sent or received message.</p></div><span className="customer-soft-pill">Sample only</span></div>
       <div className="notifications-filter-list" role="group" aria-label="Filter notifications">
@@ -365,12 +384,20 @@ function NotificationsCentre({ onSectionChange }: Pick<CustomerExperienceProps, 
   </div>;
 }
 
-function HelpCentre({ onNotice }: Pick<CustomerExperienceProps, "onNotice">) {
+function HelpCentre({ onNotice, onSectionChange }: Pick<CustomerExperienceProps, "onNotice" | "onSectionChange">) {
   const [expanded, setExpanded] = useState<number | null>(0);
   return <div className="customer-experience">
     <PageHeading eyebrow="CUSTOMER CARE" title="Clear answers. Considered support." description="Find plain-language guidance for applications, documents and responsible borrowing." />
     <SampleBanner compact />
     <section className="help-centre-hero"><div><span className="help-centre-icon"><HeartHandshake size={24} /></span><Eyebrow>HERE WHEN YOU NEED US</Eyebrow><h2>Every good decision<br />starts with a question.</h2><p>Explore common topics and learn how a secure support experience should work.</p></div><div className="help-centre-illustration"><span className="help-chat-bubble bubble-one"><MessageCircle size={20} /></span><span className="help-chat-bubble bubble-two"><CircleHelp size={23} /></span><span className="help-chat-bubble bubble-three"><HeartHandshake size={24} /></span><i className="help-illustration-star">✦</i></div></section>
+    <section className="help-pathways-section" aria-label="Customer help pathways">
+      <div className="help-pathways-heading"><Eyebrow>QUICK PATHWAYS</Eyebrow><h2>Go straight to the information you need.</h2><p>Explore the sample guidance areas without sending a support request.</p></div>
+      <div className="help-pathways-grid">
+        <button className="help-pathway-card" onClick={() => onSectionChange("applications")}><span className="help-pathway-icon pathway-blue"><FileCheck2 size={19} /></span><span><strong>Application journey</strong><small>Understand stages and example status updates.</small></span><ArrowRight size={16} /></button>
+        <button className="help-pathway-card" onClick={() => onSectionChange("documents")}><span className="help-pathway-icon pathway-gold"><FolderCheck size={19} /></span><span><strong>Document guidance</strong><small>Learn about evidence requests and secure sharing.</small></span><ArrowRight size={16} /></button>
+        <button className="help-pathway-card" onClick={() => onSectionChange("security")}><span className="help-pathway-icon pathway-green"><ShieldCheck size={19} /></span><span><strong>Account safety</strong><small>Review privacy and account-protection principles.</small></span><ArrowRight size={16} /></button>
+      </div>
+    </section>
     <div className="help-centre-layout"><section className="customer-surface faq-surface"><div className="customer-surface-heading"><div><Eyebrow>HELP & GUIDANCE</Eyebrow><h2>Frequently asked questions</h2><p>General information only. Your legal rights depend on local rules.</p></div><span className="customer-soft-pill">{supportQuestions.length} topics</span></div><div className="faq-list">{supportQuestions.map((item,index) => <article className={expanded === index ? "faq-item expanded" : "faq-item"} key={item.question}><button className="faq-question" aria-expanded={expanded === index} onClick={() => setExpanded(expanded === index ? null : index)}><span>{item.question}</span><ChevronDown size={18} /></button>{expanded === index && <p className="faq-answer">{item.answer}</p>}</article>)}</div></section>
       <aside className="help-contact-column"><section className="help-contact-card"><span className="help-contact-icon"><MessageCircle size={20} /></span><Eyebrow>SECURE MESSAGING</Eyebrow><h2>Talk to the right team.</h2><p>Live support messaging will be connected after customer authentication, case routing and privacy controls are ready.</p><button onClick={() => onNotice("Secure support messaging is not active in this preview. No message or personal information was sent.")}>Messaging unavailable <ArrowRight size={14} /></button></section><section className="help-safety-card"><ShieldCheck size={19} /><div><strong>Stay alert to impersonation.</strong><p>Never share passwords, one-time codes or full payment credentials with someone who contacts you unexpectedly.</p></div></section></aside></div>
     <div className="help-hours-note"><Info size={15} /> This is a demonstration help centre, not a monitored support channel. No support request has been sent.</div>
@@ -382,6 +409,15 @@ function SecurityProfile({ onNotice }: Pick<CustomerExperienceProps, "onNotice">
     <PageHeading eyebrow="ACCOUNT & PRIVACY" title="Your information matters." description="Understand the controls a secure customer account should provide before sharing personal information." />
     <SampleBanner compact />
     <section className="profile-preview-card"><div className="profile-preview-avatar">SC</div><div><Eyebrow>DEMONSTRATION PROFILE</Eyebrow><h2>Sample customer</h2><p>Example profile · No verified identity or live account is connected</p></div><span className="profile-preview-status"><i /> Preview only</span></section>
+    <section className="security-foundation-section" aria-label="Planned account security foundations">
+      <div className="security-foundation-heading"><Eyebrow>ACCOUNT PROTECTION FRAMEWORK</Eyebrow><h2>Four foundations for a trusted account.</h2><p>Every item is a planned capability. None is enabled in this sample experience.</p></div>
+      <div className="security-foundation-grid">
+        <article className="security-foundation-card"><span className="security-foundation-step">01</span><span className="security-foundation-icon"><ShieldCheck size={18} /></span><strong>Verified identity</strong><small>Provider integration required</small></article>
+        <article className="security-foundation-card"><span className="security-foundation-step">02</span><span className="security-foundation-icon"><LockKeyhole size={18} /></span><strong>Protected sessions</strong><small>Session controls required</small></article>
+        <article className="security-foundation-card"><span className="security-foundation-step">03</span><span className="security-foundation-icon"><BellRing size={18} /></span><strong>Activity awareness</strong><small>Verified alerts required</small></article>
+        <article className="security-foundation-card"><span className="security-foundation-step">04</span><span className="security-foundation-icon"><FileLock2 size={18} /></span><strong>Privacy governance</strong><small>Consent controls required</small></article>
+      </div>
+    </section>
     <div className="security-dashboard-grid"><section className="customer-surface security-controls-surface"><div className="customer-surface-heading"><div><Eyebrow>SECURITY PRINCIPLES</Eyebrow><h2>Designed for safer access</h2><p>These controls describe the intended product, not active account settings.</p></div><span className="customer-soft-pill">Planned controls</span></div><article className="security-control-row"><span className="security-control-icon"><LockKeyhole size={19} /></span><div><strong>Multi-factor authentication</strong><p>Use a second verification step to help protect account access.</p></div><span className="security-planned-pill">Not connected</span></article><article className="security-control-row"><span className="security-control-icon"><BellRing size={19} /></span><div><strong>Sign-in and activity alerts</strong><p>Receive clear notices about important account activity.</p></div><span className="security-planned-pill">Not connected</span></article><article className="security-control-row"><span className="security-control-icon"><FileLock2 size={19} /></span><div><strong>Privacy and consent history</strong><p>Review what information is used, why it is needed and the choices recorded.</p></div><span className="security-planned-pill">Not connected</span></article><article className="security-control-row"><span className="security-control-icon"><UserRound size={19} /></span><div><strong>Profile and access management</strong><p>Manage verified contact details and active sessions through a secure process.</p></div><span className="security-planned-pill">Not connected</span></article></section>
       <aside className="security-right-column"><section className="security-assurance-card"><span><ShieldCheck size={24} /></span><h2>Security is built into the journey.</h2><p>Before live onboarding, the platform needs tested identity controls, encryption, least-privilege access, audit history, incident response and privacy governance.</p><button onClick={() => onNotice("The security programme is tracked in the implementation plan. No account settings can be changed in this preview.")}>Security programme status <ArrowRight size={14} /></button></section><section className="security-warning-card"><Info size={18} /><div><strong>Keep sensitive details private.</strong><p>Do not enter identity numbers, passwords, one-time codes or banking information into this sample portal.</p></div></section></aside></div>
   </div>;
@@ -394,7 +430,7 @@ export function CustomerExperience({ section, onSectionChange, onNotice, applica
     case "loans": return <MyLoansCentre onSectionChange={onSectionChange} />;
     case "documents": return <DocumentsCentre />;
     case "notifications": return <NotificationsCentre onSectionChange={onSectionChange} />;
-    case "help": return <HelpCentre onNotice={onNotice} />;
+    case "help": return <HelpCentre onNotice={onNotice} onSectionChange={onSectionChange} />;
     case "security": return <SecurityProfile onNotice={onNotice} />;
     case "overview":
     default: return <CustomerOverview onSectionChange={onSectionChange} />;
