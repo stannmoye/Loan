@@ -388,6 +388,11 @@ function MyLoansCentre({ onSectionChange }: Pick<CustomerExperienceProps, "onSec
         <span className="loan-centre-wallet"><WalletCards size={39} /></span>
         <span className="loan-centre-art-chip chip-one"><CalendarDays size={16} /></span>
         <span className="loan-centre-art-chip chip-two"><ReceiptText size={16} /></span>
+        <div className="loan-hero-account-preview">
+          <div className="loan-hero-preview-heading"><span>ACCOUNT SNAPSHOT</span><i>PREVIEW</i></div>
+          <div className="loan-hero-preview-status"><span className="loan-preview-status-dot" /> Awaiting secure connection</div>
+          <div className="loan-hero-preview-rows"><div><span>Account balance</span><strong>Not available</strong></div><div><span>Next repayment</span><strong>Not available</strong></div></div>
+        </div>
       </div>
     </section>
     <section className="loan-readiness-grid" aria-label="Loan account data availability">
