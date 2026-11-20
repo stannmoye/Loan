@@ -390,3 +390,12 @@ The notifications inbox is sample-only, not a live message system. It has no eve
 - Applied responsive activity rows, icon treatments, compact timeline metadata and a two-column checklist layout that collapses cleanly for smaller screens.
 - Reused existing navigation callbacks; no account events, balances, repayments, notifications or live financial data were introduced.
 - Tests remain deferred under the design-first direction. This increment has not been runtime-verified.
+
+## 2026-11-20 — Customer account and document journey design refinement
+
+- Added a structured loan-account information framework for account records, approved repayment schedules and posted account history, with each area tied to its authoritative source.
+- Added a four-stage document request lifecycle preview covering request explanation, authenticated access, review history and retention governance.
+- Kept all new account and document lifecycle elements explicitly marked as planned; no financial values, repayment events, document requests, uploads or storage behavior were invented or activated.
+- Clarified the meaning of complete, current and upcoming milestones in the sample application journey and refined the application overview and responsive timeline treatment.
+- Reused existing customer components, icon dependencies and navigation behavior. No servicing, document, underwriting, payment or authentication functionality was changed.
+- Tests remain deferred under the design-first direction. This increment has not been runtime-verified.
