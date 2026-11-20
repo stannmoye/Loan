@@ -554,6 +554,14 @@ function HelpCentre({ onNotice, onSectionChange }: Pick<CustomerExperienceProps,
   return <div className="customer-experience">
     <PageHeading eyebrow="CUSTOMER CARE" title="Clear answers. Considered support." description="Find plain-language guidance for applications, documents and responsible borrowing." />
     <SampleBanner compact />
+    <section className="help-service-overview" aria-label="Support service availability">
+      <div className="help-service-overview-heading"><span className="help-service-mark"><Headphones size={21} /></span><div><Eyebrow>SUPPORT WORKSPACE</Eyebrow><h2>Choose a safe way to find an answer.</h2><p>These service options show the intended experience. No live support channel is connected.</p></div><span className="help-service-preview">PREVIEW ONLY</span></div>
+      <div className="help-service-options">
+        <article className="help-service-option"><span className="help-service-option-icon support-blue"><BookOpen size={19} /></span><div><small>SELF-SERVICE</small><strong>Guides & answers</strong><p>Browse the help topics and practical explanations on this page.</p><span className="help-service-state state-available">Guidance preview</span></div></article>
+        <article className="help-service-option"><span className="help-service-option-icon support-gold"><MessageCircle size={19} /></span><div><small>SECURE MESSAGING</small><strong>Contact the right team</strong><p>Authenticated conversations with protected case history.</p><span className="help-service-state">Not connected</span></div></article>
+        <article className="help-service-option"><span className="help-service-option-icon support-green"><ShieldCheck size={19} /></span><div><small>ACCOUNT SAFETY</small><strong>Security guidance</strong><p>Learn how to verify a request and protect sensitive details.</p><span className="help-service-state state-available">Guidance preview</span></div></article>
+      </div>
+    </section>
     <section className="help-centre-hero"><div><span className="help-centre-icon"><HeartHandshake size={24} /></span><Eyebrow>HERE WHEN YOU NEED US</Eyebrow><h2>Every good decision<br />starts with a question.</h2><p>Explore common topics and learn how a secure support experience should work.</p></div><div className="help-centre-illustration"><span className="help-chat-bubble bubble-one"><MessageCircle size={20} /></span><span className="help-chat-bubble bubble-two"><CircleHelp size={23} /></span><span className="help-chat-bubble bubble-three"><HeartHandshake size={24} /></span><i className="help-illustration-star">✦</i></div></section>
     <section className="help-pathways-section" aria-label="Customer help pathways">
       <div className="help-pathways-heading"><Eyebrow>QUICK PATHWAYS</Eyebrow><h2>Go straight to the information you need.</h2><p>Explore the sample guidance areas without sending a support request.</p></div>
@@ -561,6 +569,14 @@ function HelpCentre({ onNotice, onSectionChange }: Pick<CustomerExperienceProps,
         <button className="help-pathway-card" onClick={() => onSectionChange("applications")}><span className="help-pathway-icon pathway-blue"><FileCheck2 size={19} /></span><span><strong>Application journey</strong><small>Understand stages and example status updates.</small></span><ArrowRight size={16} /></button>
         <button className="help-pathway-card" onClick={() => onSectionChange("documents")}><span className="help-pathway-icon pathway-gold"><FolderCheck size={19} /></span><span><strong>Document guidance</strong><small>Learn about evidence requests and secure sharing.</small></span><ArrowRight size={16} /></button>
         <button className="help-pathway-card" onClick={() => onSectionChange("security")}><span className="help-pathway-icon pathway-green"><ShieldCheck size={19} /></span><span><strong>Account safety</strong><small>Review privacy and account-protection principles.</small></span><ArrowRight size={16} /></button>
+      </div>
+    </section>
+    <section className="help-support-journey" aria-label="Future support request process">
+      <div className="help-support-journey-heading"><div><Eyebrow>HOW SUPPORT SHOULD WORK</Eyebrow><h2>A clear route from question to answer.</h2><p>A future support service should make ownership, response expectations and next steps easy to understand.</p></div><span className="customer-soft-pill">Planned service</span></div>
+      <div className="help-support-steps">
+        <article><span>01</span><strong>Choose a topic</strong><p>Explain the issue without sharing passwords or one-time codes.</p></article>
+        <article><span>02</span><strong>Verify your session</strong><p>Access support through the authenticated provider experience.</p></article>
+        <article><span>03</span><strong>Track the response</strong><p>See the responsible team, status and recorded next step.</p></article>
       </div>
     </section>
     <div className="help-centre-layout"><section className="customer-surface faq-surface"><div className="customer-surface-heading"><div><Eyebrow>HELP & GUIDANCE</Eyebrow><h2>Frequently asked questions</h2><p>General information only. Your legal rights depend on local rules.</p></div><span className="customer-soft-pill">{supportQuestions.length} topics</span></div><div className="faq-list">{supportQuestions.map((item,index) => <article className={expanded === index ? "faq-item expanded" : "faq-item"} key={item.question}><button className="faq-question" aria-expanded={expanded === index} onClick={() => setExpanded(expanded === index ? null : index)}><span>{item.question}</span><ChevronDown size={18} /></button>{expanded === index && <p className="faq-answer">{item.answer}</p>}</article>)}</div></section>
