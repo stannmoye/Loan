@@ -431,3 +431,13 @@ The notifications inbox is sample-only, not a live message system. It has no eve
 - Added responsive layouts for the sample summary cards, milestone timeline, live record list and detail facts down to narrow mobile widths.
 - No application statuses, amounts, event dates, eligibility outcomes or lending decisions were fabricated; the sample-only and authenticated-data boundaries remain intact.
 - Tests remain deferred under the design-first direction. This design increment has not been runtime-verified.
+
+
+## 2026-11-20 — My Loans account workspace navigation
+
+- Added a dedicated account-workspace shortcut section to My Loans, linking to the existing Applications, Documents and Help destinations.
+- Each shortcut explains its purpose and uses clear labels, finance-oriented iconography and accessible button semantics.
+- Added a responsive three-column desktop layout that becomes a vertically stacked, touch-friendly mobile list, with keyboard focus and reduced-motion handling.
+- Preserved the current My Loans account-readiness messaging and all existing routes and data contracts.
+- No live loan account, balance, due date, repayment event, statement or receipt was invented; no servicing or payment functionality was enabled.
+- Tests remain deferred under the design-first direction. This design increment has not been runtime-verified.
