@@ -64,6 +64,39 @@ function CustomerOverview({ onSectionChange }: Pick<CustomerExperienceProps, "on
         <section className="customer-privacy-card"><span><LockKeyhole size={19} /></span><div><strong>Your privacy matters</strong><p>Only share sensitive information through a verified, secure channel.</p><button onClick={() => onSectionChange("security")}>See privacy guidance <ArrowRight size={13} /></button></div></section>
       </aside>
     </div>
+    <section className="overview-activity-grid" aria-label="Sample activity and suggested next steps">
+      <div className="customer-surface overview-activity-surface">
+        <div className="customer-surface-heading">
+          <div><Eyebrow>ACTIVITY PREVIEW</Eyebrow><h2>A clearer view of what happened.</h2><p>An example of how important updates could be grouped in one place.</p></div>
+          <span className="customer-soft-pill">Sample timeline</span>
+        </div>
+        <div className="overview-activity-list">
+          <article className="overview-activity-item">
+            <span className="overview-activity-icon activity-blue"><ClipboardList size={17} /></span>
+            <div><strong>Application details received</strong><p>Illustrative milestone · Personal finance enquiry</p></div>
+            <time>19 Nov</time>
+          </article>
+          <article className="overview-activity-item">
+            <span className="overview-activity-icon activity-gold"><FileCheck2 size={17} /></span>
+            <div><strong>Review stage displayed</strong><p>Example status · No assessment performed</p></div>
+            <time>20 Nov</time>
+          </article>
+          <article className="overview-activity-item">
+            <span className="overview-activity-icon activity-green"><BookOpen size={17} /></span>
+            <div><strong>Finance comparison guide available</strong><p>Learning resource · No offer or rate shown</p></div>
+            <time>Today</time>
+          </article>
+        </div>
+        <p className="overview-activity-disclaimer"><Info size={13} /> These entries are fictional examples, not account events or notifications.</p>
+      </div>
+      <aside className="customer-surface overview-next-steps">
+        <div className="next-steps-heading"><span className="next-steps-icon"><Sparkles size={17} /></span><div><Eyebrow>YOUR CHECKLIST</Eyebrow><h2>Take the next step at your pace.</h2></div></div>
+        <div className="overview-checklist-item"><span>01</span><div><strong>Understand the full cost</strong><p>Look beyond a headline instalment or advertised rate.</p></div></div>
+        <div className="overview-checklist-item"><span>02</span><div><strong>Review the key conditions</strong><p>Check fees, timing, flexibility and what happens if plans change.</p></div></div>
+        <div className="overview-checklist-item"><span>03</span><div><strong>Use trusted support</strong><p>Ask questions through verified provider channels.</p></div></div>
+        <button className="customer-text-link" onClick={() => onSectionChange("help")}>Visit the help centre <ArrowRight size={15} /></button>
+      </aside>
+    </section>
     <section className="customer-discovery-section"><div className="customer-section-heading"><div><Eyebrow>EXPLORE POSSIBILITIES</Eyebrow><h2>Finance for life's next chapter.</h2><p>Learn the differences between finance categories and the questions worth asking.</p></div><button className="customer-text-link" onClick={() => onSectionChange("explore")}>View all categories <ArrowRight size={15} /></button></div><div className="customer-category-grid">{financeCategories.slice(0, 4).map((category) => <CategoryCard key={category.id} category={category} onSelect={() => onSectionChange("explore")} />)}</div><p className="customer-disclaimer">Learning content only. Availability and terms depend on supported products, provider criteria and local laws. This preview does not show live offers or eligibility.</p></section>
     <section className="customer-bottom-banner"><span className="bottom-banner-icon"><MessageCircle size={22} /></span><div><strong>It's okay to ask questions before making a decision.</strong><p>Explore the help centre for plain-language information about documents, applications and responsible borrowing.</p></div><button onClick={() => onSectionChange("help")}>Visit help centre <ArrowRight size={15} /></button></section>
     <div className="customer-footer-note"><ShieldCheck size={14} /> A good borrowing decision starts with clear terms, realistic repayment planning and time to compare options.</div>
