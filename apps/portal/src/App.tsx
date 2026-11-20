@@ -36,7 +36,7 @@ function StatusPill({ status }: { status: CaseStatus }) {
 }
 
 function Brand() {
-  return <div className="brand"><span className="brand-mark"><Landmark size={19} strokeWidth={1.8} /></span><span>northline<span className="brand-period">.</span></span></div>;
+  return <div className="brand-lockup"><div className="brand"><span className="brand-mark"><Landmark size={19} strokeWidth={1.8} /></span><span>northline<span className="brand-period">.</span></span></div><span className="brand-caption">FINANCIAL WORKSPACE</span></div>;
 }
 
 type AppProps = { applicationApi?: CustomerApplicationApi };
@@ -89,7 +89,7 @@ function App({ applicationApi }: AppProps = {}) {
       <aside className={mobileOpen ? "sidebar sidebar-open" : "sidebar"}>
         <div className="sidebar-top"><Brand /><button className="icon-button mobile-close" aria-label="Close navigation" onClick={() => setMobileOpen(false)}><X size={19} /></button></div>
         <div className="workspace-label">WORKSPACE</div>
-        <button className={mode === "customer" ? "workspace-switch selected" : "workspace-switch"} onClick={() => changeMode("customer")}><span className="nav-icon"><UserRound size={17} /></span><span>Customer space</span><ChevronDown size={15} /></button>
+        <button className={mode === "customer" ? "workspace-switch selected" : "workspace-switch"} onClick={() => changeMode("customer")}><span className="nav-icon"><UserRound size={17} /></span><span>Customer space</span><span className="workspace-preview-tag">DEMO</span><ChevronDown size={15} /></button>
         <nav className="side-nav" aria-label="Primary navigation">
           {mode === "customer" ? <>
             <span className="nav-section">YOUR ACCOUNT</span>
@@ -113,6 +113,7 @@ function App({ applicationApi }: AppProps = {}) {
           </>}
         </nav>
         <div className="sidebar-bottom">
+          <div className="sidebar-environment"><span className="environment-icon"><ShieldCheck size={15} /></span><span><strong>Preview environment</strong><small>Sample data · no live services</small></span><i /></div>
           <div className="help-card"><span className="help-icon"><CircleHelp size={17} /></span><div><strong>Here when you need us</strong><small>Guidance and support</small></div><ArrowRight size={15} /></div>
           <div className="profile-mini"><div className="avatar">{mode === "customer" ? "SC" : "SO"}</div><div className="profile-copy"><strong>{mode === "customer" ? "Sample customer" : "Sample operator"}</strong><small>{mode === "customer" ? "Customer preview" : "Operations preview"}</small></div><ChevronDown size={15} /></div>
         </div>
@@ -121,8 +122,8 @@ function App({ applicationApi }: AppProps = {}) {
       <main className="main-area">
         <header className="topbar">
           <button className="icon-button mobile-menu" aria-label="Open navigation" onClick={() => setMobileOpen(true)}><Menu size={20} /></button>
-          <div className="breadcrumb"><span>Northline</span><span className="crumb-separator">/</span><strong>{mode === "customer" ? customerSectionLabels[customerSection] : "Case overview"}</strong></div>
-          <div className="topbar-actions"><span className="preview-label"><span />Illustrative preview</span><button className="icon-button notification-button" aria-label="Open notifications" onClick={() => mode === "customer" ? changeCustomerSection("notifications") : navNotice("Operations notifications are not connected in this preview.")}><Bell size={18} /></button><div className="top-avatar">{mode === "customer" ? "SC" : "SO"}</div></div>
+          <div className="breadcrumb"><span className="breadcrumb-brand">Northline</span><span className="crumb-separator">/</span><span className="breadcrumb-workspace">{mode === "customer" ? "Customer space" : "Operations"}</span><span className="crumb-separator">/</span><strong>{mode === "customer" ? customerSectionLabels[customerSection] : "Case overview"}</strong></div>
+          <div className="topbar-actions"><span className="preview-label"><span />Illustrative preview</span><button className={mode === "customer" && customerSection === "notifications" ? "icon-button notification-button top-notification-active" : "icon-button notification-button"} aria-label="Open notifications" aria-current={mode === "customer" && customerSection === "notifications" ? "page" : undefined} onClick={() => mode === "customer" ? changeCustomerSection("notifications") : navNotice("Operations notifications are not connected in this preview.")}><Bell size={18} /></button><div className="top-avatar">{mode === "customer" ? "SC" : "SO"}</div></div>
         </header>
         <div className="content-wrap">
           <div className="mode-switch" role="group" aria-label="Preview workspace"><button className={mode === "customer" ? "mode-active" : ""} onClick={() => changeMode("customer")}>Customer view</button><button className={mode === "operations" ? "mode-active" : ""} onClick={() => changeMode("operations")}>Operations view</button></div>
@@ -130,6 +131,13 @@ function App({ applicationApi }: AppProps = {}) {
           {mode === "customer" ? <CustomerExperience section={customerSection} onSectionChange={changeCustomerSection} onNotice={setNotice} applicationApi={applicationApi} /> : <OperationsView query={query} setQuery={setQuery} filter={filter} setFilter={setFilter} cases={filteredCases} selected={selected} setSelected={setSelected} onNotice={setNotice} />}
           <footer className="page-footer"><span>Northline is a product concept for a lending platform.</span><span>Illustrative interface · No live financial services</span></footer>
         </div>
+        {mode === "customer" && <nav className="mobile-quick-nav" aria-label="Quick customer navigation">
+          <button className={customerSection === "overview" ? "quick-nav-item active" : "quick-nav-item"} aria-current={customerSection === "overview" ? "page" : undefined} onClick={() => changeCustomerSection("overview")}><Home size={18} /><span>Home</span></button>
+          <button className={customerSection === "explore" ? "quick-nav-item active" : "quick-nav-item"} aria-current={customerSection === "explore" ? "page" : undefined} onClick={() => changeCustomerSection("explore")}><Landmark size={18} /><span>Explore</span></button>
+          <button className={customerSection === "applications" ? "quick-nav-item active" : "quick-nav-item"} aria-current={customerSection === "applications" ? "page" : undefined} onClick={() => changeCustomerSection("applications")}><FileText size={18} /><span>Applications</span></button>
+          <button className={customerSection === "loans" ? "quick-nav-item active" : "quick-nav-item"} aria-current={customerSection === "loans" ? "page" : undefined} onClick={() => changeCustomerSection("loans")}><WalletCards size={18} /><span>My loans</span></button>
+          <button className="quick-nav-item quick-nav-more" aria-label="Open full navigation" onClick={() => setMobileOpen(true)}><Menu size={18} /><span>More</span></button>
+        </nav>}
       </main>
     </div>
   );
