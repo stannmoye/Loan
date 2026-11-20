@@ -332,3 +332,12 @@ The notifications inbox is sample-only, not a live message system. It has no eve
 - Added domain tests for strict payload allow-lists, declaration acceptance, amount precision, UUIDs and withdrawal eligibility.
 - CI is being rerun after early compile failures exposed escaped newline characters in generated source. Do not mark this stage verified until Stage 1 CI passes the TypeScript build, unit/static checks and MySQL migration/integration checks on the exact latest feature-branch head. Portal CI should also pass to confirm no regression.
 - Remaining: staff review/decision workflow with permission separation and maker-checker, secure document collection, full customer application form and live portal integration, idempotency, applicant country verification, underwriting, offer/contract, ledger/funding and repayment servicing. Declared country is customer-provided profile data, not verified residency or KYC.
+
+
+## 2026-11-20 — Portal visual design refresh (implementation in progress)
+
+- Applied a presentation-only visual-system layer across the customer and operations portal: refined finance-oriented navy/blue/gold palette, softer layered page backgrounds, consistent radii and elevation, stronger navigation states, clearer typography, polished cards and panels, and restrained hover/focus feedback.
+- Refined the customer overview, loan discovery, application history, loan centre, documents, notifications, help and security surfaces, plus the operations case queue and case-detail workspace.
+- Improved responsive spacing and component treatment for tablet and mobile widths, while preserving existing routes, component structure, data contracts and interaction handlers.
+- No backend or workflow behavior was changed in this design increment.
+- Per the project direction on 2026-11-20, repetitive test runs are deferred while the design implementation continues. The added tests remain in the repository; current visual changes are not being reported as tested or verified. Functionality and validation will be revisited incrementally in a later stage.
