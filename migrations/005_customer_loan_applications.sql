@@ -18,6 +18,7 @@ CREATE TABLE IF NOT EXISTS customer_loan_applications (
   CONSTRAINT fk_customer_application_currency FOREIGN KEY (currency_code) REFERENCES currencies(code),
   CONSTRAINT chk_customer_application_amount CHECK (requested_amount > 0),
   CONSTRAINT chk_customer_application_duration CHECK (requested_duration_days > 0),
+  UNIQUE KEY uq_customer_application_owner (id, customer_id),
   INDEX idx_customer_applications_customer_status (customer_id, status, created_at),
   INDEX idx_customer_applications_review_queue (status, submitted_at)
 ) ENGINE=InnoDB;
@@ -33,7 +34,7 @@ CREATE TABLE IF NOT EXISTS customer_loan_application_events (
   to_status VARCHAR(40) NULL,
   metadata_json JSON NOT NULL,
   created_at TIMESTAMP(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
-  CONSTRAINT fk_application_event_application FOREIGN KEY (application_id) REFERENCES customer_loan_applications(id) ON DELETE RESTRICT,
+  CONSTRAINT fk_application_event_owner FOREIGN KEY (application_id, customer_id) REFERENCES customer_loan_applications(id, customer_id) ON DELETE RESTRICT,
   CONSTRAINT fk_application_event_customer FOREIGN KEY (customer_id) REFERENCES customer_accounts(id) ON DELETE RESTRICT,
   INDEX idx_application_events_timeline (application_id, created_at, id)
 ) ENGINE=InnoDB;
