@@ -53,6 +53,7 @@ export type CustomerAccountRouteOptions = {
   applicationDeclarationVersion: string | null;
   verifyToken?: typeof verifyCustomerAccessToken;
   service?: CustomerAccountService;
+  applicationService?: CustomerApplicationRouteService;
 };
 
 function publicRouteError(message: string, statusCode: number): Error {
