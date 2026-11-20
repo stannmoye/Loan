@@ -341,6 +341,33 @@ function MyLoansCentre({ onSectionChange }: Pick<CustomerExperienceProps, "onSec
         <div className="loan-empty-actions"><button className="button-primary" onClick={() => onSectionChange("explore")}>Explore finance basics <ArrowRight size={15} /></button><button className="customer-outline-button" onClick={() => onSectionChange("applications")}>View application journey <ArrowRight size={15} /></button></div>
       </div>
     </section>
+    <section className="loan-data-framework" aria-label="How connected loan information will be organised">
+      <div className="loan-data-framework-heading"><div><Eyebrow>ACCOUNT INFORMATION FRAMEWORK</Eyebrow><h2>One account view. Three trusted information sources.</h2><p>When servicing is connected, each part of the account should be backed by its own verified record.</p></div><span className="customer-soft-pill">Planned layout</span></div>
+      <div className="loan-data-framework-grid">
+        <article className="loan-data-framework-card">
+          <span className="loan-framework-icon framework-blue"><WalletCards size={19} /></span>
+          <span className="loan-framework-step">01</span>
+          <small>ACCOUNT RECORD</small><strong>Know the account details</strong>
+          <p>Product terms, account status and reconciled balances from the authoritative servicing record.</p>
+          <span className="loan-framework-source">Source: verified account record</span>
+        </article>
+        <article className="loan-data-framework-card">
+          <span className="loan-framework-icon framework-gold"><CalendarDays size={19} /></span>
+          <span className="loan-framework-step">02</span>
+          <small>REPAYMENT PLAN</small><strong>Understand the schedule</strong>
+          <p>Confirmed due dates, payment amounts and schedule changes from the servicing system.</p>
+          <span className="loan-framework-source">Source: approved repayment schedule</span>
+        </article>
+        <article className="loan-data-framework-card">
+          <span className="loan-framework-icon framework-green"><ReceiptText size={19} /></span>
+          <span className="loan-framework-step">03</span>
+          <small>ACCOUNT HISTORY</small><strong>Follow recorded activity</strong>
+          <p>Posted transactions, statements and receipts with clear dates and traceable references.</p>
+          <span className="loan-framework-source">Source: posted ledger entries</span>
+        </article>
+      </div>
+      <p className="loan-framework-footnote"><ShieldCheck size={14} /> No figures or payment events are shown until the relevant source records are connected and reconciled.</p>
+    </section>
     <section className="loan-account-tools">
       <div className="customer-section-heading"><div><Eyebrow>YOUR ACCOUNT TOOLS</Eyebrow><h2>Everything organised in one place.</h2><p>These areas will use verified servicing data when the relevant backend services are implemented.</p></div></div>
       <div className="loan-tools-grid">
@@ -366,6 +393,16 @@ function DocumentsCentre() {
         <article className="document-principle-card"><span className="document-principle-number">02</span><span className="document-principle-icon"><ShieldCheck size={18} /></span><strong>Verify the channel</strong><p>Use an independently verified provider channel before sharing anything.</p></article>
         <article className="document-principle-card"><span className="document-principle-number">03</span><span className="document-principle-icon"><LockKeyhole size={18} /></span><strong>Check access and retention</strong><p>Understand who can view the file and how long it may be kept.</p></article>
       </div>
+    </section>
+    <section className="document-lifecycle-section" aria-label="Future document request lifecycle">
+      <div className="document-lifecycle-heading"><div><Eyebrow>REQUEST LIFECYCLE</Eyebrow><h2>Every document request should have a clear trail.</h2><p>A future secure workflow should make the purpose, review and retention of each file understandable.</p></div><span className="customer-soft-pill">Future workflow</span></div>
+      <div className="document-lifecycle-grid">
+        <article className="document-lifecycle-card"><span className="document-lifecycle-number">01</span><span className="document-lifecycle-icon"><FileText size={18} /></span><strong>Request explained</strong><p>The reason, required file type and requesting team are made clear.</p><span className="document-lifecycle-state">Planned stage</span></article>
+        <article className="document-lifecycle-card"><span className="document-lifecycle-number">02</span><span className="document-lifecycle-icon"><ShieldCheck size={18} /></span><strong>Identity verified</strong><p>Access is granted only through an authenticated customer session.</p><span className="document-lifecycle-state">Planned stage</span></article>
+        <article className="document-lifecycle-card"><span className="document-lifecycle-number">03</span><span className="document-lifecycle-icon"><FileCheck2 size={18} /></span><strong>Review recorded</strong><p>Customers can understand whether a file is received, reviewed or needs attention.</p><span className="document-lifecycle-state">Planned stage</span></article>
+        <article className="document-lifecycle-card"><span className="document-lifecycle-number">04</span><span className="document-lifecycle-icon"><LockKeyhole size={18} /></span><strong>Retention controlled</strong><p>Access, retention periods and permitted deletion are governed and auditable.</p><span className="document-lifecycle-state">Planned stage</span></article>
+      </div>
+      <p className="document-lifecycle-footnote"><Info size={14} /> No live document requests, uploads, reviews or storage records exist in this preview.</p>
     </section>
     <div className="document-centre-grid"><section className="customer-surface document-list-surface"><div className="customer-surface-heading"><div><Eyebrow>DOCUMENT GUIDANCE</Eyebrow><h2>Common evidence categories</h2><p>What a provider may ask for depends on the product and applicable law.</p></div><span className="customer-soft-pill">Guide only</span></div>{documentGuidance.map((item,index) => <article className="document-guidance-row" key={item.title}><span className="document-guidance-icon">{index === 0 ? <UserRound size={18} /> : index === 1 ? <FileCheck2 size={18} /> : index === 2 ? <WalletCards size={18} /> : <FolderCheck size={18} />}</span><div><strong>{item.title}</strong><p>{item.detail}</p></div><span className="document-guidance-status">Not requested</span></article>)}</section>
       <aside className="customer-surface document-upload-surface"><div className="upload-empty-art"><span><UploadCloud size={28} /></span><i /><i /></div><h2>Secure sharing is not connected yet.</h2><p>There is no file upload, identity collection or document storage in this demonstration. Do not enter or attach personal information.</p><button disabled className="disabled-upload-button"><UploadCloud size={16} /> Upload unavailable</button><small>Enabled only after secure storage, access controls, malware scanning, retention and audit are implemented.</small></aside></div>
