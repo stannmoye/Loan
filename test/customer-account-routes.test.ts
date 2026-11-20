@@ -290,6 +290,59 @@ describe('customer account API route contracts', () => {
     await app.close();
   });
 
+  it('creates a draft application using only the authenticated customer context', async () => {
+    const { options } = makeOptions();
+    const app = await createApp(options);
+    const response = await app.inject({
+      method: 'POST',
+      url: '/api/v1/customer/me/applications',
+      headers: { authorization: 'Bearer valid-customer-test-token' },
+      payload: {
+        productId: 12, currencyCode: 'NGN', requestedAmount: '125000.50',
+        requestedDurationDays: 180, applicantDeclarationVersion: 'declaration-v1',
+        declarationAccepted: true,
+      },
+    });
+    expect(response.statusCode).toBe(201);
+    expect(options.applicationService?.create).toHaveBeenCalledWith(
+      customerContext,
+      expect.objectContaining({ productId: 12, requestedAmount: '125000.50' }),
+      '4a'.repeat(32),
+    );
+    await app.close();
+  });
+
+  it('rejects client-supplied identity, status and stale declaration fields', async () => {
+    const { options } = makeOptions();
+    const app = await createApp(options);
+    const response = await app.inject({
+      method: 'POST',
+      url: '/api/v1/customer/me/applications',
+      headers: { authorization: 'Bearer valid-customer-test-token' },
+      payload: {
+        customerId: 'another-customer', status: 'approved', productId: 12,
+        currencyCode: 'NGN', requestedAmount: '1000', requestedDurationDays: 30,
+        applicantDeclarationVersion: 'old-version', declarationAccepted: true,
+      },
+    });
+    expect(response.statusCode).toBe(400);
+    expect(options.applicationService?.create).not.toHaveBeenCalled();
+    await app.close();
+  });
+
+  it('validates application IDs before submit or withdrawal', async () => {
+    const { options } = makeOptions();
+    const app = await createApp(options);
+    const headers = { authorization: 'Bearer valid-customer-test-token' };
+    const submit = await app.inject({ method: 'POST', url: '/api/v1/customer/me/applications/not-a-uuid/submit', headers });
+    const withdraw = await app.inject({ method: 'POST', url: '/api/v1/customer/me/applications/not-a-uuid/withdraw', headers });
+    expect(submit.statusCode).toBe(400);
+    expect(withdraw.statusCode).toBe(400);
+    expect(options.applicationService?.submit).not.toHaveBeenCalled();
+    expect(options.applicationService?.withdraw).not.toHaveBeenCalled();
+    await app.close();
+  });
+
   it('revokes the current session through logout', async () => {
     const { options, service } = makeOptions();
     const app = await createApp(options);
