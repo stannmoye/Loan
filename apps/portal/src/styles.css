@@ -1836,3 +1836,106 @@ button:focus-visible, input:focus-visible, select:focus-visible {
 @media (prefers-reduced-motion: reduce) {
   .application-long-marker { scroll-behavior:auto; }
 }
+
+
+/* Customer portal finish pass: consistent interaction, hierarchy and responsive polish */
+.customer-experience {
+  --customer-ink: #203a59;
+  --customer-muted: #7d8da1;
+  --customer-line: #e3ebf3;
+  --customer-blue: #3f6f9f;
+  color: var(--customer-ink);
+}
+.customer-experience :is(button,a,input,select,textarea,[tabindex]):focus-visible {
+  outline: 3px solid rgba(76,132,190,.42);
+  outline-offset: 3px;
+}
+.customer-experience :is(.customer-surface,.customer-snapshot-card,.customer-category-card,.customer-guidance-card,.customer-privacy-card,.customer-bottom-banner) {
+  isolation: isolate;
+}
+.customer-experience :is(.customer-surface,.customer-snapshot-card,.customer-category-card) {
+  border-color: var(--customer-line);
+}
+.customer-experience .customer-page-heading h1,
+.customer-experience .customer-section-heading h2,
+.customer-experience .customer-surface-heading h2 {
+  text-wrap: balance;
+}
+.customer-experience .customer-page-heading > div > p,
+.customer-experience .customer-section-heading > div > p,
+.customer-experience .customer-surface-heading > div > p {
+  max-width: 66ch;
+  text-wrap: pretty;
+}
+.customer-experience :is(.customer-text-link,.category-card-link,.customer-privacy-card button) {
+  min-height: 36px;
+  border-radius: 8px;
+  transition: color .16s ease, background-color .16s ease, gap .16s ease;
+}
+.customer-experience :is(.customer-text-link,.category-card-link,.customer-privacy-card button):hover {
+  color: #285b8d;
+}
+.customer-experience :is(.customer-snapshot-card,.customer-category-card,.overview-activity-item,.security-control-row) {
+  transition: border-color .18s ease, box-shadow .18s ease, transform .18s ease;
+}
+.customer-experience :is(.customer-snapshot-card,.customer-category-card):hover {
+  border-color: #cbdbea;
+  box-shadow: 0 12px 28px rgba(24,53,84,.075);
+  transform: translateY(-2px);
+}
+.customer-experience .customer-sample-banner {
+  box-shadow: 0 5px 16px rgba(29,58,89,.035);
+}
+.customer-experience .customer-soft-pill,
+.customer-experience .sample-banner-label {
+  white-space: nowrap;
+}
+.customer-experience :is(.customer-hero,.explore-feature-panel) {
+  box-shadow: 0 18px 42px rgba(20,48,79,.09);
+}
+.customer-experience .customer-category-card img {
+  transition: transform .35s ease;
+}
+.customer-experience .customer-category-card:hover img {
+  transform: scale(1.035);
+}
+.customer-experience .customer-footer-note {
+  max-width: 100%;
+  line-height: 1.65;
+}
+@media (max-width: 680px) {
+  .customer-experience .customer-page-heading {
+    gap: 12px;
+  }
+  .customer-experience .customer-page-heading h1 {
+    letter-spacing: -.7px;
+  }
+  .customer-experience :is(.customer-surface,.customer-guidance-card,.customer-privacy-card) {
+    border-radius: 13px;
+  }
+  .customer-experience .customer-bottom-banner {
+    align-items: flex-start;
+    flex-wrap: wrap;
+  }
+  .customer-experience .customer-bottom-banner > button {
+    width: 100%;
+    justify-content: center;
+  }
+  .customer-experience :is(.customer-text-link,.category-card-link) {
+    min-height: 40px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .customer-experience *,
+  .customer-experience *::before,
+  .customer-experience *::after {
+    scroll-behavior: auto !important;
+    transition-duration: .01ms !important;
+    animation-duration: .01ms !important;
+    animation-iteration-count: 1 !important;
+  }
+  .customer-experience :is(.customer-snapshot-card,.customer-category-card):hover,
+  .customer-experience .customer-category-card:hover img {
+    transform: none;
+  }
+}
