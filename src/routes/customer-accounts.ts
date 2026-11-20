@@ -6,7 +6,11 @@ import {
 } from '../domain/customer-account.js';
 import { env } from '../config/env.js';
 import { applicationIdSchema, createCustomerLoanApplicationSchema } from '../domain/customer-loan-application.js';
-import { createCustomerApplication, getCustomerApplication, listCustomerApplications, submitCustomerApplication, withdrawCustomerApplication } from '../services/customer-loan-applications.js';
+import {
+  createCustomerApplication, getCustomerApplication, listCustomerApplications,
+  submitCustomerApplication, withdrawCustomerApplication,
+  type CustomerApplicationError,
+} from '../services/customer-loan-applications.js';
 import {
   CustomerAuthError,
   extractBearerToken,
@@ -33,6 +37,14 @@ export type CustomerAccountService = {
   updateProfile: typeof updateCustomerProfile;
   listSessions: typeof listCustomerSessions;
   revokeSession: typeof revokeCustomerSession;
+};
+
+export type CustomerApplicationRouteService = {
+  create: typeof createCustomerApplication;
+  get: typeof getCustomerApplication;
+  list: typeof listCustomerApplications;
+  submit: typeof submitCustomerApplication;
+  withdraw: typeof withdrawCustomerApplication;
 };
 
 export type CustomerAccountRouteOptions = {
@@ -74,7 +86,7 @@ function configuredOptions(): CustomerAccountRouteOptions {
 
 export function buildCustomerAccountRoutes(options: CustomerAccountRouteOptions) {
   const verifyToken = options.verifyToken ?? verifyCustomerAccessToken;
-  const service: CustomerAccountService = options.service ?? {
+  const applicationService: CustomerApplicationRouteService = options.applicationService ?? {\n    create: createCustomerApplication, get: getCustomerApplication, list: listCustomerApplications,\n    submit: submitCustomerApplication, withdraw: withdrawCustomerApplication,\n  };\n  const service: CustomerAccountService = options.service ?? {
     onboard: onboardCustomer,
     findContext: findActiveCustomerContext,
     getProfile: getCustomerProfile,
@@ -170,14 +182,14 @@ export function buildCustomerAccountRoutes(options: CustomerAccountRouteOptions)
       const context = await requireContext(identity);
       const parsed = createCustomerLoanApplicationSchema.safeParse(request.body);
       if (!parsed.success) return reply.code(400).send({ error: 'Invalid loan application', details: parsed.error.flatten() });
-      const result = await createCustomerApplication(context, parsed.data, requireProfileEncryptionKey());
+      const result = await applicationService.create(context, parsed.data, requireProfileEncryptionKey());
       return reply.code(201).send({ data: result });
     });
 
     app.get('/api/v1/customer/me/applications', async (request) => {
       const identity = await requireIdentity(request);
       const context = await requireContext(identity);
-      return { data: await listCustomerApplications(context) };
+      return { data: await applicationService.list(context) };
     });
 
     app.get<{ Params: { applicationId: string } }>('/api/v1/customer/me/applications/:applicationId', async (request, reply) => {
@@ -185,7 +197,7 @@ export function buildCustomerAccountRoutes(options: CustomerAccountRouteOptions)
       const context = await requireContext(identity);
       const parsed = applicationIdSchema.safeParse(request.params.applicationId);
       if (!parsed.success) return reply.code(400).send({ error: 'Invalid application identifier' });
-      return { data: await getCustomerApplication(context, parsed.data) };
+      return { data: await applicationService.get(context, parsed.data) };
     });
 
     app.post<{ Params: { applicationId: string } }>('/api/v1/customer/me/applications/:applicationId/submit', { config: { rateLimit: { max: 10, timeWindow: '1 minute' } } }, async (request, reply) => {
@@ -193,7 +205,7 @@ export function buildCustomerAccountRoutes(options: CustomerAccountRouteOptions)
       const context = await requireContext(identity);
       const parsed = applicationIdSchema.safeParse(request.params.applicationId);
       if (!parsed.success) return reply.code(400).send({ error: 'Invalid application identifier' });
-      return { data: await submitCustomerApplication(context, parsed.data) };
+      return { data: await applicationService.submit(context, parsed.data) };
     });
 
     app.post<{ Params: { applicationId: string } }>('/api/v1/customer/me/applications/:applicationId/withdraw', { config: { rateLimit: { max: 5, timeWindow: '1 minute' } } }, async (request, reply) => {
@@ -201,7 +213,7 @@ export function buildCustomerAccountRoutes(options: CustomerAccountRouteOptions)
       const context = await requireContext(identity);
       const parsed = applicationIdSchema.safeParse(request.params.applicationId);
       if (!parsed.success) return reply.code(400).send({ error: 'Invalid application identifier' });
-      return { data: await withdrawCustomerApplication(context, parsed.data) };
+      return { data: await applicationService.withdraw(context, parsed.data) };
     });
 
     app.post('/api/v1/customer/auth/logout', async (request) => {
