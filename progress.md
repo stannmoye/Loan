@@ -382,3 +382,11 @@ The notifications inbox is sample-only, not a live message system. It has no eve
 - Added safe-area-aware mobile spacing, active destination states, reduced-motion handling and compact breadcrumb behavior on narrow screens.
 - Existing routes and navigation callbacks are reused; no new financial, authentication or account-management behavior was introduced.
 - Tests remain deferred under the current design-first direction. This increment has not been reported as tested or verified.
+
+## 2026-11-20 — Customer overview activity and guided next steps
+
+- Added a recent-activity preview to the customer dashboard with clear sample-only labels for application milestones and learning resources.
+- Added a guided three-part checklist covering total cost, key conditions and trusted support channels.
+- Applied responsive activity rows, icon treatments, compact timeline metadata and a two-column checklist layout that collapses cleanly for smaller screens.
+- Reused existing navigation callbacks; no account events, balances, repayments, notifications or live financial data were introduced.
+- Tests remain deferred under the design-first direction. This increment has not been runtime-verified.
