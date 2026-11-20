@@ -2900,3 +2900,52 @@ button:focus-visible, input:focus-visible, select:focus-visible {
 @media (prefers-reduced-motion: reduce) {
   .security-workspace-art *, .security-foundation-enhanced { transition:none !important; animation:none !important; }
 }
+
+
+/* Notifications Centre — premium inbox, category navigation and channel clarity */
+.notifications-category-workspace,.notifications-preferences-panel {
+  margin:24px 0; padding:22px; border:1px solid #e1e8f0; border-radius:20px;
+  background:linear-gradient(145deg,#fff 0%,#f8fafd 100%); box-shadow:0 9px 26px rgba(20,42,72,.035);
+}
+.notifications-section-heading { display:flex; align-items:flex-end; justify-content:space-between; gap:16px; }
+.notifications-section-heading h2 { margin:5px 0 5px; color:#203854; font-size:clamp(1.08rem,2vw,1.3rem); letter-spacing:-.035em; }
+.notifications-section-heading p { max-width:680px; margin:0; color:#748196; font-size:.8rem; line-height:1.6; }
+.notifications-planned-pill { display:inline-flex; flex:0 0 auto; align-items:center; gap:6px; padding:7px 10px; border:1px solid #e7dcc3; border-radius:999px; color:#806632; background:#fbf6e9; font-size:.63rem; font-weight:800; }
+.notifications-category-grid { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:10px; margin-top:18px; }
+.notifications-category-card { display:flex; align-items:center; gap:10px; min-width:0; padding:13px; border:1px solid #e5ebf2; border-radius:15px; text-align:left; background:#fff; cursor:pointer; transition:border-color .18s ease,box-shadow .18s ease,transform .18s ease; }
+.notifications-category-card:hover { transform:translateY(-2px); border-color:#cbd8e8; box-shadow:0 8px 18px rgba(25,49,79,.07); }
+.notifications-category-card[aria-pressed="true"] { border-color:#8ca9ca; box-shadow:0 0 0 3px rgba(67,111,160,.1); background:#f8fbff; }
+.notifications-category-icon { display:grid; width:38px; height:38px; flex:0 0 38px; place-items:center; border-radius:12px; color:#42658f; background:#edf3fa; }
+.category-documents .notifications-category-icon { color:#876b36; background:#f8f2e4; }
+.category-security .notifications-category-icon { color:#39745e; background:#eaf4ee; }
+.category-learning .notifications-category-icon { color:#69578e; background:#f1edf8; }
+.notifications-category-copy { display:grid; gap:4px; min-width:0; }
+.notifications-category-copy strong { color:#2a405c; font-size:.8rem; }
+.notifications-category-copy small { color:#7a8798; font-size:.66rem; line-height:1.45; }
+.notifications-category-count { display:grid; gap:1px; margin-left:auto; color:#304d70; font-size:.92rem; font-weight:850; text-align:right; }
+.notifications-category-count small { color:#8a96a5; font-size:.56rem; font-weight:650; }
+.notifications-channel-grid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:11px; margin-top:18px; }
+.notifications-channel-grid article { display:flex; gap:12px; min-width:0; padding:16px; border:1px solid #e5ebf2; border-radius:15px; background:#fff; }
+.channel-icon { display:grid; width:39px; height:39px; flex:0 0 39px; place-items:center; border-radius:12px; }
+.channel-email { color:#42658f; background:#edf3fa; }
+.channel-device { color:#876b36; background:#f8f2e4; }
+.channel-security { color:#39745e; background:#eaf4ee; }
+.notifications-channel-grid article > div { min-width:0; }
+.notifications-channel-grid strong { color:#2a405c; font-size:.84rem; }
+.notifications-channel-grid p { margin:5px 0 9px; color:#748196; font-size:.74rem; line-height:1.55; }
+.notifications-channel-grid small { color:#8a754c; font-size:.63rem; font-weight:800; }
+.notifications-preference-footnote { display:flex; align-items:flex-start; gap:8px; margin:14px 0 0; padding:11px 13px; border:1px solid #e4eaf1; border-radius:12px; color:#718096; background:#f8fafd; font-size:.72rem; line-height:1.5; }
+.notifications-preference-footnote svg { flex:0 0 auto; margin-top:1px; }
+.notifications-category-card:focus-visible { outline:3px solid rgba(56,105,159,.28); outline-offset:3px; }
+@media (max-width:1000px) { .notifications-category-grid { grid-template-columns:repeat(2,minmax(0,1fr)); } }
+@media (max-width:760px) {
+  .notifications-category-workspace,.notifications-preferences-panel { padding:17px; }
+  .notifications-section-heading { align-items:flex-start; flex-direction:column; }
+  .notifications-category-grid,.notifications-channel-grid { grid-template-columns:1fr; }
+  .notifications-category-card { padding:12px; }
+  .notifications-category-count { min-width:54px; }
+}
+@media (prefers-reduced-motion:reduce) {
+  .notifications-category-card { transition:none; }
+  .notifications-category-card:hover { transform:none; }
+}
