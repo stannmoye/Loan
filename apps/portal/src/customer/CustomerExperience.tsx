@@ -376,6 +376,29 @@ function MyLoansCentre({ onSectionChange }: Pick<CustomerExperienceProps, "onSec
       <article className="loan-readiness-card"><span className="loan-readiness-icon"><CalendarDays size={18} /></span><div><small>REPAYMENT INFORMATION</small><strong>No schedule available</strong><p>Due dates must come from the servicing ledger.</p></div><span className="loan-readiness-status">Unavailable</span></article>
       <article className="loan-readiness-card"><span className="loan-readiness-icon"><ReceiptText size={18} /></span><div><small>STATEMENTS & RECEIPTS</small><strong>No records available</strong><p>Documents appear after verified account activity.</p></div><span className="loan-readiness-status">Unavailable</span></article>
     </section>
+    <section className="loan-workspace-shortcuts" aria-labelledby="loan-workspace-shortcuts-title">
+      <div className="loan-workspace-shortcuts-heading">
+        <div><Eyebrow>ACCOUNT WORKSPACE</Eyebrow><h2 id="loan-workspace-shortcuts-title">Choose where to go next.</h2><p>Explore the connected areas of your customer workspace. Live servicing information is not available in this preview.</p></div>
+        <span className="customer-soft-pill">Preview navigation</span>
+      </div>
+      <div className="loan-workspace-shortcuts-grid">
+        <button type="button" className="loan-workspace-shortcut" onClick={() => onSectionChange("applications")}>
+          <span className="loan-shortcut-icon shortcut-blue"><ClipboardList size={19} /></span>
+          <span><small>APPLICATIONS</small><strong>Track your application</strong><em>Review the illustrative journey and application records.</em></span>
+          <ArrowUpRight size={17} />
+        </button>
+        <button type="button" className="loan-workspace-shortcut" onClick={() => onSectionChange("documents")}>
+          <span className="loan-shortcut-icon shortcut-gold"><FileLock2 size={19} /></span>
+          <span><small>DOCUMENT CENTRE</small><strong>Understand document requests</strong><em>Review safe-sharing guidance and future document controls.</em></span>
+          <ArrowUpRight size={17} />
+        </button>
+        <button type="button" className="loan-workspace-shortcut" onClick={() => onSectionChange("help")}>
+          <span className="loan-shortcut-icon shortcut-green"><HeartHandshake size={19} /></span>
+          <span><small>CUSTOMER SUPPORT</small><strong>Find help and guidance</strong><em>Explore common questions and account-safety information.</em></span>
+          <ArrowUpRight size={17} />
+        </button>
+      </div>
+    </section>
     <section className="loan-empty-state">
       <div className="loan-empty-illustration"><span><WalletCards size={35} /></span><i /><i /></div>
       <div className="loan-empty-copy">
