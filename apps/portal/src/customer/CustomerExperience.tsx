@@ -10,11 +10,13 @@ import {
   type CustomerNotificationKind,
   type CustomerSection, type FinanceCategory
 } from "./customer-data";
+import type { CustomerApplication, CustomerApplicationApi, CustomerApplicationStatus } from "./customer-api";
 
 type CustomerExperienceProps = {
   section: CustomerSection;
   onSectionChange: (section: CustomerSection) => void;
   onNotice: (message: string) => void;
+  applicationApi?: CustomerApplicationApi;
 };
 
 function Eyebrow({ children }: { children: ReactNode }) {
@@ -122,17 +124,155 @@ function ExploreFinance({ onNotice }: Pick<CustomerExperienceProps, "onNotice">)
   </div>;
 }
 
-function ApplicationJourney({ onSectionChange }: Pick<CustomerExperienceProps, "onSectionChange">) {
-  return <div className="customer-experience">
-    <PageHeading eyebrow="APPLICATION CENTRE" title="Follow your application." description="A clear explanation of the stages a real application may move through. The record below is illustrative only." />
-    <SampleBanner compact />
-    <section className="application-overview-card"><div className="application-overview-top"><div className="application-product-icon"><FileText size={22} /></div><div><span className="application-id-label">SAMPLE REFERENCE</span><h2>Personal finance enquiry</h2><p>SAMPLE-APP-001 · Created 19 November 2026</p></div><span className="application-review-label"><i /> In review</span></div><div className="application-overview-bottom"><div><span>Application status</span><strong>Illustrative review stage</strong></div><div><span>Next update</span><strong>Not available in preview</strong></div><div><span>Assigned team</span><strong>Not connected</strong></div></div></section>
-    <section className="customer-surface application-timeline-surface"><div className="customer-surface-heading"><div><Eyebrow>PROCESS OVERVIEW</Eyebrow><h2>Understand each stage</h2><p>Real timelines depend on complete information, required checks and local processes.</p></div><span className="customer-soft-pill">4 stages</span></div><div className="application-long-timeline">{applicationSteps.map((step, index) => <article className={"application-long-step " + step.state} key={step.title}><span className="application-long-marker">{step.state === "complete" ? <Check size={16} /> : index + 1}</span><div className="application-long-copy"><div><h3>{step.title}</h3><span className={"application-stage-state " + step.state}>{step.state === "complete" ? "Shown complete" : step.state === "current" ? "Illustrative current step" : "Upcoming stage"}</span></div><p>{step.detail}</p></div><time>{step.date}</time></article>)}</div></section>
-    <section className="application-help-strip"><span><CircleHelp size={20} /></span><div><strong>Need help understanding a request?</strong><p>Read the document guidance or visit the help centre for plain-language explanations.</p></div><button onClick={() => onSectionChange("help")}>Get guidance <ArrowRight size={15} /></button></section>
-    <p className="application-note"><Info size={15} /> No assessment, verification or lending decision has taken place. A real application view must be supplied by the authenticated application service.</p>
-  </div>;
+function applicationStatusLabel(status: CustomerApplicationStatus): string {
+  const labels: Record<CustomerApplicationStatus, string> = {
+    draft: "Draft",
+    submitted: "Submitted",
+    under_review: "Under review",
+    awaiting_documents: "Awaiting documents",
+    approved_conditionally: "Conditional approval",
+    declined: "Declined",
+    withdrawn: "Withdrawn",
+    cancelled: "Cancelled",
+    funding_pending: "Funding pending",
+    funded: "Funded",
+  };
+  return labels[status];
 }
 
+function canWithdrawApplication(status: CustomerApplicationStatus): boolean {
+  return status === "draft" || status === "submitted" || status === "awaiting_documents";
+}
+
+function formatApplicationDate(value: string | null): string {
+  if (!value) return "Not yet recorded";
+  const date = new Date(value);
+  return Number.isNaN(date.getTime()) ? "Date unavailable" : new Intl.DateTimeFormat(undefined, {
+    dateStyle: "medium",
+    timeStyle: "short",
+  }).format(date);
+}
+
+function ApplicationJourney({
+  onSectionChange,
+  applicationApi,
+}: Pick<CustomerExperienceProps, "onSectionChange"> & { applicationApi?: CustomerApplicationApi }) {
+  const [applications, setApplications] = useState<CustomerApplication[] | null>(null);
+  const [selectedId, setSelectedId] = useState<string | null>(null);
+  const [selected, setSelected] = useState<CustomerApplication | null>(null);
+  const [loading, setLoading] = useState(false);
+  const [detailLoading, setDetailLoading] = useState(false);
+  const [mutationLoading, setMutationLoading] = useState(false);
+  const [error, setError] = useState("");
+  const [actionMessage, setActionMessage] = useState("");
+
+  useEffect(() => {
+    if (!applicationApi) return;
+    let current = true;
+    setLoading(true);
+    setError("");
+    applicationApi.listApplications().then((records) => {
+      if (!current) return;
+      setApplications(records);
+      setSelectedId((previous) => previous && records.some((record) => record.id === previous)
+        ? previous
+        : records[0]?.id ?? null);
+    }).catch((reason: unknown) => {
+      if (!current) return;
+      setError(reason instanceof Error ? reason.message : "Applications could not be loaded.");
+      setApplications([]);
+    }).finally(() => {
+      if (current) setLoading(false);
+    });
+    return () => { current = false; };
+  }, [applicationApi]);
+
+  useEffect(() => {
+    if (!applicationApi || !selectedId) {
+      setSelected(null);
+      return;
+    }
+    let current = true;
+    setDetailLoading(true);
+    applicationApi.getApplication(selectedId).then((record) => {
+      if (current) setSelected(record);
+    }).catch((reason: unknown) => {
+      if (current) {
+        setSelected(null);
+        setError(reason instanceof Error ? reason.message : "Application details could not be loaded.");
+      }
+    }).finally(() => {
+      if (current) setDetailLoading(false);
+    });
+    return () => { current = false; };
+  }, [applicationApi, selectedId]);
+
+  async function refreshApplications(preferredId?: string) {
+    if (!applicationApi) return;
+    const records = await applicationApi.listApplications();
+    setApplications(records);
+    const nextId = preferredId && records.some((record) => record.id === preferredId)
+      ? preferredId
+      : records[0]?.id ?? null;
+    setSelectedId(nextId);
+  }
+
+  async function withdrawSelected() {
+    if (!applicationApi || !selected || !canWithdrawApplication(selected.status)) return;
+    setMutationLoading(true);
+    setError("");
+    setActionMessage("");
+    try {
+      await applicationApi.withdrawApplication(selected.id);
+      await refreshApplications(selected.id);
+      setActionMessage("Your withdrawal request was recorded. The latest application status is shown below.");
+    } catch (reason) {
+      setError(reason instanceof Error ? reason.message : "The application could not be withdrawn.");
+    } finally {
+      setMutationLoading(false);
+    }
+  }
+
+  if (!applicationApi) {
+    return <div className="customer-experience">
+      <PageHeading eyebrow="APPLICATION CENTRE" title="Follow your application." description="A clear explanation of the stages a real application may move through. The record below is illustrative only." />
+      <SampleBanner compact />
+      <section className="application-overview-card"><div className="application-overview-top"><div className="application-product-icon"><FileText size={22} /></div><div><span className="application-id-label">SAMPLE REFERENCE</span><h2>Personal finance enquiry</h2><p>SAMPLE-APP-001 · Created 19 November 2026</p></div><span className="application-review-label"><i /> In review</span></div><div className="application-overview-bottom"><div><span>Application status</span><strong>Illustrative review stage</strong></div><div><span>Next update</span><strong>Not available in preview</strong></div><div><span>Assigned team</span><strong>Not connected</strong></div></div></section>
+      <section className="customer-surface application-timeline-surface"><div className="customer-surface-heading"><div><Eyebrow>PROCESS OVERVIEW</Eyebrow><h2>Understand each stage</h2><p>Real timelines depend on complete information, required checks and local processes.</p></div><span className="customer-soft-pill">4 stages</span></div><div className="application-long-timeline">{applicationSteps.map((step, index) => <article className={"application-long-step " + step.state} key={step.title}><span className="application-long-marker">{step.state === "complete" ? <Check size={16} /> : index + 1}</span><div className="application-long-copy"><div><h3>{step.title}</h3><span className={"application-stage-state " + step.state}>{step.state === "complete" ? "Shown complete" : step.state === "current" ? "Illustrative current step" : "Upcoming stage"}</span></div><p>{step.detail}</p></div><time>{step.date}</time></article>)}</div></section>
+      <section className="application-help-strip"><span><CircleHelp size={20} /></span><div><strong>Need help understanding a request?</strong><p>Read the document guidance or visit the help centre for plain-language explanations.</p></div><button onClick={() => onSectionChange("help")}>Get guidance <ArrowRight size={15} /></button></section>
+      <p className="application-note"><Info size={15} /> No assessment, verification or lending decision has taken place. A real application view must be supplied by the authenticated application service.</p>
+    </div>;
+  }
+
+  return <div className="customer-experience">
+    <PageHeading eyebrow="APPLICATION CENTRE" title="Your applications." description="Application records and status history retrieved from your authenticated customer account." />
+    <section className="live-application-security-note"><ShieldCheck size={17} /><span>Private account data · Requests are scoped by your verified customer session.</span></section>
+    {error && <div className="application-api-error" role="alert"><Info size={17} /><span>{error}</span><button onClick={() => { setError(""); void refreshApplications().catch((reason: unknown) => setError(reason instanceof Error ? reason.message : "Applications could not be refreshed.")); }}>Try again</button></div>}
+    {actionMessage && <div className="application-api-success" role="status"><CheckCircle2 size={17} />{actionMessage}</div>}
+    {loading ? <section className="application-live-empty" aria-live="polite"><span className="application-loading-mark" /><strong>Loading your applications</strong><p>Retrieving records linked to your authenticated account.</p></section>
+      : applications?.length === 0 ? <section className="application-live-empty"><span className="application-empty-mark"><FileText size={25} /></span><h2>No applications found.</h2><p>There are no application records linked to this customer account yet. This does not mean an application has been approved or declined.</p><button className="customer-outline-button" onClick={() => onSectionChange("explore")}>Explore finance information <ArrowRight size={14} /></button></section>
+      : <div className="application-live-layout">
+        <section className="customer-surface application-record-list"><div className="customer-surface-heading"><div><Eyebrow>YOUR RECORDS</Eyebrow><h2>Application history</h2><p>{applications?.length ?? 0} record{applications?.length === 1 ? "" : "s"} · Most recent first</p></div><span className="customer-soft-pill">Live records</span></div>
+          {(applications ?? []).map((application) => <button key={application.id} className={selectedId === application.id ? "application-record-item selected" : "application-record-item"} onClick={() => { setSelectedId(application.id); setActionMessage(""); setError(""); }}>
+            <span className="application-record-icon"><FileText size={17} /></span><span className="application-record-copy"><strong>{application.product_terms_snapshot.productName}</strong><small>{application.id}</small><small>{formatApplicationDate(application.created_at)}</small></span><span className={"application-record-status status-" + application.status}>{applicationStatusLabel(application.status)}</span>
+          </button>)}
+        </section>
+        <section className="customer-surface application-record-detail" aria-live="polite">
+          {detailLoading ? <div className="application-detail-loading">Loading application details…</div> : selected ? <>
+            <div className="customer-surface-heading"><div><Eyebrow>APPLICATION DETAILS</Eyebrow><h2>{selected.product_terms_snapshot.productName}</h2><p>Reference {selected.id}</p></div><span className={"application-record-status status-" + selected.status}>{applicationStatusLabel(selected.status)}</span></div>
+            <div className="application-facts-grid"><div><span>Requested amount</span><strong>{selected.currency_code} {selected.requested_amount}</strong></div><div><span>Requested duration</span><strong>{selected.requested_duration_days} days</strong></div><div><span>Created</span><strong>{formatApplicationDate(selected.created_at)}</strong></div><div><span>Last updated</span><strong>{formatApplicationDate(selected.updated_at)}</strong></div></div>
+            <div className="application-terms-note"><Info size={15} /><span>Product terms are shown from the version snapshot saved when this application was created. They are not a live offer or approval.</span></div>
+            <div className="application-live-timeline"><div className="customer-surface-heading"><div><Eyebrow>RECORDED HISTORY</Eyebrow><h3>Status timeline</h3></div><span className="customer-soft-pill">{selected.timeline?.length ?? 0} events</span></div>
+              {(selected.timeline ?? []).map((event, index) => <article className="application-live-event" key={event.event_type + event.created_at + index}><span className="application-event-marker"><Check size={13} /></span><div><strong>{event.to_status ? applicationStatusLabel(event.to_status) : event.event_type.replaceAll(".", " ")}</strong><p>{event.event_type.replaceAll(".", " ")}</p><time>{formatApplicationDate(event.created_at)}</time></div></article>)}
+              {(!selected.timeline || selected.timeline.length === 0) && <p className="application-no-events">No timeline events have been returned for this record.</p>}
+            </div>
+            {canWithdrawApplication(selected.status) && <div className="application-live-actions"><div><strong>Need to stop this application?</strong><p>You can withdraw while the application remains in an eligible pre-review stage.</p></div><button className="button-outline" disabled={mutationLoading} onClick={() => void withdrawSelected()}>{mutationLoading ? "Submitting…" : "Withdraw application"}</button></div>}
+          </> : <div className="application-detail-loading">Select an application to view its recorded history.</div>}
+        </section>
+      </div>}
+    <p className="application-note"><Info size={15} /> Statuses reflect recorded workflow events only. This screen does not make credit decisions, create offers or promise funding.</p>
+  </div>;
+}
 
 function MyLoansCentre({ onSectionChange }: Pick<CustomerExperienceProps, "onSectionChange">) {
   return <div className="customer-experience">
@@ -245,10 +385,10 @@ function SecurityProfile({ onNotice }: Pick<CustomerExperienceProps, "onNotice">
   </div>;
 }
 
-export function CustomerExperience({ section, onSectionChange, onNotice }: CustomerExperienceProps) {
+export function CustomerExperience({ section, onSectionChange, onNotice, applicationApi }: CustomerExperienceProps) {
   switch (section) {
     case "explore": return <ExploreFinance onNotice={onNotice} />;
-    case "applications": return <ApplicationJourney onSectionChange={onSectionChange} />;
+    case "applications": return <ApplicationJourney onSectionChange={onSectionChange} applicationApi={applicationApi} />;
     case "loans": return <MyLoansCentre onSectionChange={onSectionChange} />;
     case "documents": return <DocumentsCentre />;
     case "notifications": return <NotificationsCentre onSectionChange={onSectionChange} />;
