@@ -2768,3 +2768,52 @@ button:focus-visible, input:focus-visible, select:focus-visible {
   .document-category-card { transition: none; }
   .document-category-card:hover { transform: none; }
 }
+
+
+/* Help Centre — service discovery and support journey */
+.help-service-overview {
+  overflow: hidden;
+  margin: 22px 0 25px;
+  border: 1px solid #dfe7f0;
+  border-radius: 21px;
+  background: linear-gradient(125deg, #f7faff, #fff 62%, #f9f6ee);
+  box-shadow: 0 12px 32px rgba(17,39,70,.05);
+}
+.help-service-overview-heading { display:flex; align-items:center; gap:14px; padding:21px 23px; }
+.help-service-mark { display:grid; width:46px; height:46px; flex:0 0 46px; place-items:center; border:1px solid #dce6f2; border-radius:14px; color:#315b8c; background:#eaf1fa; }
+.help-service-overview-heading > div { flex:1; min-width:0; }
+.help-service-overview-heading h2 { margin:4px 0 5px; color:#1d3452; font-size:clamp(1.08rem,2vw,1.35rem); letter-spacing:-.03em; }
+.help-service-overview-heading p { margin:0; color:#6e7d91; font-size:.84rem; line-height:1.6; }
+.help-service-preview { flex:0 0 auto; padding:7px 10px; border:1px solid #e7dcc3; border-radius:999px; color:#806632; background:#fbf6e9; font-size:.64rem; font-weight:800; letter-spacing:.08em; }
+.help-service-options { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); border-top:1px solid #e6edf4; background:rgba(255,255,255,.75); }
+.help-service-option { display:flex; gap:12px; min-width:0; padding:18px 20px; }
+.help-service-option + .help-service-option { border-left:1px solid #e6edf4; }
+.help-service-option-icon { display:grid; width:40px; height:40px; flex:0 0 40px; place-items:center; border-radius:12px; }
+.help-service-option-icon.support-blue { color:#315f98; background:#eaf1fb; }
+.help-service-option-icon.support-gold { color:#8a6a31; background:#f8f0df; }
+.help-service-option-icon.support-green { color:#39745e; background:#e9f3ed; }
+.help-service-option > div { display:grid; align-content:start; gap:4px; min-width:0; }
+.help-service-option small { color:#7d8a9b; font-size:.62rem; font-weight:800; letter-spacing:.075em; }
+.help-service-option strong { color:#263e5b; font-size:.88rem; }
+.help-service-option p { margin:1px 0 5px; color:#748196; font-size:.76rem; line-height:1.55; }
+.help-service-state { width:max-content; max-width:100%; padding:4px 8px; border-radius:999px; color:#8a7040; background:#f8f2e5; font-size:.64rem; font-weight:750; }
+.help-service-state.state-available { color:#46715d; background:#edf5ef; }
+.help-support-journey { margin:25px 0; padding:22px; border:1px solid #e2e9f1; border-radius:19px; background:linear-gradient(145deg,#fff,#f8fafd); }
+.help-support-journey-heading { display:flex; align-items:flex-end; justify-content:space-between; gap:16px; }
+.help-support-journey-heading h2 { margin:5px 0; color:#203854; font-size:1.25rem; letter-spacing:-.03em; }
+.help-support-journey-heading p { max-width:650px; margin:0; color:#748196; font-size:.83rem; line-height:1.6; }
+.help-support-steps { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:12px; margin-top:18px; }
+.help-support-steps article { padding:16px; border:1px solid #e7edf4; border-radius:14px; background:#fff; }
+.help-support-steps article > span { display:grid; width:29px; height:29px; margin-bottom:13px; place-items:center; border-radius:9px; color:#41658f; background:#edf3fa; font-size:.7rem; font-weight:850; }
+.help-support-steps strong { display:block; color:#2a405c; font-size:.88rem; }
+.help-support-steps p { margin:6px 0 0; color:#748196; font-size:.77rem; line-height:1.55; }
+@media (max-width:760px) {
+  .help-service-overview-heading { align-items:flex-start; flex-wrap:wrap; padding:17px; }
+  .help-service-overview-heading > div { flex-basis:calc(100% - 62px); }
+  .help-service-preview { margin-left:60px; }
+  .help-service-options,.help-support-steps { grid-template-columns:1fr; }
+  .help-service-option { padding:15px 17px; }
+  .help-service-option + .help-service-option { border-top:1px solid #e6edf4; border-left:0; }
+  .help-support-journey { padding:17px; }
+  .help-support-journey-heading { align-items:flex-start; flex-direction:column; }
+}
