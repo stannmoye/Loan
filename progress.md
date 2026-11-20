@@ -1,5 +1,36 @@
 # Project Progress
 
+## 2026-11-20 — Customer loan application API foundation (verification pending)
+
+### Implemented on `feat/customer-operations-portal-shell`
+
+- Added migration `005_customer_loan_applications.sql` for customer-owned loan applications and append-only application timeline events. The application references the exact product-version row and stores a JSON snapshot of the published terms used at creation.
+- Added strict Zod request validation: positive decimal amount with at most four fractional digits, supported currency-code shape, bounded duration, explicit affirmative declaration, and rejection of extra client-controlled fields such as `customerId` and `status`.
+- Added authenticated customer endpoints to create a draft, list own applications, retrieve one own application with timeline, submit a draft, and withdraw only eligible pre-review applications.
+- Server derives customer scope from the verified customer token and persisted session context. Reads and state changes filter by that customer ID; the client cannot select another customer.
+- Product creation guard checks active product, published/effective product version, currency, active product-country corridor, enabled country/currency corridor, the encrypted profile's declared residence country, and published amount/duration bounds.
+- Application creation and state transitions write application timeline and general audit records in the same transaction as the data change.
+- Added mutation rate limits and a server-configured declaration-version gate. Creation remains disabled until the approved declaration version is configured.
+- Made application service dependencies injectable into route tests; added route tests for authenticated-context use, invalid client identity/status overrides, stale declaration rejection and invalid application IDs.
+
+### Verification state and limitations
+
+- The earlier Stage 1 CI run `44602917837` failed at TypeScript compilation on an intermediate revision, with an invalid character in `src/routes/customer-accounts.ts`. The route source was subsequently normalized and corrected.
+- Portal CI passed on the earlier revision, but it does not verify the new backend migration or application APIs.
+- No successful CI run for the current head is evidenced yet. The GitHub Actions runs visible during this update still correspond to earlier commits; do not treat them as current-head verification.
+- The new MySQL migration and service queries have not yet passed a current-head MySQL 8.4 integration run. Product-version locking, foreign keys, SQL compatibility, and transactional audit behavior remain unverified at runtime.
+- The customer portal still displays sample application content and is not connected to these endpoints.
+- This increment does not approve loans, make underwriting decisions, create contracts, disburse funds, create balances, or process repayments.
+
+### Next acceptance gates
+
+1. Run current-head backend TypeScript build and route/domain tests.
+2. Run all migrations and seed against disposable MySQL 8.4, then add integration coverage for draft creation, submit/withdraw transitions, customer isolation, product limits, country/currency corridor checks, immutable product snapshots and audit rollback.
+3. Correct every failure and repeat the full checks against the exact final head.
+4. Only after those gates pass, add the typed portal application API integration with explicit loading, error, empty and disabled states; keep fixture mode clearly separate.
+5. Keep PR #1 draft and unmerged pending review.
+
+
 ## 2026-11-19 — Plan publication and Stage 1 adoption
 
 ### Completed and published
