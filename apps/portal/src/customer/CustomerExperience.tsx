@@ -50,6 +50,28 @@ function CustomerOverview({ onSectionChange }: Pick<CustomerExperienceProps, "on
       <article className="customer-snapshot-card"><span className="snapshot-icon snapshot-gold"><FolderCheck size={19} /></span><div><small>DOCUMENT GUIDANCE</small><strong>Secure sharing planned</strong><span>No files uploaded or stored</span></div><button aria-label="View document guidance" onClick={() => onSectionChange("documents")}><ArrowUpRight size={17} /></button></article>
       <article className="customer-snapshot-card"><span className="snapshot-icon snapshot-green"><Headphones size={19} /></span><div><small>HELP & SUPPORT</small><strong>Answers when you need them</strong><span>Explore common questions</span></div><button aria-label="Open help centre" onClick={() => onSectionChange("help")}><ArrowUpRight size={17} /></button></article>
     </section>
+
+    <section className="overview-account-services" aria-labelledby="overview-account-services-title">
+      <div className="overview-account-services-heading">
+        <div><Eyebrow>ACCOUNT SERVICES PREVIEW</Eyebrow><h2 id="overview-account-services-title">Your account, clearly organised.</h2><p>A quick guide to the information a connected account centre will bring together.</p></div>
+        <span className="overview-preview-state"><LockKeyhole size={13} /> Connection not configured</span>
+      </div>
+      <div className="overview-account-services-grid">
+        <article className="overview-account-service">
+          <span className="overview-account-service-icon service-navy"><WalletCards size={18} /></span>
+          <div><small>ACCOUNT DETAILS</small><strong>Verified account information</strong><span className="overview-service-status">Not connected in preview</span></div>
+        </article>
+        <article className="overview-account-service">
+          <span className="overview-account-service-icon service-gold"><CalendarDays size={18} /></span>
+          <div><small>REPAYMENT SCHEDULE</small><strong>Upcoming dates and terms</strong><span className="overview-service-status">No schedule available</span></div>
+        </article>
+        <article className="overview-account-service">
+          <span className="overview-account-service-icon service-green"><ReceiptText size={18} /></span>
+          <div><small>STATEMENTS & RECEIPTS</small><strong>Official account records</strong><span className="overview-service-status">No records available</span></div>
+        </article>
+      </div>
+      <button className="customer-text-link overview-account-services-link" onClick={() => onSectionChange("loans")}>Explore the My loans centre <ArrowRight size={15} /></button>
+    </section>
     <div className="customer-dashboard-grid">
       <section className="customer-surface journey-surface">
         <div className="customer-surface-heading"><div><Eyebrow>YOUR JOURNEY</Eyebrow><h2>Application progress</h2><p>See how a sample application journey can be explained clearly.</p></div><span className="customer-soft-pill">Demonstration</span></div>
