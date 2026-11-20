@@ -1398,3 +1398,139 @@ button:focus-visible, input:focus-visible, select:focus-visible {
   .explore-feature-panel { grid-template-columns:minmax(0,1fr) 75px; }
   .explore-feature-art { transform:scale(.62); }
 }
+
+
+/* Customer account, document, inbox, help and security design pass */
+.loan-readiness-grid {
+  display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:12px;
+}
+.loan-readiness-card {
+  display:grid; grid-template-columns:38px minmax(0,1fr); align-items:start; gap:11px;
+  min-width:0; padding:15px; border:1px solid #e2eaf3; border-radius:14px;
+  background:linear-gradient(145deg,#fff 0%,#f9fbfe 100%); box-shadow:0 6px 18px rgba(18,42,72,.035);
+}
+.loan-readiness-icon,.notification-status-icon {
+  width:37px; height:37px; display:grid; place-items:center; border-radius:11px;
+  background:#edf4fd; color:#37689c;
+}
+.loan-readiness-card > div { min-width:0; }
+.loan-readiness-card small,.notification-status-card small {
+  display:block; color:#8795a8; font-size:8px; font-weight:800; letter-spacing:.75px;
+}
+.loan-readiness-card strong {
+  display:block; margin-top:5px; color:#2d435e; font-size:11px; line-height:1.35;
+}
+.loan-readiness-card p,.notification-status-card p {
+  margin:5px 0 0; color:#8996a7; font-size:9px; line-height:1.5;
+}
+.loan-readiness-status {
+  grid-column:2; justify-self:start; margin-top:1px; padding:4px 7px; border-radius:20px;
+  background:#f0f3f7; color:#78879a; font-size:8px; font-weight:750;
+}
+
+.document-principles-section,.help-pathways-section,.security-foundation-section {
+  display:flex; flex-direction:column; gap:13px;
+}
+.document-principles-heading,.help-pathways-heading,.security-foundation-heading {
+  display:flex; flex-direction:column; gap:5px;
+}
+.document-principles-heading h2,.help-pathways-heading h2,.security-foundation-heading h2 {
+  margin:0; color:#203a59; font-size:17px; line-height:1.25; letter-spacing:-.45px;
+}
+.document-principles-heading p,.help-pathways-heading p,.security-foundation-heading p {
+  margin:0; color:#8290a2; font-size:10px; line-height:1.55;
+}
+.document-principles-grid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:12px; }
+.document-principle-card {
+  min-height:142px; position:relative; overflow:hidden; padding:16px;
+  border:1px solid #e2eaf3; border-radius:14px;
+  background:linear-gradient(145deg,#fff 0%,#f8fbff 100%);
+  box-shadow:0 7px 20px rgba(18,42,72,.035);
+}
+.document-principle-number {
+  position:absolute; top:12px; right:13px; color:#e0e8f2; font-size:23px;
+  font-weight:850; letter-spacing:-1px;
+}
+.document-principle-icon {
+  width:35px; height:35px; display:grid; place-items:center; margin-bottom:13px;
+  border:1px solid #e0eaf5; border-radius:10px; background:#edf4fd; color:#3b6c9e;
+}
+.document-principle-card strong { display:block; color:#2f4661; font-size:11px; }
+.document-principle-card p { max-width:260px; margin:6px 0 0; color:#8492a4; font-size:9px; line-height:1.55; }
+
+.notification-status-grid { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:11px; }
+.notification-status-card {
+  display:flex; align-items:flex-start; gap:10px; min-width:0; padding:14px;
+  border:1px solid #e2eaf3; border-radius:14px; background:#fff;
+  box-shadow:0 6px 17px rgba(18,42,72,.03);
+}
+.notification-status-card > div { min-width:0; }
+.notification-status-card strong {
+  display:block; margin-top:5px; color:#2b425e; font-size:14px; line-height:1.3;
+  overflow-wrap:anywhere;
+}
+.notification-status-card:nth-child(n+3) strong { font-size:10px; }
+.notification-status-card:nth-child(3) .notification-status-icon { background:#f5f2eb; color:#98733d; }
+.notification-status-card:nth-child(4) .notification-status-icon { background:#edf6f0; color:#4b805d; }
+
+.help-pathways-grid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:11px; }
+.help-pathway-card {
+  display:flex; align-items:center; gap:10px; min-width:0; padding:14px;
+  border:1px solid #e1e9f2; border-radius:13px; background:#fff; color:inherit;
+  text-align:left; box-shadow:0 6px 17px rgba(18,42,72,.03);
+}
+.help-pathway-card:hover { transform:translateY(-2px); border-color:#cbdced; background:#fbfdff; box-shadow:0 10px 22px rgba(18,42,72,.07); }
+.help-pathway-icon {
+  width:38px; height:38px; display:grid; place-items:center; flex:0 0 auto; border-radius:11px;
+}
+.help-pathway-icon.pathway-blue { background:#edf4ff; color:#35699f; }
+.help-pathway-icon.pathway-gold { background:#faf4e9; color:#98743e; }
+.help-pathway-icon.pathway-green { background:#edf7f0; color:#4a805b; }
+.help-pathway-card > span:nth-child(2) { display:flex; flex:1; min-width:0; flex-direction:column; gap:5px; }
+.help-pathway-card strong { color:#2c435f; font-size:10px; }
+.help-pathway-card small { color:#8794a5; font-size:8px; line-height:1.5; }
+.help-pathway-card > svg { flex:0 0 auto; color:#6a87a7; }
+
+.security-foundation-grid { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:11px; }
+.security-foundation-card {
+  min-height:142px; position:relative; display:flex; flex-direction:column; align-items:flex-start;
+  padding:15px; border:1px solid #e2eaf3; border-radius:14px;
+  background:linear-gradient(145deg,#fff 0%,#f9fbfe 100%);
+  box-shadow:0 6px 18px rgba(18,42,72,.035);
+}
+.security-foundation-step {
+  position:absolute; top:12px; right:13px; color:#e1e9f2; font-size:20px; font-weight:850;
+}
+.security-foundation-icon {
+  width:36px; height:36px; display:grid; place-items:center; margin-bottom:13px;
+  border:1px solid #e0eaf5; border-radius:10px; background:#edf4fd; color:#3a6b9d;
+}
+.security-foundation-card strong { color:#2d435e; font-size:10px; }
+.security-foundation-card small { margin-top:6px; color:#8795a7; font-size:8px; line-height:1.4; }
+
+.loan-readiness-card,.document-principle-card,.notification-status-card,
+.help-pathway-card,.security-foundation-card { transition:transform .18s ease,border-color .18s ease,box-shadow .18s ease; }
+.document-principle-card:hover,.security-foundation-card:hover {
+  transform:translateY(-2px); border-color:#d3e1ef; box-shadow:0 10px 23px rgba(18,42,72,.065);
+}
+@media (max-width: 1050px) {
+  .notification-status-grid { grid-template-columns:repeat(2,minmax(0,1fr)); }
+  .security-foundation-grid { grid-template-columns:repeat(2,minmax(0,1fr)); }
+}
+@media (max-width: 900px) {
+  .loan-readiness-grid,.document-principles-grid,.help-pathways-grid { grid-template-columns:1fr; }
+  .document-principle-card { min-height:unset; }
+  .loan-readiness-card { grid-template-columns:38px minmax(0,1fr) auto; }
+  .loan-readiness-status { grid-column:3; grid-row:1; align-self:start; }
+}
+@media (max-width: 560px) {
+  .notification-status-grid,.security-foundation-grid { grid-template-columns:1fr 1fr; gap:8px; }
+  .notification-status-card { flex-direction:column; gap:8px; padding:12px; }
+  .notification-status-card strong { font-size:13px; }
+  .notification-status-card:nth-child(n+3) strong { font-size:9px; }
+  .loan-readiness-card { grid-template-columns:34px minmax(0,1fr); padding:12px; }
+  .loan-readiness-status { grid-column:2; grid-row:auto; }
+  .help-pathway-card { padding:12px; }
+  .document-principle-card { padding:14px; }
+  .security-foundation-card { min-height:132px; padding:12px; }
+}
