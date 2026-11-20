@@ -491,3 +491,13 @@ The notifications inbox is sample-only, not a live message system. It has no eve
 - Preserved category search, filters, category detail dialog, product-type listings and existing navigation/notice callbacks.
 - No loan offers, rates, eligibility assessments, application actions or personalized financial recommendations were introduced.
 - Tests and browser verification remain deferred under the current design-first direction; this increment is not runtime-verified.
+
+
+## 2026-11-20 — Application Centre visual journey rail
+
+- Added a visual four-stage journey rail to the sample application view, showing the existing illustrative complete/current/upcoming stage states.
+- Added concise stage numbering, clear state labels and a mobile vertical progression layout.
+- Preserved the existing application overview, summary cards, stage key, detailed timeline and help navigation.
+- Reinforced that the timeline is illustrative and performs no checks, verification or lending assessment.
+- No application workflow, status mutation, underwriting or customer record behavior was changed.
+- Tests and browser verification remain deferred under the design-first direction; this increment is not runtime-verified.
