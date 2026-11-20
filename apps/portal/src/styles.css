@@ -3046,3 +3046,32 @@ button:focus-visible, input:focus-visible, select:focus-visible {
  .loan-centre-hero-art { min-width:90px; }
  .loan-hero-account-preview { width:145px; }
 }
+
+
+/* Help Centre — transparent support record blueprint */
+.help-response-blueprint { margin:24px 0; padding:23px; border:1px solid #e1e8f0; border-radius:21px; background:linear-gradient(145deg,#fff 0%,#f7f9fc 100%); box-shadow:0 10px 28px rgba(20,42,72,.035); }
+.help-response-blueprint-heading { display:flex; align-items:flex-end; justify-content:space-between; gap:18px; }
+.help-response-blueprint-heading h2 { margin:5px 0 6px; color:#203854; font-size:clamp(1.1rem,2vw,1.35rem); letter-spacing:-.04em; }
+.help-response-blueprint-heading p { max-width:700px; margin:0; color:#748196; font-size:.78rem; line-height:1.65; }
+.help-response-blueprint-tag { display:inline-flex; align-items:center; gap:6px; flex:0 0 auto; padding:7px 10px; border:1px solid #dce8e0; border-radius:999px; color:#39745e; background:#f0f7f2; font-size:.63rem; font-weight:800; }
+.help-response-record { margin-top:18px; padding:17px; border:1px solid #e5ebf2; border-radius:16px; background:#fff; }
+.help-response-record-top { display:flex; align-items:center; gap:11px; padding-bottom:14px; border-bottom:1px solid #edf0f4; }
+.help-response-record-icon { display:grid; width:39px; height:39px; flex:0 0 39px; place-items:center; border-radius:12px; color:#42658f; background:#edf3fa; }
+.help-response-record-top > div { display:grid; gap:4px; min-width:0; }
+.help-response-record-top small,.help-response-record-grid small { color:#8a96a5; font-size:.57rem; font-weight:850; letter-spacing:.075em; }
+.help-response-record-top strong { color:#2a405c; font-size:.83rem; }
+.help-response-record-state { margin-left:auto; padding:5px 8px; border-radius:999px; color:#806632; background:#fbf6e9; font-size:.59rem; font-weight:800; }
+.help-response-record-grid { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:10px; padding:15px 0 12px; }
+.help-response-record-grid article { display:grid; align-content:start; gap:6px; min-width:0; padding:12px; border:1px solid #edf0f4; border-radius:12px; background:#fbfcfe; }
+.help-response-record-grid strong { color:#304b6b; font-size:.72rem; line-height:1.4; }
+.help-response-record-grid span { color:#8491a2; font-size:.63rem; line-height:1.45; }
+.help-response-record > p { display:flex; align-items:flex-start; gap:7px; margin:2px 0 0; color:#78879a; font-size:.67rem; line-height:1.55; }
+.help-response-record > p svg { flex:0 0 auto; margin-top:1px; }
+@media (max-width:900px) { .help-response-record-grid { grid-template-columns:repeat(2,minmax(0,1fr)); } }
+@media (max-width:760px) {
+ .help-response-blueprint { padding:17px; }
+ .help-response-blueprint-heading { align-items:flex-start; flex-direction:column; }
+ .help-response-record { padding:13px; }
+ .help-response-record-grid { grid-template-columns:1fr; gap:8px; }
+ .help-response-record-grid article { grid-template-columns:minmax(0,1fr); }
+}
