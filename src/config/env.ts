@@ -15,6 +15,7 @@ const envSchema = z.object({
   CUSTOMER_PROFILE_ENCRYPTION_KEY_HEX: z.string().regex(/^[a-fA-F0-9]{64}$/).optional(),
   CUSTOMER_PRIVACY_NOTICE_VERSION: z.string().regex(/^[A-Za-z0-9._-]{1,64}$/).optional(),
   CUSTOMER_TERMS_OF_SERVICE_VERSION: z.string().regex(/^[A-Za-z0-9._-]{1,64}$/).optional(),
+  CUSTOMER_APPLICATION_DECLARATION_VERSION: z.string().regex(/^[A-Za-z0-9._-]{1,64}$/).optional(),
   CORS_ORIGIN: z.string().url(),
 });
 
