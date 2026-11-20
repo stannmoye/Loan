@@ -510,3 +510,13 @@ The notifications inbox is sample-only, not a live message system. It has no eve
 - Added responsive sizing for smaller customer screens while preserving the existing account readiness cards, navigation shortcuts, information-source framework and account tools.
 - No servicing API, ledger, repayment, statement, payment or account mutation behavior was added.
 - Tests and browser verification remain deferred under the design-first direction; this increment is not runtime-verified.
+
+
+## 2026-11-20 — Help Centre support transparency design
+
+- Added a responsive support-record blueprint to the customer Help Centre, showing how a future authenticated support experience can communicate case ownership, verified update timestamps, next steps and protected conversation history.
+- Clearly labels the panel as planned design and disconnected; it creates no support case, promises no response time and sends no message.
+- Preserved the existing FAQ, support pathway, navigation and unavailable-channel behavior.
+- Added desktop/tablet/mobile layout rules consistent with the Northline customer design system.
+- Automated tests and browser visual verification were deferred in accordance with the current design-first priority; this increment is not claimed as runtime-verified.
+
