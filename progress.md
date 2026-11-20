@@ -409,3 +409,13 @@ The notifications inbox is sample-only, not a live message system. It has no eve
 - Applied reduced-motion overrides to the customer experience, including hover transforms and decorative transitions.
 - Preserved existing page content, routes, API contracts, sample-data boundaries and financial workflow behavior.
 - Tests remain deferred under the current design-first direction. This visual pass has not been runtime-verified.
+
+
+## 2026-11-20 — Customer dashboard account-services overview
+
+- Added a dedicated account-services preview panel to the customer overview, covering verified account details, repayment schedules, and statements/receipts.
+- Each service is explicitly marked as unavailable or not connected in the preview; no account existence, balance, repayment amount, due date, statement or transaction is implied.
+- Added a direct route into the existing My loans centre and preserved all existing navigation and data contracts.
+- Introduced a responsive three-card composition with clear status treatment, finance-oriented iconography, a restrained layered background and accessible heading semantics.
+- No customer identity, lending, repayment, document, ledger or payment workflow was activated or changed.
+- Tests remain deferred under the design-first direction. This dashboard increment has not been runtime-verified.
