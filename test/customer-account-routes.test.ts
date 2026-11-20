@@ -6,7 +6,8 @@ import type { CustomerIdentity } from '../src/plugins/customer-auth.js';
 import {
   buildCustomerAccountRoutes,
   type CustomerAccountRouteOptions,
-  type CustomerAccountService,\n  type CustomerApplicationRouteService,
+  type CustomerAccountService,
+  type CustomerApplicationRouteService,
 } from '../src/routes/customer-accounts.js';
 
 const identity: CustomerIdentity = {
@@ -62,6 +63,13 @@ function makeService(): CustomerAccountService {
 
 function makeOptions(overrides: Partial<CustomerAccountRouteOptions> = {}) {
   const service = overrides.service ?? makeService();
+  const applicationService = overrides.applicationService ?? ({
+    create: vi.fn(async () => ({ id: 'a48d7f98-4da7-4550-a1a3-38c32ed5b4e6', status: 'draft' })),
+    get: vi.fn(async () => ({ id: 'a48d7f98-4da7-4550-a1a3-38c32ed5b4e6', status: 'draft', timeline: [] })),
+    list: vi.fn(async () => []),
+    submit: vi.fn(async () => ({ id: 'a48d7f98-4da7-4550-a1a3-38c32ed5b4e6', status: 'submitted' })),
+    withdraw: vi.fn(async () => ({ id: 'a48d7f98-4da7-4550-a1a3-38c32ed5b4e6', status: 'withdrawn' })),
+  } as unknown as CustomerApplicationRouteService);
   const options: CustomerAccountRouteOptions = {
     tokenConfig: {
       issuer: identity.issuer,
@@ -69,6 +77,7 @@ function makeOptions(overrides: Partial<CustomerAccountRouteOptions> = {}) {
       publicKeyPem: 'test-public-key-not-used-by-verifier-stub',
     },
     profileEncryptionKeyHex: '4a'.repeat(32),
+    applicationDeclarationVersion: 'declaration-v1',
     consentVersions: {
       privacyNoticeVersion: 'privacy-test-v1',
       termsOfServiceVersion: 'terms-test-v1',
@@ -80,6 +89,7 @@ function makeOptions(overrides: Partial<CustomerAccountRouteOptions> = {}) {
       return identity;
     }),
     service,
+    applicationService,
     ...overrides,
   };
   return { options, service };
