@@ -626,6 +626,19 @@ function HelpCentre({ onNotice, onSectionChange }: Pick<CustomerExperienceProps,
         <article><span>03</span><strong>Track the response</strong><p>See the responsible team, status and recorded next step.</p></article>
       </div>
     </section>
+    <section className="help-response-blueprint" aria-label="How a future support response will be presented">
+      <div className="help-response-blueprint-heading"><div><Eyebrow>RESPONSE TRANSPARENCY</Eyebrow><h2>Every conversation should leave a clear record.</h2><p>A future authenticated support workspace should make ownership and progress easy to understand, without exposing sensitive information in ordinary notifications.</p></div><span className="help-response-blueprint-tag"><ShieldCheck size={13} /> Planned design</span></div>
+      <div className="help-response-record">
+        <div className="help-response-record-top"><span className="help-response-record-icon"><MessageCircle size={19} /></span><div><small>ILLUSTRATIVE SUPPORT RECORD</small><strong>Example enquiry summary</strong></div><span className="help-response-record-state">Not connected</span></div>
+        <div className="help-response-record-grid">
+          <article><small>CASE OWNER</small><strong>Assigned support team</strong><span>Ownership should be visible</span></article>
+          <article><small>LAST UPDATE</small><strong>Verified timestamp</strong><span>Only recorded events shown</span></article>
+          <article><small>NEXT STEP</small><strong>Clear action or no action</strong><span>Responsibilities explained</span></article>
+          <article><small>SECURE HISTORY</small><strong>Authenticated access</strong><span>Protected conversation record</span></article>
+        </div>
+        <p><Info size={13} /> This is a presentation blueprint only. No case exists, no response time is promised and no support request has been submitted.</p>
+      </div>
+    </section>
     <div className="help-centre-layout"><section className="customer-surface faq-surface"><div className="customer-surface-heading"><div><Eyebrow>HELP & GUIDANCE</Eyebrow><h2>Frequently asked questions</h2><p>General information only. Your legal rights depend on local rules.</p></div><span className="customer-soft-pill">{supportQuestions.length} topics</span></div><div className="faq-list">{supportQuestions.map((item,index) => <article className={expanded === index ? "faq-item expanded" : "faq-item"} key={item.question}><button className="faq-question" aria-expanded={expanded === index} onClick={() => setExpanded(expanded === index ? null : index)}><span>{item.question}</span><ChevronDown size={18} /></button>{expanded === index && <p className="faq-answer">{item.answer}</p>}</article>)}</div></section>
       <aside className="help-contact-column"><section className="help-contact-card"><span className="help-contact-icon"><MessageCircle size={20} /></span><Eyebrow>SECURE MESSAGING</Eyebrow><h2>Talk to the right team.</h2><p>Live support messaging will be connected after customer authentication, case routing and privacy controls are ready.</p><button onClick={() => onNotice("Secure support messaging is not active in this preview. No message or personal information was sent.")}>Messaging unavailable <ArrowRight size={14} /></button></section><section className="help-safety-card"><ShieldCheck size={19} /><div><strong>Stay alert to impersonation.</strong><p>Never share passwords, one-time codes or full payment credentials with someone who contacts you unexpectedly.</p></div></section></aside></div>
     <div className="help-hours-note"><Info size={15} /> This is a demonstration help centre, not a monitored support channel. No support request has been sent.</div>
