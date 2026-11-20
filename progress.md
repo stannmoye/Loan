@@ -441,3 +441,13 @@ The notifications inbox is sample-only, not a live message system. It has no eve
 - Preserved the current My Loans account-readiness messaging and all existing routes and data contracts.
 - No live loan account, balance, due date, repayment event, statement or receipt was invented; no servicing or payment functionality was enabled.
 - Tests remain deferred under the design-first direction. This design increment has not been runtime-verified.
+
+
+## 2026-11-20 — Document Centre premium workspace design
+
+- Expanded the Documents Centre into a structured preview workspace with clear account-level status indicators for active requests, received files and secure sharing availability.
+- Added a four-part document category library covering identity, address, income and existing commitments, with explanatory copy and explicit “Not requested” states.
+- Added a three-stage future request-flow presentation for request explanation, authenticated access and review outcomes, plus a distinct retention and audit-control status.
+- Strengthened the upload-disabled presentation and repeated the preview boundary so customers are not invited to submit sensitive files through an unconfigured service.
+- Added responsive desktop/mobile layouts, accessible section headings and reduced-motion behavior while preserving the existing document guidance and route structure.
+- No upload, file storage, malware scanning, document review, retention or customer identity functionality was activated. No tests or browser checks were run in accordance with the current design-first instruction.
