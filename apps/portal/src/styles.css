@@ -2499,3 +2499,148 @@ button:focus-visible, input:focus-visible, select:focus-visible {
     transition:none;
   }
 }
+
+
+/* My Loans account workspace shortcuts */
+.loan-workspace-shortcuts {
+  margin:16px 0 19px;
+  padding:19px;
+  border:1px solid #e1e9f2;
+  border-radius:16px;
+  background:linear-gradient(145deg,#fff 0%,#f7faff 100%);
+  box-shadow:0 9px 24px rgba(22,48,79,.04);
+}
+.loan-workspace-shortcuts-heading {
+  display:flex;
+  align-items:flex-start;
+  justify-content:space-between;
+  gap:15px;
+  margin-bottom:13px;
+}
+.loan-workspace-shortcuts-heading h2 {
+  margin:5px 0 4px;
+  color:#203a59;
+  font-size:17px;
+  line-height:1.3;
+  letter-spacing:-.4px;
+}
+.loan-workspace-shortcuts-heading p {
+  max-width:62ch;
+  margin:0;
+  color:#8190a2;
+  font-size:10px;
+  line-height:1.6;
+}
+.loan-workspace-shortcuts-grid {
+  display:grid;
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:10px;
+}
+.loan-workspace-shortcut {
+  display:flex;
+  align-items:flex-start;
+  gap:10px;
+  min-width:0;
+  min-height:105px;
+  padding:13px;
+  border:1px solid #e5ecf3;
+  border-radius:12px;
+  background:#fff;
+  color:#3b526c;
+  text-align:left;
+  cursor:pointer;
+  transition:border-color .16s ease,box-shadow .16s ease,transform .16s ease;
+}
+.loan-workspace-shortcut:hover {
+  border-color:#cbdbea;
+  box-shadow:0 8px 18px rgba(24,53,84,.07);
+  transform:translateY(-2px);
+}
+.loan-workspace-shortcut:focus-visible {
+  outline:3px solid rgba(76,132,190,.42);
+  outline-offset:3px;
+}
+.loan-workspace-shortcut > span:nth-child(2) {
+  display:flex;
+  flex:1;
+  flex-direction:column;
+  align-items:flex-start;
+  gap:5px;
+  min-width:0;
+}
+.loan-workspace-shortcut > svg {
+  flex:0 0 auto;
+  margin-top:2px;
+  color:#8194aa;
+}
+.loan-shortcut-icon {
+  width:35px;
+  height:35px;
+  display:grid;
+  place-items:center;
+  flex:0 0 auto;
+  border:1px solid #dfe9f4;
+  border-radius:10px;
+  background:#eef4fb;
+  color:#416e9b;
+}
+.loan-shortcut-icon.shortcut-gold {
+  border-color:#eee4d1;
+  background:#fbf6eb;
+  color:#98773f;
+}
+.loan-shortcut-icon.shortcut-green {
+  border-color:#dcece2;
+  background:#eef7f1;
+  color:#477d5c;
+}
+.loan-workspace-shortcut small {
+  color:#8a98a9;
+  font-size:8px;
+  font-weight:850;
+  letter-spacing:.7px;
+}
+.loan-workspace-shortcut strong {
+  color:#2c4561;
+  font-size:10px;
+  line-height:1.4;
+}
+.loan-workspace-shortcut em {
+  color:#8290a1;
+  font-size:8px;
+  font-style:normal;
+  line-height:1.5;
+}
+@media (max-width: 900px) {
+  .loan-workspace-shortcuts-grid {
+    grid-template-columns:1fr;
+  }
+  .loan-workspace-shortcut {
+    min-height:unset;
+    align-items:center;
+  }
+}
+@media (max-width: 560px) {
+  .loan-workspace-shortcuts {
+    padding:14px;
+    border-radius:14px;
+  }
+  .loan-workspace-shortcuts-heading {
+    flex-direction:column;
+    gap:8px;
+  }
+  .loan-workspace-shortcuts-heading h2 {
+    font-size:16px;
+  }
+  .loan-workspace-shortcut {
+    padding:11px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .loan-workspace-shortcut {
+    transition:none;
+  }
+  .loan-workspace-shortcut:hover {
+    transform:none;
+  }
+}
