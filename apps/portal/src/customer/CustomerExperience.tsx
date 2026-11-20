@@ -449,9 +449,40 @@ function MyLoansCentre({ onSectionChange }: Pick<CustomerExperienceProps, "onSec
 }
 
 function DocumentsCentre() {
+  const documentCategories = [
+    { title: "Identity & personal details", detail: "Examples include identity evidence and details needed to confirm an application.", icon: UserRound, tone: "identity" },
+    { title: "Address & residency", detail: "Examples may include recent correspondence accepted under local requirements.", icon: FileCheck2, tone: "address" },
+    { title: "Income & employment", detail: "A provider may explain which income evidence is relevant to a specific request.", icon: WalletCards, tone: "income" },
+    { title: "Existing financial commitments", detail: "Only information relevant to the request should be explained and collected.", icon: FolderCheck, tone: "commitments" },
+  ];
+  const requestStages = [
+    { number: "01", title: "Request explained", detail: "Purpose, file requirements and requesting organisation", icon: FileText },
+    { number: "02", title: "Secure access", detail: "Verified session and permission checks", icon: ShieldCheck },
+    { number: "03", title: "Review outcome", detail: "Received, reviewed or clarification needed", icon: FileCheck2 },
+  ];
+
   return <div className="customer-experience">
-    <PageHeading eyebrow="DOCUMENT CENTRE" title="Know what may be needed." description="Understand common document categories and how a secure request process should work." />
+    <PageHeading eyebrow="DOCUMENT CENTRE" title="Know what may be needed." description="A clearer guide to document categories, request status and the safeguards a secure document service should provide." />
     <SampleBanner compact />
+    <section className="document-workspace-overview" aria-label="Document centre preview status">
+      <div className="document-workspace-intro">
+        <span className="document-workspace-mark"><FolderCheck size={21} /></span>
+        <div><Eyebrow>YOUR DOCUMENT WORKSPACE</Eyebrow><h2>Everything should have a purpose and a clear status.</h2><p>This is a design preview. No personal files, document requests or review records are connected.</p></div>
+        <span className="document-preview-chip"><LockKeyhole size={13} /> PREVIEW ONLY</span>
+      </div>
+      <div className="document-workspace-metrics">
+        <article><span className="document-metric-icon metric-blue"><FileText size={17} /></span><div><small>ACTIVE REQUESTS</small><strong>Not connected</strong><span>No live requests</span></div></article>
+        <article><span className="document-metric-icon metric-gold"><FileCheck2 size={17} /></span><div><small>FILES RECEIVED</small><strong>None available</strong><span>No files stored</span></div></article>
+        <article><span className="document-metric-icon metric-green"><ShieldCheck size={17} /></span><div><small>SECURE SHARING</small><strong>Not enabled</strong><span>Security setup required</span></div></article>
+      </div>
+    </section>
+    <section className="document-category-section" aria-labelledby="document-category-title">
+      <div className="document-category-heading"><div><Eyebrow>DOCUMENT LIBRARY</Eyebrow><h2 id="document-category-title">Common evidence categories.</h2><p>Requirements vary by product, provider and local rules. These examples are not a request for your information.</p></div><span className="customer-soft-pill">Information only</span></div>
+      <div className="document-category-grid">{documentCategories.map((item) => {
+        const Icon = item.icon;
+        return <article className="document-category-card" key={item.title}><span className={"document-category-icon " + item.tone}><Icon size={20} /></span><div className="document-category-copy"><strong>{item.title}</strong><p>{item.detail}</p></div><span className="document-category-state"><LockKeyhole size={12} /> Not requested</span></article>;
+      })}</div>
+    </section>
     <section className="document-security-hero"><span className="document-security-icon"><FileLock2 size={26} /></span><div><Eyebrow>SECURE DOCUMENT HANDLING</Eyebrow><h2>Your documents deserve careful handling.</h2><p>This preview does not accept, upload or store files. A live document service must verify access, explain the purpose of each request and protect information throughout its lifecycle.</p></div><span className="document-lock-watermark"><LockKeyhole size={74} /></span></section>
     <section className="document-principles-section" aria-label="Safe document sharing principles">
       <div className="document-principles-heading"><Eyebrow>BEFORE YOU SHARE</Eyebrow><h2>A safer document journey has clear steps.</h2><p>These are design principles for a future secure service, not active upload controls.</p></div>
@@ -463,21 +494,18 @@ function DocumentsCentre() {
     </section>
     <section className="document-lifecycle-section" aria-label="Future document request lifecycle">
       <div className="document-lifecycle-heading"><div><Eyebrow>REQUEST LIFECYCLE</Eyebrow><h2>Every document request should have a clear trail.</h2><p>A future secure workflow should make the purpose, review and retention of each file understandable.</p></div><span className="customer-soft-pill">Future workflow</span></div>
-      <div className="document-lifecycle-grid">
-        <article className="document-lifecycle-card"><span className="document-lifecycle-number">01</span><span className="document-lifecycle-icon"><FileText size={18} /></span><strong>Request explained</strong><p>The reason, required file type and requesting team are made clear.</p><span className="document-lifecycle-state">Planned stage</span></article>
-        <article className="document-lifecycle-card"><span className="document-lifecycle-number">02</span><span className="document-lifecycle-icon"><ShieldCheck size={18} /></span><strong>Identity verified</strong><p>Access is granted only through an authenticated customer session.</p><span className="document-lifecycle-state">Planned stage</span></article>
-        <article className="document-lifecycle-card"><span className="document-lifecycle-number">03</span><span className="document-lifecycle-icon"><FileCheck2 size={18} /></span><strong>Review recorded</strong><p>Customers can understand whether a file is received, reviewed or needs attention.</p><span className="document-lifecycle-state">Planned stage</span></article>
-        <article className="document-lifecycle-card"><span className="document-lifecycle-number">04</span><span className="document-lifecycle-icon"><LockKeyhole size={18} /></span><strong>Retention controlled</strong><p>Access, retention periods and permitted deletion are governed and auditable.</p><span className="document-lifecycle-state">Planned stage</span></article>
-      </div>
+      <div className="document-request-flow">{requestStages.map((stage) => {
+        const Icon = stage.icon;
+        return <article className="document-request-flow-card" key={stage.number}><span className="document-request-flow-top"><span>{stage.number}</span><Icon size={19} /></span><strong>{stage.title}</strong><p>{stage.detail}</p><small>Planned capability</small></article>;
+      })}</div>
+      <div className="document-retention-ribbon"><LockKeyhole size={16} /><span><strong>Retention & audit controls</strong> — access history, retention periods and permitted deletion should be governed and reviewable.</span><span className="document-retention-status">Not implemented</span></div>
       <p className="document-lifecycle-footnote"><Info size={14} /> No live document requests, uploads, reviews or storage records exist in this preview.</p>
     </section>
-    <div className="document-centre-grid"><section className="customer-surface document-list-surface"><div className="customer-surface-heading"><div><Eyebrow>DOCUMENT GUIDANCE</Eyebrow><h2>Common evidence categories</h2><p>What a provider may ask for depends on the product and applicable law.</p></div><span className="customer-soft-pill">Guide only</span></div>{documentGuidance.map((item,index) => <article className="document-guidance-row" key={item.title}><span className="document-guidance-icon">{index === 0 ? <UserRound size={18} /> : index === 1 ? <FileCheck2 size={18} /> : index === 2 ? <WalletCards size={18} /> : <FolderCheck size={18} />}</span><div><strong>{item.title}</strong><p>{item.detail}</p></div><span className="document-guidance-status">Not requested</span></article>)}</section>
-      <aside className="customer-surface document-upload-surface"><div className="upload-empty-art"><span><UploadCloud size={28} /></span><i /><i /></div><h2>Secure sharing is not connected yet.</h2><p>There is no file upload, identity collection or document storage in this demonstration. Do not enter or attach personal information.</p><button disabled className="disabled-upload-button"><UploadCloud size={16} /> Upload unavailable</button><small>Enabled only after secure storage, access controls, malware scanning, retention and audit are implemented.</small></aside></div>
+    <div className="document-centre-grid"><section className="customer-surface document-list-surface"><div className="customer-surface-heading"><div><Eyebrow>DOCUMENT GUIDANCE</Eyebrow><h2>What a provider may ask about.</h2><p>Only the information relevant to a specific product and lawful request should be considered.</p></div><span className="customer-soft-pill">Guide only</span></div>{documentGuidance.map((item,index) => <article className="document-guidance-row" key={item.title}><span className="document-guidance-icon">{index === 0 ? <UserRound size={18} /> : index === 1 ? <FileCheck2 size={18} /> : index === 2 ? <WalletCards size={18} /> : <FolderCheck size={18} />}</span><div><strong>{item.title}</strong><p>{item.detail}</p></div><span className="document-guidance-status">Not requested</span></article>)}</section>
+      <aside className="customer-surface document-upload-surface"><div className="upload-empty-art"><span><UploadCloud size={28} /></span><i /><i /></div><span className="document-upload-preview-label"><LockKeyhole size={12} /> UPLOADS DISABLED</span><h2>Secure sharing is not connected yet.</h2><p>There is no file upload, identity collection or document storage in this demonstration. Do not enter or attach personal information.</p><button disabled className="disabled-upload-button"><UploadCloud size={16} /> Upload unavailable</button><small>Enabled only after secure storage, access controls, malware scanning, retention and audit are implemented.</small></aside></div>
     <section className="document-privacy-note"><ShieldCheck size={19} /><p><strong>Share only what is requested.</strong> A responsible process should explain why a document is needed, who can access it, how long it is retained and how to ask for correction or deletion where permitted.</p></section>
   </div>;
 }
-
-
 function NotificationsCentre({ onSectionChange }: Pick<CustomerExperienceProps, "onSectionChange">) {
   const [filter, setFilter] = useState<"All" | "Application" | "Documents" | "Security" | "Learning">("All");
   const visible = customerNotifications.filter((item) => filter === "All" || item.kind === filter);
