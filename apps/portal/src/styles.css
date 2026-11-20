@@ -2982,3 +2982,35 @@ button:focus-visible, input:focus-visible, select:focus-visible {
  .explore-comparison-card h3 { margin:4px 0; }
 }
 @media (prefers-reduced-motion:reduce) { .explore-comparison-card { transition:none; } .explore-comparison-card:hover { transform:none; } }
+
+
+/* Application Centre — visual journey rail */
+.application-journey-visual { margin:20px 0 22px; padding:23px; border:1px solid #e1e8f0; border-radius:21px; background:linear-gradient(145deg,#fff 0%,#f7f9fc 100%); box-shadow:0 10px 28px rgba(20,42,72,.035); }
+.application-journey-visual-heading { display:flex; align-items:flex-end; justify-content:space-between; gap:16px; }
+.application-journey-visual-heading h2 { margin:5px 0 5px; color:#203854; font-size:clamp(1.12rem,2vw,1.36rem); letter-spacing:-.04em; }
+.application-journey-visual-heading p { max-width:700px; margin:0; color:#748196; font-size:.79rem; line-height:1.6; }
+.application-journey-demo-pill { display:inline-flex; flex:0 0 auto; align-items:center; gap:6px; padding:7px 10px; border:1px solid #e5eaf0; border-radius:999px; color:#6d7d91; background:#f8fafd; font-size:.64rem; font-weight:800; }
+.application-journey-rail { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:0; margin-top:22px; }
+.application-journey-node { position:relative; display:flex; align-items:flex-start; gap:11px; min-width:0; padding:0 13px 0 0; }
+.application-journey-node:not(:last-child)::after { position:absolute; top:17px; left:40px; right:10px; height:2px; content:""; background:#e4eaf1; }
+.application-journey-node.complete:not(:last-child)::after { background:linear-gradient(90deg,#75a68c 0%,#dce9e1 100%); }
+.application-journey-node-marker { position:relative; z-index:1; display:grid; width:35px; height:35px; flex:0 0 35px; place-items:center; border:1px solid #dfe6ee; border-radius:50%; color:#8190a1; background:#fff; font-size:.72rem; font-weight:850; }
+.application-journey-node.complete .application-journey-node-marker { border-color:#c8dfd0; color:#39745e; background:#edf6f0; }
+.application-journey-node.current .application-journey-node-marker { border:2px solid #8ca9ca; color:#365b84; background:#edf3fa; box-shadow:0 0 0 4px rgba(67,111,160,.09); }
+.application-journey-node-copy { display:grid; gap:5px; min-width:0; padding-top:2px; }
+.application-journey-node-copy small { color:#94a0ae; font-size:.55rem; font-weight:850; letter-spacing:.08em; }
+.application-journey-node-copy strong { color:#2a405c; font-size:.76rem; line-height:1.35; }
+.application-journey-node-copy span { color:#8190a1; font-size:.61rem; line-height:1.4; }
+.application-journey-node.current .application-journey-node-copy strong { color:#315a86; }
+.application-journey-visual-note { display:flex; align-items:flex-start; gap:7px; margin:18px 0 0; padding-top:13px; border-top:1px solid #edf0f4; color:#78879a; font-size:.68rem; line-height:1.5; }
+.application-journey-visual-note svg { flex:0 0 auto; }
+@media (max-width:760px) {
+ .application-journey-visual { padding:17px; }
+ .application-journey-visual-heading { align-items:flex-start; flex-direction:column; }
+ .application-journey-rail { grid-template-columns:1fr; gap:0; margin-top:17px; }
+ .application-journey-node { min-height:70px; padding:0 0 14px; }
+ .application-journey-node:not(:last-child)::after { top:35px; bottom:0; left:17px; right:auto; width:2px; height:auto; }
+ .application-journey-node-copy { padding-top:1px; }
+ .application-journey-node-copy strong { font-size:.8rem; }
+}
+@media (prefers-reduced-motion:reduce) { .application-journey-node-marker { box-shadow:none; } }
