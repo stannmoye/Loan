@@ -470,3 +470,14 @@ The notifications inbox is sample-only, not a live message system. It has no eve
 - Refined account access guidance for multi-factor authentication, activity alerts, session review and privacy history.
 - Added responsive desktop/tablet/mobile layouts and reduced-motion support. Existing notification callback remains informational only.
 - No authentication, MFA, session termination, privacy preference mutation or personal-data collection was enabled. Tests and browser verification remain deferred as requested.
+
+
+## 2026-11-20 — Notifications Centre premium inbox design
+
+- Expanded the customer inbox with a dedicated category-navigation workspace for application, document, security and learning updates, using counts derived only from the existing illustrative notification fixtures.
+- Added a communication-channel overview for email, in-app and security notices, with each channel explicitly marked as unconfigured or not enabled.
+- Added planned-preference status messaging so the preview does not imply that communication settings can be saved or changed.
+- Preserved the existing sample inbox, category filtering, message copy, timestamps, navigation targets and explicit no-live-delivery boundary.
+- Added responsive category and channel layouts, keyboard focus treatment and reduced-motion support.
+- No notification delivery, read-state persistence, preference mutation, push subscription, email/SMS integration or delivery receipt functionality was activated.
+- Tests and browser verification remain deferred under the current design-first direction; this increment has not been runtime-verified.
