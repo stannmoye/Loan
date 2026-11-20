@@ -2817,3 +2817,86 @@ button:focus-visible, input:focus-visible, select:focus-visible {
   .help-support-journey { padding:17px; }
   .help-support-journey-heading { align-items:flex-start; flex-direction:column; }
 }
+
+
+/* Security & Profile — premium account protection workspace */
+.security-workspace-hero {
+  position:relative; display:flex; align-items:center; justify-content:space-between; gap:24px; overflow:hidden;
+  min-height:245px; margin:20px 0 18px; padding:27px 30px; border:1px solid #dce6f1; border-radius:23px;
+  background:linear-gradient(115deg,#f5f9ff 0%,#fff 57%,#f6f3ea 100%); box-shadow:0 13px 34px rgba(17,39,70,.055);
+}
+.security-workspace-copy { position:relative; z-index:1; max-width:660px; }
+.security-workspace-icon { display:grid; width:48px; height:48px; margin-bottom:15px; place-items:center; border:1px solid #d9e4f1; border-radius:15px; color:#315d91; background:#eaf1fb; }
+.security-workspace-copy h2 { max-width:600px; margin:6px 0 8px; color:#1d3452; font-size:clamp(1.35rem,2.7vw,1.9rem); letter-spacing:-.045em; line-height:1.18; }
+.security-workspace-copy p { max-width:610px; margin:0; color:#6b7b90; font-size:.88rem; line-height:1.7; }
+.security-preview-label { display:inline-flex; align-items:center; gap:6px; margin-top:15px; padding:7px 10px; border:1px solid #e7dcc3; border-radius:999px; color:#806632; background:#fbf6e9; font-size:.65rem; font-weight:850; letter-spacing:.07em; }
+.security-workspace-art { position:relative; display:grid; width:220px; height:190px; flex:0 0 220px; place-items:center; }
+.security-art-orbit { position:absolute; width:164px; height:164px; border:1px solid #dbe5f1; border-radius:50%; }
+.security-art-orbit.orbit-b { width:125px; height:125px; border-style:dashed; border-color:#d7cba9; }
+.security-art-shield { display:grid; width:100px; height:112px; place-items:center; border:1px solid #cfdbeb; border-radius:32px 32px 38px 38px; color:#315d91; background:linear-gradient(145deg,#fff,#e8f0fa); box-shadow:0 15px 32px rgba(45,77,117,.13); }
+.security-art-lock { position:absolute; right:22px; bottom:28px; display:grid; width:39px; height:39px; place-items:center; border:3px solid #fff; border-radius:13px; color:#826a3d; background:#f8efd9; box-shadow:0 5px 15px rgba(50,55,65,.1); }
+.security-art-spark { position:absolute; color:#b29356; font-size:24px; }
+.security-art-spark.spark-a { top:19px; right:42px; }
+.security-art-spark.spark-b { bottom:22px; left:26px; }
+.security-status-overview { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); margin:18px 0 27px; overflow:hidden; border:1px solid #e1e8f0; border-radius:18px; background:#fff; box-shadow:0 8px 24px rgba(20,42,72,.035); }
+.security-status-overview article { display:flex; align-items:flex-start; gap:11px; min-width:0; padding:17px 15px; }
+.security-status-overview article + article { border-left:1px solid #e8edf3; }
+.security-status-icon { display:grid; width:37px; height:37px; flex:0 0 37px; place-items:center; border-radius:11px; color:#42658f; background:#edf3fa; }
+.security-status-overview article div { display:grid; gap:3px; min-width:0; }
+.security-status-overview small { color:#8290a1; font-size:.6rem; font-weight:850; letter-spacing:.07em; }
+.security-status-overview strong { color:#293f5b; font-size:.85rem; }
+.security-status-overview p { margin:0; color:#8995a4; font-size:.68rem; line-height:1.45; }
+.security-foundation-enhanced { position:relative; min-height:174px; padding-bottom:39px; }
+.security-foundation-identity { color:#345f91 !important; background:#edf3fb !important; }
+.security-foundation-access { color:#866b36 !important; background:#f8f2e4 !important; }
+.security-foundation-sessions { color:#39745e !important; background:#eaf4ee !important; }
+.security-foundation-privacy { color:#69578e !important; background:#f1edf8 !important; }
+.security-capability-state { position:absolute; right:13px; bottom:13px; left:13px; width:max-content; max-width:calc(100% - 26px); padding:4px 8px; border-radius:999px; color:#7f704e; background:#f7f3e9; font-size:.61rem; font-weight:800; }
+.security-session-preview,.security-privacy-preview { margin:23px 0; padding:22px; border:1px solid #e2e9f1; border-radius:19px; background:linear-gradient(145deg,#fff,#f8fafd); }
+.security-session-heading { display:flex; align-items:flex-end; justify-content:space-between; gap:15px; }
+.security-session-heading h2 { margin:5px 0; color:#203854; font-size:1.22rem; letter-spacing:-.03em; }
+.security-session-heading p { max-width:650px; margin:0; color:#748196; font-size:.82rem; line-height:1.6; }
+.security-session-empty { display:flex; align-items:center; gap:13px; margin-top:17px; padding:16px; border:1px dashed #d7e0eb; border-radius:14px; background:#fbfcfe; }
+.security-session-empty > span:first-child { display:grid; width:42px; height:42px; flex:0 0 42px; place-items:center; border-radius:12px; color:#53749a; background:#edf3fa; }
+.security-session-empty > div { flex:1; min-width:0; }
+.security-session-empty strong { color:#2a405d; font-size:.87rem; }
+.security-session-empty p { margin:4px 0 0; color:#778498; font-size:.77rem; line-height:1.55; }
+.security-session-empty-state { flex:0 0 auto; color:#8a754c; font-size:.67rem; font-weight:800; }
+.security-privacy-grid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:12px; margin-top:18px; }
+.security-privacy-grid article { display:flex; flex-direction:column; align-items:flex-start; min-width:0; padding:17px; border:1px solid #e5ebf2; border-radius:15px; background:#fff; }
+.security-privacy-grid article > span { display:grid; width:38px; height:38px; margin-bottom:12px; place-items:center; border-radius:11px; color:#456a94; background:#edf3fa; }
+.security-privacy-grid strong { color:#2a405c; font-size:.87rem; }
+.security-privacy-grid p { flex:1; margin:6px 0 12px; color:#748196; font-size:.76rem; line-height:1.58; }
+.security-privacy-grid small { color:#8a754c; font-size:.65rem; font-weight:800; }
+.security-privacy-footer { display:flex; align-items:center; gap:9px; margin-top:13px; padding:12px 14px; border:1px solid #e0e9e3; border-radius:12px; color:#597263; background:#f3f8f4; font-size:.76rem; line-height:1.55; }
+.security-privacy-footer svg { flex:0 0 auto; }
+@media (max-width:900px) {
+  .security-status-overview { grid-template-columns:repeat(2,minmax(0,1fr)); }
+  .security-status-overview article:nth-child(3) { border-top:1px solid #e8edf3; border-left:0; }
+  .security-status-overview article:nth-child(4) { border-top:1px solid #e8edf3; }
+}
+@media (max-width:760px) {
+  .security-workspace-hero { min-height:0; padding:20px; }
+  .security-workspace-art { width:115px; height:125px; flex-basis:115px; transform:scale(.78); transform-origin:center right; margin-left:-12px; }
+  .security-art-orbit { width:125px; height:125px; }
+  .security-art-orbit.orbit-b { width:96px; height:96px; }
+  .security-art-shield { width:75px; height:84px; border-radius:24px; }
+  .security-art-lock { right:0; bottom:9px; }
+  .security-session-preview,.security-privacy-preview { padding:17px; }
+  .security-session-heading { align-items:flex-start; flex-direction:column; }
+  .security-session-empty { align-items:flex-start; flex-wrap:wrap; }
+  .security-session-empty-state { margin-left:55px; }
+  .security-privacy-grid { grid-template-columns:1fr; }
+  .security-privacy-grid article { min-height:0; }
+}
+@media (max-width:480px) {
+  .security-workspace-hero { display:block; }
+  .security-workspace-art { position:absolute; right:8px; bottom:0; opacity:.22; }
+  .security-workspace-copy { max-width:none; }
+  .security-status-overview { grid-template-columns:1fr; }
+  .security-status-overview article { padding:13px 16px; }
+  .security-status-overview article + article { border-top:1px solid #e8edf3; border-left:0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .security-workspace-art *, .security-foundation-enhanced { transition:none !important; animation:none !important; }
+}
