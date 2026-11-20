@@ -1939,3 +1939,171 @@ button:focus-visible, input:focus-visible, select:focus-visible {
     transform: none;
   }
 }
+
+
+/* Overview account-services panel: a clear, sample-only account readiness view */
+.overview-account-services {
+  position:relative;
+  margin:16px 0 22px;
+  padding:19px;
+  overflow:hidden;
+  border:1px solid #dfe8f2;
+  border-radius:17px;
+  background:
+    radial-gradient(circle at 100% 0%,rgba(220,233,248,.58),transparent 34%),
+    linear-gradient(135deg,#f7faff 0%,#f1f6fc 100%);
+  box-shadow:0 9px 24px rgba(22,48,79,.045);
+}
+.overview-account-services::after {
+  content:"";
+  position:absolute;
+  width:185px;
+  height:185px;
+  right:-115px;
+  bottom:-128px;
+  border:1px solid rgba(115,148,184,.16);
+  border-radius:50%;
+  pointer-events:none;
+}
+.overview-account-services-heading {
+  position:relative;
+  z-index:1;
+  display:flex;
+  align-items:flex-start;
+  justify-content:space-between;
+  gap:16px;
+  margin-bottom:14px;
+}
+.overview-account-services-heading h2 {
+  margin:5px 0 4px;
+  color:#203a59;
+  font-size:18px;
+  line-height:1.25;
+  letter-spacing:-.55px;
+}
+.overview-account-services-heading p {
+  margin:0;
+  color:#7d8da1;
+  font-size:10px;
+  line-height:1.55;
+}
+.overview-preview-state {
+  display:inline-flex;
+  align-items:center;
+  flex:0 0 auto;
+  gap:6px;
+  padding:7px 9px;
+  border:1px solid #e6dcbf;
+  border-radius:8px;
+  background:rgba(255,252,244,.86);
+  color:#846a3b;
+  font-size:8px;
+  font-weight:800;
+  letter-spacing:.15px;
+}
+.overview-account-services-grid {
+  position:relative;
+  z-index:1;
+  display:grid;
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:10px;
+}
+.overview-account-service {
+  display:flex;
+  align-items:flex-start;
+  gap:11px;
+  min-width:0;
+  min-height:91px;
+  padding:13px;
+  border:1px solid rgba(222,232,243,.95);
+  border-radius:12px;
+  background:rgba(255,255,255,.88);
+  box-shadow:0 4px 12px rgba(28,54,83,.025);
+}
+.overview-account-service-icon {
+  width:35px;
+  height:35px;
+  display:grid;
+  place-items:center;
+  flex:0 0 auto;
+  border:1px solid #e0e9f3;
+  border-radius:10px;
+  background:#edf4fd;
+  color:#416e9b;
+}
+.overview-account-service-icon.service-gold {
+  border-color:#eee4d0;
+  background:#fbf6eb;
+  color:#98773f;
+}
+.overview-account-service-icon.service-green {
+  border-color:#dceee3;
+  background:#eef7f1;
+  color:#477d5c;
+}
+.overview-account-service > div {
+  display:flex;
+  flex-direction:column;
+  align-items:flex-start;
+  gap:4px;
+  min-width:0;
+}
+.overview-account-service small {
+  color:#8997a8;
+  font-size:8px;
+  font-weight:850;
+  letter-spacing:.75px;
+}
+.overview-account-service strong {
+  color:#344b65;
+  font-size:10px;
+  line-height:1.4;
+}
+.overview-service-status {
+  margin-top:2px;
+  color:#8794a5;
+  font-size:8px;
+  font-weight:650;
+  line-height:1.35;
+}
+.overview-account-services-link {
+  position:relative;
+  z-index:1;
+  margin-top:7px;
+}
+@media (max-width: 900px) {
+  .overview-account-services-grid {
+    grid-template-columns:1fr;
+  }
+  .overview-account-service {
+    min-height:unset;
+    align-items:center;
+  }
+}
+@media (max-width: 560px) {
+  .overview-account-services {
+    margin:13px 0 18px;
+    padding:14px;
+    border-radius:14px;
+  }
+  .overview-account-services-heading {
+    flex-direction:column;
+    gap:9px;
+  }
+  .overview-account-services-heading h2 {
+    font-size:16px;
+  }
+  .overview-account-services-grid {
+    gap:8px;
+  }
+  .overview-account-service {
+    padding:11px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .overview-account-services,
+  .overview-account-services * {
+    scroll-behavior:auto;
+    transition:none !important;
+  }
+}
