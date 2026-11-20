@@ -341,3 +341,13 @@ The notifications inbox is sample-only, not a live message system. It has no eve
 - Improved responsive spacing and component treatment for tablet and mobile widths, while preserving existing routes, component structure, data contracts and interaction handlers.
 - No backend or workflow behavior was changed in this design increment.
 - Per the project direction on 2026-11-20, repetitive test runs are deferred while the design implementation continues. The added tests remain in the repository; current visual changes are not being reported as tested or verified. Functionality and validation will be revisited incrementally in a later stage.
+
+
+## 2026-11-20 — Operations workspace visual enhancement
+
+- Reworked the operations overview into a clearer dashboard composition with four sample status metrics: total cases, needs review, waiting on customer and completed.
+- Added a status-composition visual with an accessible text alternative and a legend derived from the existing illustrative case fixture data. The distribution is explicitly labelled as sample-only, not live operational analytics.
+- Improved case-list identity treatment with compact initials, stronger customer-name hierarchy and clearer product alignment.
+- Added responsive layouts for the queue overview and its composition panel at desktop, tablet and mobile widths.
+- Preserved the existing sample-only review controls and did not introduce approval, rejection, credit-decision or transaction functionality.
+- As requested, routine test runs remain deferred during this design-first phase. The new presentation changes are not reported as tested or verified.
