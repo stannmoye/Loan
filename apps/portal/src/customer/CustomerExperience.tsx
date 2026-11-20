@@ -321,6 +321,16 @@ function ApplicationJourney({
           <div><small>ASSESSMENT</small><strong>Not performed</strong><span>No lending decision recorded</span></div>
         </article>
       </section>
+      <section className="application-journey-visual" aria-label="Illustrative application journey at a glance">
+        <div className="application-journey-visual-heading"><div><Eyebrow>JOURNEY AT A GLANCE</Eyebrow><h2>Every stage, explained.</h2><p>A simple visual guide to the example journey. Actual steps and timing vary by provider and application.</p></div><span className="application-journey-demo-pill"><Info size={13} /> Illustrative only</span></div>
+        <div className="application-journey-rail">
+          {applicationSteps.map((step, index) => <article className={"application-journey-node " + step.state} key={step.title}>
+            <span className="application-journey-node-marker">{step.state === "complete" ? <Check size={15} /> : index + 1}</span>
+            <div className="application-journey-node-copy"><small>STAGE {String(index + 1).padStart(2, "0")}</small><strong>{step.title}</strong><span>{step.state === "complete" ? "Shown complete" : step.state === "current" ? "Highlighted in example" : "Possible next stage"}</span></div>
+          </article>)}
+        </div>
+        <p className="application-journey-visual-note"><ShieldCheck size={14} /> No checks, verification or lending assessment are performed by this demonstration timeline.</p>
+      </section>
       <section className="application-stage-key" aria-label="How to read the sample application timeline">
         <div className="application-stage-key-item"><span className="stage-key-icon stage-key-complete"><Check size={13} /></span><div><strong>Complete</strong><small>A milestone shown as recorded</small></div></div>
         <div className="application-stage-key-item"><span className="stage-key-icon stage-key-current"><Info size={13} /></span><div><strong>Current</strong><small>The example's highlighted stage</small></div></div>
