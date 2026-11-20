@@ -8,6 +8,7 @@ import {
 import { reviewCases, type CaseStatus, type ReviewCase } from "./data/fixtures";
 import { CustomerExperience } from "./customer/CustomerExperience";
 import type { CustomerSection } from "./customer/customer-data";
+import type { CustomerApplicationApi } from "./customer/customer-api";
 
 type Mode = "customer" | "operations";
 
@@ -38,7 +39,9 @@ function Brand() {
   return <div className="brand"><span className="brand-mark"><Landmark size={19} strokeWidth={1.8} /></span><span>northline<span className="brand-period">.</span></span></div>;
 }
 
-function App() {
+type AppProps = { applicationApi?: CustomerApplicationApi };
+
+function App({ applicationApi }: AppProps = {}) {
   const [mode, setMode] = useState<Mode>(() => window.location.pathname === "/operations" ? "operations" : "customer");
   const [query, setQuery] = useState("");
   const [filter, setFilter] = useState<"All" | CaseStatus>("All");
@@ -124,7 +127,7 @@ function App() {
         <div className="content-wrap">
           <div className="mode-switch" role="group" aria-label="Preview workspace"><button className={mode === "customer" ? "mode-active" : ""} onClick={() => changeMode("customer")}>Customer view</button><button className={mode === "operations" ? "mode-active" : ""} onClick={() => changeMode("operations")}>Operations view</button></div>
           {notice && <div className="notice-banner" role="status"><span>{notice}</span><button aria-label="Dismiss notice" onClick={() => setNotice("")}><X size={16} /></button></div>}
-          {mode === "customer" ? <CustomerExperience section={customerSection} onSectionChange={changeCustomerSection} onNotice={setNotice} /> : <OperationsView query={query} setQuery={setQuery} filter={filter} setFilter={setFilter} cases={filteredCases} selected={selected} setSelected={setSelected} onNotice={setNotice} />}
+          {mode === "customer" ? <CustomerExperience section={customerSection} onSectionChange={changeCustomerSection} onNotice={setNotice} applicationApi={applicationApi} /> : <OperationsView query={query} setQuery={setQuery} filter={filter} setFilter={setFilter} cases={filteredCases} selected={selected} setSelected={setSelected} onNotice={setNotice} />}
           <footer className="page-footer"><span>Northline is a product concept for a lending platform.</span><span>Illustrative interface · No live financial services</span></footer>
         </div>
       </main>
