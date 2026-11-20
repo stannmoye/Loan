@@ -451,3 +451,12 @@ The notifications inbox is sample-only, not a live message system. It has no eve
 - Strengthened the upload-disabled presentation and repeated the preview boundary so customers are not invited to submit sensitive files through an unconfigured service.
 - Added responsive desktop/mobile layouts, accessible section headings and reduced-motion behavior while preserving the existing document guidance and route structure.
 - No upload, file storage, malware scanning, document review, retention or customer identity functionality was activated. No tests or browser checks were run in accordance with the current design-first instruction.
+
+
+## 2026-11-20 — Help Centre service workspace design
+
+- Added a support-service overview that separates self-service guidance, future secure messaging and account-safety information, with live-channel availability clearly identified.
+- Added a three-step future support journey covering topic selection, authenticated access and response tracking.
+- Preserved the existing FAQ accordion, navigation pathways, impersonation guidance and explicit notice that this preview is not a monitored support channel.
+- Added responsive service cards and support-flow layouts for mobile and desktop.
+- No support inbox, chat, case submission, contact endpoint or customer messaging capability was activated. No tests or browser checks were run during this design-first pass.
