@@ -2949,3 +2949,36 @@ button:focus-visible, input:focus-visible, select:focus-visible {
   .notifications-category-card { transition:none; }
   .notifications-category-card:hover { transform:none; }
 }
+
+
+/* Finance Explorer — comparison framework and learning hierarchy */
+.explore-comparison-framework { margin:28px 0; padding:24px; border:1px solid #e1e8f0; border-radius:21px; background:linear-gradient(145deg,#fff 0%,#f7f9fc 100%); box-shadow:0 10px 28px rgba(20,42,72,.035); }
+.explore-comparison-heading { display:flex; align-items:flex-end; justify-content:space-between; gap:18px; }
+.explore-comparison-heading h2 { margin:5px 0 6px; color:#203854; font-size:clamp(1.12rem,2vw,1.38rem); letter-spacing:-.04em; }
+.explore-comparison-heading p { max-width:690px; margin:0; color:#748196; font-size:.8rem; line-height:1.65; }
+.explore-framework-badge { display:inline-flex; align-items:center; gap:7px; flex:0 0 auto; padding:8px 11px; border:1px solid #dce8e0; border-radius:999px; color:#39745e; background:#f0f7f2; font-size:.66rem; font-weight:800; }
+.explore-comparison-grid { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:11px; margin-top:19px; }
+.explore-comparison-card { min-width:0; padding:16px; border:1px solid #e5ebf2; border-radius:16px; background:#fff; }
+.explore-comparison-icon { display:grid; width:39px; height:39px; place-items:center; margin-bottom:15px; border-radius:12px; }
+.comparison-cost { color:#42658f; background:#edf3fa; }
+.comparison-time { color:#876b36; background:#f8f2e4; }
+.comparison-flex { color:#69578e; background:#f1edf8; }
+.comparison-protect { color:#39745e; background:#eaf4ee; }
+.explore-comparison-card > small { color:#8a96a5; font-size:.59rem; font-weight:850; letter-spacing:.075em; }
+.explore-comparison-card h3 { margin:7px 0 6px; color:#2a405c; font-size:.86rem; letter-spacing:-.02em; }
+.explore-comparison-card p { margin:0; color:#748196; font-size:.73rem; line-height:1.6; }
+.explore-comparison-card { transition:transform .18s ease,border-color .18s ease,box-shadow .18s ease; }
+.explore-comparison-card:hover { transform:translateY(-2px); border-color:#d1dce9; box-shadow:0 9px 20px rgba(25,49,79,.06); }
+.explore-comparison-card:focus-within { outline:2px solid rgba(56,105,159,.24); outline-offset:2px; }
+@media (max-width:1000px) { .explore-comparison-grid { grid-template-columns:repeat(2,minmax(0,1fr)); } }
+@media (max-width:760px) {
+ .explore-comparison-framework { padding:17px; }
+ .explore-comparison-heading { align-items:flex-start; flex-direction:column; }
+ .explore-comparison-grid { grid-template-columns:1fr; }
+ .explore-comparison-card { display:grid; grid-template-columns:42px 1fr; column-gap:12px; align-items:center; }
+ .explore-comparison-icon { grid-row:1 / span 2; margin:0; }
+ .explore-comparison-card > small,.explore-comparison-card h3,.explore-comparison-card p { grid-column:2; }
+ .explore-comparison-card > small { align-self:end; }
+ .explore-comparison-card h3 { margin:4px 0; }
+}
+@media (prefers-reduced-motion:reduce) { .explore-comparison-card { transition:none; } .explore-comparison-card:hover { transform:none; } }
