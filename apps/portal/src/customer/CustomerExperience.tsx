@@ -212,6 +212,9 @@ function ApplicationJourney({
   onSectionChange,
   applicationApi,
 }: Pick<CustomerExperienceProps, "onSectionChange"> & { applicationApi?: CustomerApplicationApi }) {
+  const sampleCompletedSteps = applicationSteps.filter((step) => step.state === "complete").length;
+  const sampleCurrentStep = applicationSteps.find((step) => step.state === "current");
+
   const [applications, setApplications] = useState<CustomerApplication[] | null>(null);
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const [selected, setSelected] = useState<CustomerApplication | null>(null);
@@ -295,6 +298,20 @@ function ApplicationJourney({
       <PageHeading eyebrow="APPLICATION CENTRE" title="Follow your application." description="A clear explanation of the stages a real application may move through. The record below is illustrative only." />
       <SampleBanner compact />
       <section className="application-overview-card"><div className="application-overview-top"><div className="application-product-icon"><FileText size={22} /></div><div><span className="application-id-label">SAMPLE REFERENCE</span><h2>Personal finance enquiry</h2><p>SAMPLE-APP-001 · Created 19 November 2026</p></div><span className="application-review-label"><i /> In review</span></div><div className="application-overview-bottom"><div><span>Application status</span><strong>Illustrative review stage</strong></div><div><span>Next update</span><strong>Not available in preview</strong></div><div><span>Assigned team</span><strong>Not connected</strong></div></div></section>
+      <section className="application-glance-grid" aria-label="Illustrative application summary">
+        <article className="application-glance-card glance-progress">
+          <span className="application-glance-icon"><ClipboardList size={18} /></span>
+          <div><small>JOURNEY PROGRESS</small><strong>{sampleCompletedSteps} of {applicationSteps.length} stages</strong><span>Shown complete in this example</span></div>
+        </article>
+        <article className="application-glance-card glance-current">
+          <span className="application-glance-icon"><CalendarDays size={18} /></span>
+          <div><small>HIGHLIGHTED STAGE</small><strong>{sampleCurrentStep?.title ?? "No current stage shown"}</strong><span>Illustrative status only</span></div>
+        </article>
+        <article className="application-glance-card glance-decision">
+          <span className="application-glance-icon"><ShieldCheck size={18} /></span>
+          <div><small>ASSESSMENT</small><strong>Not performed</strong><span>No lending decision recorded</span></div>
+        </article>
+      </section>
       <section className="application-stage-key" aria-label="How to read the sample application timeline">
         <div className="application-stage-key-item"><span className="stage-key-icon stage-key-complete"><Check size={13} /></span><div><strong>Complete</strong><small>A milestone shown as recorded</small></div></div>
         <div className="application-stage-key-item"><span className="stage-key-icon stage-key-current"><Info size={13} /></span><div><strong>Current</strong><small>The example's highlighted stage</small></div></div>
@@ -315,7 +332,7 @@ function ApplicationJourney({
       : applications?.length === 0 ? <section className="application-live-empty"><span className="application-empty-mark"><FileText size={25} /></span><h2>No applications found.</h2><p>There are no application records linked to this customer account yet. This does not mean an application has been approved or declined.</p><button className="customer-outline-button" onClick={() => onSectionChange("explore")}>Explore finance information <ArrowRight size={14} /></button></section>
       : <div className="application-live-layout">
         <section className="customer-surface application-record-list"><div className="customer-surface-heading"><div><Eyebrow>YOUR RECORDS</Eyebrow><h2>Application history</h2><p>{applications?.length ?? 0} record{applications?.length === 1 ? "" : "s"} · Most recent first</p></div><span className="customer-soft-pill">Live records</span></div>
-          {(applications ?? []).map((application) => <button key={application.id} className={selectedId === application.id ? "application-record-item selected" : "application-record-item"} onClick={() => { setSelectedId(application.id); setActionMessage(""); setError(""); }}>
+          {(applications ?? []).map((application) => <button key={application.id} type="button" aria-pressed={selectedId === application.id} className={selectedId === application.id ? "application-record-item selected" : "application-record-item"} onClick={() => { setSelectedId(application.id); setActionMessage(""); setError(""); }}>
             <span className="application-record-icon"><FileText size={17} /></span><span className="application-record-copy"><strong>{application.product_terms_snapshot.productName}</strong><small>{application.id}</small><small>{formatApplicationDate(application.created_at)}</small></span><span className={"application-record-status status-" + application.status}>{applicationStatusLabel(application.status)}</span>
           </button>)}
         </section>
