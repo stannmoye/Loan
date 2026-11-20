@@ -1783,3 +1783,56 @@ button:focus-visible, input:focus-visible, select:focus-visible {
   .loan-data-framework-card { transition:none; }
   .loan-data-framework-card:hover { transform:none; }
 }
+
+
+/* Application journey: clarify milestone meanings before the detailed timeline */
+.application-stage-key {
+  display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:10px;
+}
+.application-stage-key-item {
+  display:flex; align-items:center; gap:10px; min-width:0; padding:12px 14px;
+  border:1px solid #e2eaf3; border-radius:12px; background:#fff;
+}
+.stage-key-icon {
+  width:30px; height:30px; display:grid; place-items:center; flex:0 0 auto;
+  border:1px solid #dfe7ef; border-radius:9px; background:#f4f6f9; color:#7c8a9c;
+}
+.stage-key-icon.stage-key-complete { border-color:#d7eadf; background:#eff8f2; color:#41805a; }
+.stage-key-icon.stage-key-current { border-color:#d6e4f4; background:#edf4fd; color:#38699d; }
+.application-stage-key-item > div { display:flex; flex-direction:column; gap:3px; min-width:0; }
+.application-stage-key-item strong { color:#354b64; font-size:9px; }
+.application-stage-key-item small { color:#8794a5; font-size:8px; line-height:1.4; }
+.application-overview-card {
+  position:relative; overflow:hidden;
+  background:linear-gradient(145deg,#fff 0%,#fbfdff 100%);
+}
+.application-overview-card::after {
+  content:""; position:absolute; width:180px; height:180px; right:-75px; top:-112px;
+  border:1px solid #e7eef6; border-radius:50%; pointer-events:none;
+}
+.application-overview-top { position:relative; z-index:1; }
+.application-product-icon {
+  width:47px; height:47px; border:1px solid #dce8f5;
+  background:linear-gradient(145deg,#edf4ff,#e7f0fc);
+  box-shadow:0 5px 13px rgba(36,76,120,.06);
+}
+.application-long-step { min-height:96px; }
+.application-long-marker { box-shadow:0 0 0 4px #fff; }
+.application-long-step.current .application-long-marker { box-shadow:0 0 0 4px #f4f8fd; }
+@media (max-width: 680px) {
+  .application-stage-key { grid-template-columns:1fr; gap:7px; }
+  .application-stage-key-item { padding:10px 12px; }
+  .application-stage-key-item small { font-size:8px; }
+  .application-overview-card { padding:15px; }
+  .application-overview-top { flex-wrap:wrap; }
+  .application-overview-top .application-review-label { margin-left:60px; }
+  .application-overview-bottom { grid-template-columns:1fr 1fr; gap:12px; }
+  .application-long-step { grid-template-columns:30px minmax(0,1fr); gap:10px; min-height:unset; }
+  .application-long-step:not(:last-child)::after { left:14px; top:30px; }
+  .application-long-marker { width:29px; height:29px; }
+  .application-long-copy { padding-bottom:22px; }
+  .application-long-step time { grid-column:2; padding:0 0 15px; margin-top:-13px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .application-long-marker { scroll-behavior:auto; }
+}
