@@ -1,7 +1,8 @@
-import { fireEvent, render, screen, within } from "@testing-library/react";
+import { fireEvent, render, screen, waitFor, within } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
 import { CustomerExperience } from "./CustomerExperience";
 import { financeCategories, totalProductTypes } from "./customer-data";
+import type { CustomerApplication, CustomerApplicationApi } from "./customer-api";
 
 const onSectionChange = vi.fn();
 const onNotice = vi.fn();
@@ -78,4 +79,88 @@ describe("CustomerExperience", () => {
     expect(screen.getAllByText("Not connected").length).toBeGreaterThan(0);
     expect(screen.getByText(/do not enter identity numbers/i)).toBeInTheDocument();
   });
+
+  it("renders authenticated application history and its persisted timeline", async () => {
+    const record: CustomerApplication = {
+      id: "application-123", status: "submitted", requested_amount: "1250.00",
+      currency_code: "NGN", requested_duration_days: 180,
+      product_terms_snapshot: {
+        productId: 1, productCode: "PERSONAL-01", productName: "Personal finance",
+        productVersionId: 2, versionNumber: 2, currencyCode: "NGN",
+        minimumAmount: "1000.00", maximumAmount: "500000.00",
+        minimumDurationDays: 30, maximumDurationDays: 365, interestModel: "fixed",
+        annualInterestRateBps: 1200, repaymentFrequency: "monthly",
+        requiresCollateral: false, requiresGuarantor: false, riskReviewRequired: true,
+        effectiveFrom: null, effectiveUntil: null,
+      },
+      submitted_at: "2026-11-20T09:00:00.000Z",
+      created_at: "2026-11-20T08:00:00.000Z",
+      updated_at: "2026-11-20T09:00:00.000Z",
+      timeline: [{
+        event_type: "customer.application.submitted", from_status: "draft",
+        to_status: "submitted", created_at: "2026-11-20T09:00:00.000Z",
+      }],
+    };
+    const api: CustomerApplicationApi = {
+      listApplications: vi.fn(async () => [record]),
+      getApplication: vi.fn(async () => record),
+      submitApplication: vi.fn(async () => ({ id: record.id, status: "submitted" as const })),
+      withdrawApplication: vi.fn(async () => ({ id: record.id, status: "withdrawn" as const })),
+    };
+
+    render(<CustomerExperience section="applications" onSectionChange={onSectionChange} onNotice={onNotice} applicationApi={api} />);
+    expect(await screen.findByRole("heading", { name: "Your applications." })).toBeInTheDocument();
+    expect(await screen.findByRole("heading", { name: "Personal finance" })).toBeInTheDocument();
+    expect(screen.getByText("NGN 1250.00")).toBeInTheDocument();
+    expect(screen.getByText("Submitted")).toBeInTheDocument();
+    expect(screen.getByText(/customer application submitted/i)).toBeInTheDocument();
+    expect(api.listApplications).toHaveBeenCalledTimes(1);
+    expect(api.getApplication).toHaveBeenCalledWith(record.id);
+    expect(screen.queryByText(/illustrative preview/i)).not.toBeInTheDocument();
+  });
+
+  it("withdraws an eligible application and refreshes the persisted status", async () => {
+    const record: CustomerApplication = {
+      id: "application-eligible", status: "submitted", requested_amount: "5000.00",
+      currency_code: "NGN", requested_duration_days: 90,
+      product_terms_snapshot: {
+        productId: 2, productCode: "EDU-01", productName: "Education finance",
+        productVersionId: 1, versionNumber: 1, currencyCode: "NGN",
+        minimumAmount: "1000.00", maximumAmount: "500000.00",
+        minimumDurationDays: 30, maximumDurationDays: 365, interestModel: "fixed",
+        annualInterestRateBps: 900, repaymentFrequency: "monthly",
+        requiresCollateral: false, requiresGuarantor: false, riskReviewRequired: false,
+        effectiveFrom: null, effectiveUntil: null,
+      },
+      submitted_at: "2026-11-20T09:00:00.000Z",
+      created_at: "2026-11-20T08:00:00.000Z",
+      updated_at: "2026-11-20T09:00:00.000Z", timeline: [],
+    };
+    const withdrawn: CustomerApplication = { ...record, status: "withdrawn", updated_at: "2026-11-20T10:00:00.000Z" };
+    const api: CustomerApplicationApi = {
+      listApplications: vi.fn().mockResolvedValueOnce([record]).mockResolvedValueOnce([withdrawn]),
+      getApplication: vi.fn().mockResolvedValueOnce(record).mockResolvedValueOnce(withdrawn),
+      submitApplication: vi.fn(),
+      withdrawApplication: vi.fn(async () => ({ id: record.id, status: "withdrawn" as const })),
+    };
+
+    render(<CustomerExperience section="applications" onSectionChange={onSectionChange} onNotice={onNotice} applicationApi={api} />);
+    fireEvent.click(await screen.findByRole("button", { name: /withdraw application/i }));
+    await waitFor(() => expect(api.withdrawApplication).toHaveBeenCalledWith(record.id));
+    expect(await screen.findByText("Your withdrawal request was recorded. The latest application status is shown below.")).toBeInTheDocument();
+    expect(await screen.findByText("Withdrawn")).toBeInTheDocument();
+    expect(screen.queryByRole("button", { name: /withdraw application/i })).not.toBeInTheDocument();
+    expect(api.getApplication).toHaveBeenCalledTimes(2);
+  });
+
+  it("shows an accurate empty state when the customer has no application records", async () => {
+    const api: CustomerApplicationApi = {
+      listApplications: vi.fn(async () => []), getApplication: vi.fn(),
+      submitApplication: vi.fn(), withdrawApplication: vi.fn(),
+    };
+    render(<CustomerExperience section="applications" onSectionChange={onSectionChange} onNotice={onNotice} applicationApi={api} />);
+    expect(await screen.findByRole("heading", { name: "No applications found." })).toBeInTheDocument();
+    expect(screen.queryByText(/sample-app-001/i)).not.toBeInTheDocument();
+  });
+
 });
