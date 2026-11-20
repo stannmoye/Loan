@@ -51,6 +51,7 @@ export type CustomerAccountRouteOptions = {
   tokenConfig: CustomerTokenConfig | null;
   profileEncryptionKeyHex: string | null;
   consentVersions: CustomerConsentVersions | null;
+  applicationDeclarationVersion: string | null;
   verifyToken?: typeof verifyCustomerAccessToken;
   service?: CustomerAccountService;
 };
@@ -75,6 +76,7 @@ function configuredOptions(): CustomerAccountRouteOptions {
       publicKeyPem: env.CUSTOMER_JWT_PUBLIC_KEY_PEM!,
     } : null,
     profileEncryptionKeyHex: env.CUSTOMER_PROFILE_ENCRYPTION_KEY_HEX ?? null,
+    applicationDeclarationVersion: env.CUSTOMER_APPLICATION_DECLARATION_VERSION ?? null,
     consentVersions: env.CUSTOMER_PRIVACY_NOTICE_VERSION && env.CUSTOMER_TERMS_OF_SERVICE_VERSION
       ? {
         privacyNoticeVersion: env.CUSTOMER_PRIVACY_NOTICE_VERSION,
@@ -182,6 +184,10 @@ export function buildCustomerAccountRoutes(options: CustomerAccountRouteOptions)
       const context = await requireContext(identity);
       const parsed = createCustomerLoanApplicationSchema.safeParse(request.body);
       if (!parsed.success) return reply.code(400).send({ error: 'Invalid loan application', details: parsed.error.flatten() });
+      if (!options.applicationDeclarationVersion) throw publicRouteError('The approved application declaration version is not configured', 503);
+      if (parsed.data.applicantDeclarationVersion !== options.applicationDeclarationVersion) {
+        return reply.code(400).send({ error: 'The application declaration version is outdated. Review the current declaration and try again.' });
+      }
       const result = await applicationService.create(context, parsed.data, requireProfileEncryptionKey());
       return reply.code(201).send({ data: result });
     });
