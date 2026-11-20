@@ -1,5 +1,31 @@
 # Project Progress
 
+## 2026-11-20 — Customer application tracking integration increment (CI pending)
+
+### Implemented on `feat/customer-operations-portal-shell`
+
+- Extended the typed customer API client with authenticated application list/detail/submit/withdraw operations. Each request obtains a fresh provider token through the existing injected callback; identifiers are URL-encoded, cookies are omitted, caching is disabled, and redirects are rejected.
+- Added typed application status, product-term snapshot and timeline contracts matching the customer application API response.
+- Replaced the illustrative application journey with a live-record view when a trusted application API adapter is injected: loading, error/retry, empty, list/detail, immutable product-term context, recorded status timeline and eligible withdrawal states.
+- Kept the existing sample journey strictly as a preview fallback when no authenticated application adapter is supplied. No fabricated record is represented as a real customer account.
+- Exposed an optional application API adapter at the portal composition root. The app still does not instantiate one because no external identity provider/token callback has been selected or configured.
+- Added API-client and component tests for customer-authenticated requests, application history, empty states and withdrawal refresh behavior.
+- Added responsive styles for application records, status labels, timeline, empty/loading/error/success states.
+
+### Security and product boundaries
+
+- The application UI is not live in the default preview: no identity provider, customer token callback, API origin, JWT verification key or encryption key has been configured.
+- Application creation remains outside this UI increment because the backend requires an approved declaration version and a server-owned product/country/currency corridor. No application is submitted by this interface increment.
+- Withdrawal is shown only for backend-eligible statuses (draft, submitted and awaiting documents); the backend remains authoritative and may reject a stale transition.
+- This does not implement KYC, underwriting, loan offers, contracts, disbursement, servicing, balances, payments or ledger operations.
+
+### Verification
+
+- Verification is pending for the new branch head. Do not treat earlier successful Portal CI / Stage 1 CI runs as validation of this increment.
+- Next: run Portal CI and Stage 1 CI against the exact updated head, resolve all failures, then re-run. Keep PR #1 draft and unmerged until review and branch reconciliation are complete.
+
+---
+
 ## 2026-11-20 — Customer loan application API foundation (verification pending)
 
 ### Implemented on `feat/customer-operations-portal-shell`
