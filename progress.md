@@ -481,3 +481,13 @@ The notifications inbox is sample-only, not a live message system. It has no eve
 - Added responsive category and channel layouts, keyboard focus treatment and reduced-motion support.
 - No notification delivery, read-state persistence, preference mutation, push subscription, email/SMS integration or delivery receipt functionality was activated.
 - Tests and browser verification remain deferred under the current design-first direction; this increment has not been runtime-verified.
+
+
+## 2026-11-20 — Finance Explorer comparison framework
+
+- Added a dedicated four-part comparison framework to the Finance Explorer: total cost, payment timing, contractual conditions/flexibility and provider safeguards.
+- Kept the guidance general and educational, with a clear note that exact disclosures depend on provider and jurisdiction.
+- Added responsive desktop/tablet/mobile card layouts, restrained visual hierarchy and reduced-motion handling.
+- Preserved category search, filters, category detail dialog, product-type listings and existing navigation/notice callbacks.
+- No loan offers, rates, eligibility assessments, application actions or personalized financial recommendations were introduced.
+- Tests and browser verification remain deferred under the current design-first direction; this increment is not runtime-verified.
