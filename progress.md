@@ -419,3 +419,15 @@ The notifications inbox is sample-only, not a live message system. It has no eve
 - Introduced a responsive three-card composition with clear status treatment, finance-oriented iconography, a restrained layered background and accessible heading semantics.
 - No customer identity, lending, repayment, document, ledger or payment workflow was activated or changed.
 - Tests remain deferred under the design-first direction. This dashboard increment has not been runtime-verified.
+
+
+## 2026-11-20 — My Applications premium journey and record workspace
+
+- Added an at-a-glance sample application summary showing the number of illustrative stages marked complete, the highlighted sample stage and the explicit absence of an assessment or lending decision.
+- Refined the application reference card and stage key with stronger hierarchy, clearer sample context and more legible status treatments.
+- Enhanced the sample milestone timeline with more distinct complete/current/upcoming states and improved spacing.
+- Refined the authenticated application-record list and detail panel with stronger selection affordances, clearer status badges, improved facts layout and a more readable recorded-event timeline.
+- Added an explicit pressed state to application record selection for assistive technology; existing data loading, detail retrieval, withdrawal and navigation behavior remain unchanged.
+- Added responsive layouts for the sample summary cards, milestone timeline, live record list and detail facts down to narrow mobile widths.
+- No application statuses, amounts, event dates, eligibility outcomes or lending decisions were fabricated; the sample-only and authenticated-data boundaries remain intact.
+- Tests remain deferred under the design-first direction. This design increment has not been runtime-verified.
