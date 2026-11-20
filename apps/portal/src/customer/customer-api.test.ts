@@ -199,4 +199,72 @@ describe("customer API client", () => {
     });
     await expect(api.getMe()).rejects.toMatchObject({ statusCode: 502 });
   });
+
+  it("loads application history and sends customer-scoped submit and withdraw actions", async () => {
+    const requests: Array<{ input: RequestInfo | URL; init?: RequestInit }> = [];
+    const application = {
+      id: "application-123",
+      status: "submitted",
+      requested_amount: "1250.00",
+      currency_code: "NGN",
+      requested_duration_days: 180,
+      product_terms_snapshot: { productName: "Personal finance", versionNumber: 2 },
+      submitted_at: "2026-11-20T09:00:00.000Z",
+      created_at: "2026-11-20T08:00:00.000Z",
+      updated_at: "2026-11-20T09:00:00.000Z",
+    };
+    const payloads: unknown[] = [
+      [application],
+      { ...application, timeline: [] },
+      { id: application.id, status: "withdrawn" },
+      [ { ...application, status: "withdrawn" } ],
+    ];
+    const fetchImpl: typeof fetch = async (input, init) => {
+      requests.push({ input, init });
+      return response(200, { data: payloads.shift() });
+    };
+    const api = createCustomerApiClient({
+      baseUrl: "https://api.example.test",
+      getAccessToken: async () => "short-lived-customer-token",
+      fetchImpl,
+    });
+
+    await expect(api.listApplications()).resolves.toEqual([application]);
+    await expect(api.getApplication(application.id)).resolves.toMatchObject({ id: application.id, timeline: [] });
+    await expect(api.withdrawApplication(application.id)).resolves.toEqual({ id: application.id, status: "withdrawn" });
+    await expect(api.listApplications()).resolves.toMatchObject([{ id: application.id, status: "withdrawn" }]);
+
+    expect(requests.map((request) => request.input)).toEqual([
+      "https://api.example.test/api/v1/customer/me/applications",
+      "https://api.example.test/api/v1/customer/me/applications/application-123",
+      "https://api.example.test/api/v1/customer/me/applications/application-123/withdraw",
+      "https://api.example.test/api/v1/customer/me/applications",
+    ]);
+    expect(requests[2]?.init?.method).toBe("POST");
+    expect(requests.every((request) => request.init?.credentials === "omit" && request.init?.cache === "no-store")).toBe(true);
+  });
+
+  it("URL-encodes application identifiers and never sends application actions without a token", async () => {
+    const fetchImpl = vi.fn(async () => response(200, { data: { id: "app/unsafe", status: "submitted" } }));
+    const api = createCustomerApiClient({
+      baseUrl: "https://api.example.test",
+      getAccessToken: async () => "customer-token",
+      fetchImpl: fetchImpl as unknown as typeof fetch,
+    });
+    await api.submitApplication("app/unsafe");
+    expect(fetchImpl).toHaveBeenCalledWith(
+      "https://api.example.test/api/v1/customer/me/applications/app%2Funsafe/submit",
+      expect.any(Object),
+    );
+
+    const blockedFetch = vi.fn();
+    const unauthenticated = createCustomerApiClient({
+      baseUrl: "https://api.example.test",
+      getAccessToken: async () => null,
+      fetchImpl: blockedFetch as unknown as typeof fetch,
+    });
+    await expect(unauthenticated.listApplications()).rejects.toMatchObject({ statusCode: 401 });
+    expect(blockedFetch).not.toHaveBeenCalled();
+  });
+
 });
