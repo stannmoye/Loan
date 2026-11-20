@@ -518,6 +518,12 @@ function NotificationsCentre({ onSectionChange }: Pick<CustomerExperienceProps, 
       case "Learning": return <BookOpen size={18} />;
     }
   };
+  const categorySummaries = [
+    { kind: "Application", detail: "Application milestones and requests", icon: <FileCheck2 size={17} />, tone: "application" },
+    { kind: "Documents", detail: "Document guidance and secure-sharing notices", icon: <FileLock2 size={17} />, tone: "documents" },
+    { kind: "Security", detail: "Account protection and access information", icon: <ShieldCheck size={17} />, tone: "security" },
+    { kind: "Learning", detail: "Helpful guides and service information", icon: <BookOpen size={17} />, tone: "learning" }
+  ] as const;
   return <div className="customer-experience">
     <PageHeading eyebrow="CUSTOMER INBOX" title="Your updates, organised." description="A place for important account notices and helpful information, with clear links to the next step." />
     <SampleBanner compact />
@@ -530,6 +536,14 @@ function NotificationsCentre({ onSectionChange }: Pick<CustomerExperienceProps, 
       <article className="notification-status-card"><span className="notification-status-icon"><BookOpen size={18} /></span><div><small>TOPIC GROUPS</small><strong>{new Set(customerNotifications.map((item) => item.kind)).size}</strong><p>Illustrative categories</p></div></article>
       <article className="notification-status-card"><span className="notification-status-icon"><MessageCircle size={18} /></span><div><small>LIVE DELIVERY</small><strong>Not connected</strong><p>No messages are sent</p></div></article>
       <article className="notification-status-card"><span className="notification-status-icon"><ShieldCheck size={18} /></span><div><small>DELIVERY RECEIPTS</small><strong>Unavailable</strong><p>No delivery tracking</p></div></article>
+    </section>
+    <section className="notifications-category-workspace" aria-labelledby="notifications-category-title">
+      <div className="notifications-section-heading"><div><Eyebrow>INBOX ORGANISATION</Eyebrow><h2 id="notifications-category-title">The updates that matter, grouped clearly.</h2><p>These categories describe the planned service structure; they are not active subscriptions.</p></div><span className="notifications-planned-pill"><LockKeyhole size={12} /> Preferences not connected</span></div>
+      <div className="notifications-category-grid">
+        {categorySummaries.map((category) => <button type="button" key={category.kind} className={"notifications-category-card category-" + category.tone} onClick={() => setFilter(category.kind)} aria-pressed={filter === category.kind}>
+          <span className="notifications-category-icon">{category.icon}</span><span className="notifications-category-copy"><strong>{category.kind}</strong><small>{category.detail}</small></span><span className="notifications-category-count">{customerNotifications.filter((item) => item.kind === category.kind).length} <small>examples</small></span>
+        </button>)}
+      </div>
     </section>
     <section className="customer-surface notifications-list-surface">
       <div className="customer-surface-heading"><div><Eyebrow>PREVIEW INBOX</Eyebrow><h2>Information and reminders</h2><p>Every item below is a fictional example, not a sent or received message.</p></div><span className="customer-soft-pill">Sample only</span></div>
@@ -544,6 +558,15 @@ function NotificationsCentre({ onSectionChange }: Pick<CustomerExperienceProps, 
         </article>)}
         {visible.length === 0 && <div className="notifications-empty"><BellRing size={22} /><strong>No examples in this category.</strong><span>Select All updates to see the sample inbox.</span></div>}
       </div>
+    </section>
+    <section className="notifications-preferences-panel" aria-labelledby="notifications-preferences-title">
+      <div className="notifications-section-heading"><div><Eyebrow>COMMUNICATION PREFERENCES</Eyebrow><h2 id="notifications-preferences-title">A thoughtful approach to every channel.</h2><p>Customers should be able to choose permitted updates and understand how each channel is used.</p></div><span className="notifications-planned-pill"><LockKeyhole size={12} /> Planned capability</span></div>
+      <div className="notifications-channel-grid">
+        <article><span className="channel-icon channel-email"><MessageCircle size={18} /></span><div><strong>Email notices</strong><p>For non-sensitive service updates, with verified sender details.</p><small>Not configured</small></div></article>
+        <article><span className="channel-icon channel-device"><BellRing size={18} /></span><div><strong>In-app alerts</strong><p>For account information shown only after a secure sign-in.</p><small>Not configured</small></div></article>
+        <article><span className="channel-icon channel-security"><ShieldCheck size={18} /></span><div><strong>Security notices</strong><p>For important access and account-protection information.</p><small>Delivery not enabled</small></div></article>
+      </div>
+      <p className="notifications-preference-footnote"><Info size={14} /> Preference controls are intentionally inactive in this preview. No communication choice is saved or changed here.</p>
     </section>
     <section className="notifications-privacy-note"><ShieldCheck size={19} /><div><strong>Important messages should be verifiable.</strong><p>A live notification service must authenticate message origins, avoid exposing sensitive information in previews, record delivery status and let customers control permitted notification preferences.</p></div></section>
   </div>;
