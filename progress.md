@@ -361,3 +361,14 @@ The notifications inbox is sample-only, not a live message system. It has no eve
 - Added a clearer empty-search state and mobile-specific card sizing.
 - All category information remains educational and illustrative; no rates, eligibility, product selection or application workflow was introduced.
 - Test runs remain deferred by explicit project direction. This visual increment has not been reported as tested or verified.
+
+## 2026-11-20 — Customer account, document, inbox, help and security design pass
+
+- Added a loan-centre readiness strip to distinguish account records, repayment information and statements that are not connected from live servicing data.
+- Added a three-step document-sharing principles section covering request purpose, channel verification, access and retention. The page continues to state that uploads and storage are unavailable.
+- Added notification preview metrics for sample items and topic groups, while explicitly identifying live delivery and delivery receipts as unavailable.
+- Added Help Centre quick pathways into the application journey, document guidance and account-safety sections.
+- Added a four-part account-protection framework covering verified identity, protected sessions, activity awareness and privacy governance; every capability remains clearly labelled as planned.
+- Added responsive visual treatments for the new cards and pathways across desktop, tablet and mobile widths.
+- No backend, authentication, document handling, notification delivery, support messaging or account-security behavior was activated or changed.
+- Per the design-first direction, tests remain deferred. This increment has not been reported as tested or verified.
