@@ -225,6 +225,8 @@ function ApplicationJourney({
     try {
       await applicationApi.withdrawApplication(selected.id);
       await refreshApplications(selected.id);
+      const refreshed = await applicationApi.getApplication(selected.id);
+      setSelected(refreshed);
       setActionMessage("Your withdrawal request was recorded. The latest application status is shown below.");
     } catch (reason) {
       setError(reason instanceof Error ? reason.message : "The application could not be withdrawn.");
