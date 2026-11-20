@@ -399,3 +399,13 @@ The notifications inbox is sample-only, not a live message system. It has no eve
 - Clarified the meaning of complete, current and upcoming milestones in the sample application journey and refined the application overview and responsive timeline treatment.
 - Reused existing customer components, icon dependencies and navigation behavior. No servicing, document, underwriting, payment or authentication functionality was changed.
 - Tests remain deferred under the design-first direction. This increment has not been runtime-verified.
+
+
+## 2026-11-20 — Customer portal interaction and responsive finish pass
+
+- Added a consistent customer-surface interaction layer with clearer keyboard focus visibility, more coherent hover feedback and improved card elevation.
+- Refined text wrapping and content widths across page headings and surface headings to improve readability at varied viewport sizes.
+- Improved mobile action sizing and bottom-banner wrapping so key navigation actions remain comfortably reachable.
+- Applied reduced-motion overrides to the customer experience, including hover transforms and decorative transitions.
+- Preserved existing page content, routes, API contracts, sample-data boundaries and financial workflow behavior.
+- Tests remain deferred under the current design-first direction. This visual pass has not been runtime-verified.
