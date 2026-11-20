@@ -6,7 +6,7 @@ import type { CustomerIdentity } from '../src/plugins/customer-auth.js';
 import {
   buildCustomerAccountRoutes,
   type CustomerAccountRouteOptions,
-  type CustomerAccountService,
+  type CustomerAccountService,\n  type CustomerApplicationRouteService,
 } from '../src/routes/customer-accounts.js';
 
 const identity: CustomerIdentity = {
