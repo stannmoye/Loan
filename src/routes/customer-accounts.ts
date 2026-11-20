@@ -165,7 +165,7 @@ export function buildCustomerAccountRoutes(options: CustomerAccountRouteOptions)
     });
 
 
-    app.post('/api/v1/customer/me/applications', async (request, reply) => {
+    app.post('/api/v1/customer/me/applications', { config: { rateLimit: { max: 5, timeWindow: '1 minute' } } }, async (request, reply) => {
       const identity = await requireIdentity(request);
       const context = await requireContext(identity);
       const parsed = createCustomerLoanApplicationSchema.safeParse(request.body);
@@ -188,7 +188,7 @@ export function buildCustomerAccountRoutes(options: CustomerAccountRouteOptions)
       return { data: await getCustomerApplication(context, parsed.data) };
     });
 
-    app.post<{ Params: { applicationId: string } }>('/api/v1/customer/me/applications/:applicationId/submit', async (request, reply) => {
+    app.post<{ Params: { applicationId: string } }>('/api/v1/customer/me/applications/:applicationId/submit', { config: { rateLimit: { max: 10, timeWindow: '1 minute' } } }, async (request, reply) => {
       const identity = await requireIdentity(request);
       const context = await requireContext(identity);
       const parsed = applicationIdSchema.safeParse(request.params.applicationId);
@@ -196,7 +196,7 @@ export function buildCustomerAccountRoutes(options: CustomerAccountRouteOptions)
       return { data: await submitCustomerApplication(context, parsed.data) };
     });
 
-    app.post<{ Params: { applicationId: string } }>('/api/v1/customer/me/applications/:applicationId/withdraw', async (request, reply) => {
+    app.post<{ Params: { applicationId: string } }>('/api/v1/customer/me/applications/:applicationId/withdraw', { config: { rateLimit: { max: 5, timeWindow: '1 minute' } } }, async (request, reply) => {
       const identity = await requireIdentity(request);
       const context = await requireContext(identity);
       const parsed = applicationIdSchema.safeParse(request.params.applicationId);
