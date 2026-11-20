@@ -460,3 +460,13 @@ The notifications inbox is sample-only, not a live message system. It has no eve
 - Preserved the existing FAQ accordion, navigation pathways, impersonation guidance and explicit notice that this preview is not a monitored support channel.
 - Added responsive service cards and support-flow layouts for mobile and desktop.
 - No support inbox, chat, case submission, contact endpoint or customer messaging capability was activated. No tests or browser checks were run during this design-first pass.
+
+
+## 2026-11-20 — Security & Profile premium workspace design
+
+- Reworked Security & Profile into a dedicated protection workspace with a premium security hero, demonstration-profile boundary and account-status overview.
+- Expanded the security framework into four clearly described capabilities: verified identity, protected sign-in, session awareness and privacy choices.
+- Added a session-management preview that explicitly reports no live session data, plus privacy transparency, consent and privacy-request cards.
+- Refined account access guidance for multi-factor authentication, activity alerts, session review and privacy history.
+- Added responsive desktop/tablet/mobile layouts and reduced-motion support. Existing notification callback remains informational only.
+- No authentication, MFA, session termination, privacy preference mutation or personal-data collection was enabled. Tests and browser verification remain deferred as requested.
