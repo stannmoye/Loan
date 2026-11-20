@@ -41,6 +41,60 @@ export type CustomerProfilePatch = Partial<
   Pick<CustomerProfile, "displayName" | "declaredResidenceCountryCode" | "preferredLocale">
 >;
 
+
+export type CustomerApplicationStatus =
+  | "draft" | "submitted" | "under_review" | "awaiting_documents"
+  | "approved_conditionally" | "declined" | "withdrawn" | "cancelled"
+  | "funding_pending" | "funded";
+
+export type CustomerApplicationProductSnapshot = {
+  productId: number;
+  productCode: string;
+  productName: string;
+  productVersionId: number;
+  versionNumber: number;
+  currencyCode: string;
+  minimumAmount: string;
+  maximumAmount: string;
+  minimumDurationDays: number;
+  maximumDurationDays: number;
+  interestModel: string;
+  annualInterestRateBps: number;
+  repaymentFrequency: string;
+  requiresCollateral: boolean;
+  requiresGuarantor: boolean;
+  riskReviewRequired: boolean;
+  effectiveFrom: string | null;
+  effectiveUntil: string | null;
+};
+
+export type CustomerApplicationEvent = {
+  event_type: string;
+  from_status: CustomerApplicationStatus | null;
+  to_status: CustomerApplicationStatus | null;
+  created_at: string;
+};
+
+export type CustomerApplication = {
+  id: string;
+  status: CustomerApplicationStatus;
+  requested_amount: string;
+  currency_code: string;
+  requested_duration_days: number;
+  product_terms_snapshot: CustomerApplicationProductSnapshot;
+  submitted_at: string | null;
+  created_at: string;
+  updated_at: string;
+  timeline?: CustomerApplicationEvent[];
+};
+
+export type CustomerApplicationApi = {
+  listApplications(): Promise<CustomerApplication[]>;
+  getApplication(applicationId: string): Promise<CustomerApplication>;
+  submitApplication(applicationId: string): Promise<{ id: string; status: CustomerApplicationStatus }>;
+  withdrawApplication(applicationId: string): Promise<{ id: string; status: CustomerApplicationStatus }>;
+};
+
 export class CustomerApiError extends Error {
   constructor(
     message: string,
@@ -159,6 +213,24 @@ export function createCustomerApiClient(options: CustomerApiClientOptions) {
     revokeSession(sessionId: string) {
       return request<{ sessionId: string; revoked: boolean; currentSession: boolean }>(
         "/api/v1/customer/me/sessions/" + encodeURIComponent(sessionId) + "/revoke", "POST",
+      );
+    },
+    listApplications() {
+      return request<CustomerApplication[]>("/api/v1/customer/me/applications", "GET");
+    },
+    getApplication(applicationId: string) {
+      return request<CustomerApplication>(
+        "/api/v1/customer/me/applications/" + encodeURIComponent(applicationId), "GET",
+      );
+    },
+    submitApplication(applicationId: string) {
+      return request<{ id: string; status: CustomerApplicationStatus }>(
+        "/api/v1/customer/me/applications/" + encodeURIComponent(applicationId) + "/submit", "POST",
+      );
+    },
+    withdrawApplication(applicationId: string) {
+      return request<{ id: string; status: CustomerApplicationStatus }>(
+        "/api/v1/customer/me/applications/" + encodeURIComponent(applicationId) + "/withdraw", "POST",
       );
     },
     logout() {
