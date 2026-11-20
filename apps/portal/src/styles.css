@@ -3014,3 +3014,35 @@ button:focus-visible, input:focus-visible, select:focus-visible {
  .application-journey-node-copy strong { font-size:.8rem; }
 }
 @media (prefers-reduced-motion:reduce) { .application-journey-node-marker { box-shadow:none; } }
+
+
+/* Loan Centre — secure account snapshot visual */
+.loan-centre-hero-art { min-width:0; }
+.loan-hero-account-preview { position:absolute; z-index:3; right:0; bottom:0; width:min(208px,78%); padding:12px; border:1px solid rgba(255,255,255,.72); border-radius:14px; color:#29435f; background:rgba(255,255,255,.97); box-shadow:0 15px 32px rgba(5,18,34,.24); }
+.loan-hero-preview-heading { display:flex; align-items:center; justify-content:space-between; gap:8px; }
+.loan-hero-preview-heading > span { color:#65768c; font-size:.52rem; font-weight:850; letter-spacing:.09em; }
+.loan-hero-preview-heading > i { padding:3px 6px; border-radius:999px; color:#60748c; background:#eef3f8; font-size:.48rem; font-style:normal; font-weight:850; letter-spacing:.06em; }
+.loan-hero-preview-status { display:flex; align-items:center; gap:6px; margin:9px 0 10px; color:#718197; font-size:.58rem; font-weight:700; }
+.loan-preview-status-dot { width:6px; height:6px; flex:0 0 6px; border-radius:50%; background:#b58a48; box-shadow:0 0 0 3px #f7f0e4; }
+.loan-hero-preview-rows { display:grid; gap:7px; padding-top:8px; border-top:1px solid #edf0f4; }
+.loan-hero-preview-rows > div { display:flex; align-items:center; justify-content:space-between; gap:8px; }
+.loan-hero-preview-rows span { color:#8794a5; font-size:.54rem; }
+.loan-hero-preview-rows strong { color:#61748b; font-size:.56rem; font-weight:800; text-align:right; }
+@media (max-width:760px) {
+ .loan-centre-hero { grid-template-columns:minmax(0,1fr) 112px; gap:5px; padding:19px; }
+ .loan-centre-hero-art { height:142px; min-width:112px; }
+ .loan-centre-orbit { opacity:.6; }
+ .loan-centre-wallet { width:57px; height:57px; border-radius:17px; }
+ .loan-centre-wallet svg { width:29px; height:29px; }
+ .loan-centre-art-chip.chip-one { left:0; top:8px; }
+ .loan-centre-art-chip.chip-two { right:0; bottom:7px; }
+ .loan-hero-account-preview { right:-2px; bottom:0; width:158px; padding:9px; }
+ .loan-hero-preview-heading > span { font-size:.45rem; }
+ .loan-hero-preview-status { font-size:.51rem; }
+ .loan-hero-preview-rows span,.loan-hero-preview-rows strong { font-size:.48rem; }
+}
+@media (max-width:390px) {
+ .loan-centre-hero { grid-template-columns:minmax(0,1fr) 90px; padding:16px; }
+ .loan-centre-hero-art { min-width:90px; }
+ .loan-hero-account-preview { width:145px; }
+}
