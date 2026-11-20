@@ -351,3 +351,13 @@ The notifications inbox is sample-only, not a live message system. It has no eve
 - Added responsive layouts for the queue overview and its composition panel at desktop, tablet and mobile widths.
 - Preserved the existing sample-only review controls and did not introduce approval, rejection, credit-decision or transaction functionality.
 - As requested, routine test runs remain deferred during this design-first phase. The new presentation changes are not reported as tested or verified.
+
+
+## 2026-11-20 — Finance discovery and category-guide design
+
+- Refined the finance explorer feature panel with a more editorial layout, layered orbit artwork, stronger typography and a clearer educational-not-offer message.
+- Improved the category search and filter rail, catalogue summary, category imagery, product-type count labels and responsive card grid.
+- Polished the category detail dialog, including scroll behavior, question hierarchy, product-type chips and educational disclaimer treatment.
+- Added a clearer empty-search state and mobile-specific card sizing.
+- All category information remains educational and illustrative; no rates, eligibility, product selection or application workflow was introduced.
+- Test runs remain deferred by explicit project direction. This visual increment has not been reported as tested or verified.
