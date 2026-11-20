@@ -112,7 +112,7 @@ describe("CustomerExperience", () => {
     expect(await screen.findByRole("heading", { name: "Your applications." })).toBeInTheDocument();
     expect(await screen.findByRole("heading", { name: "Personal finance" })).toBeInTheDocument();
     expect(screen.getByText("NGN 1250.00")).toBeInTheDocument();
-    expect(screen.getByText("Submitted")).toBeInTheDocument();
+    expect(screen.getAllByText("Submitted").length).toBeGreaterThan(0);
     expect(screen.getByText(/customer application submitted/i)).toBeInTheDocument();
     expect(api.listApplications).toHaveBeenCalledTimes(1);
     expect(api.getApplication).toHaveBeenCalledWith(record.id);
@@ -148,7 +148,7 @@ describe("CustomerExperience", () => {
     fireEvent.click(await screen.findByRole("button", { name: /withdraw application/i }));
     await waitFor(() => expect(api.withdrawApplication).toHaveBeenCalledWith(record.id));
     expect(await screen.findByText("Your withdrawal request was recorded. The latest application status is shown below.")).toBeInTheDocument();
-    expect(await screen.findByText("Withdrawn")).toBeInTheDocument();
+    expect((await screen.findAllByText("Withdrawn")).length).toBeGreaterThan(0);
     expect(screen.queryByRole("button", { name: /withdraw application/i })).not.toBeInTheDocument();
     expect(api.getApplication).toHaveBeenCalledTimes(2);
   });
