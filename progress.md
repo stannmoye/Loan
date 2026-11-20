@@ -372,3 +372,13 @@ The notifications inbox is sample-only, not a live message system. It has no eve
 - Added responsive visual treatments for the new cards and pathways across desktop, tablet and mobile widths.
 - No backend, authentication, document handling, notification delivery, support messaging or account-security behavior was activated or changed.
 - Per the design-first direction, tests remain deferred. This increment has not been reported as tested or verified.
+
+## 2026-11-20 — Shared workspace shell and mobile navigation design
+
+- Refined the Northline brand lockup with a compact financial-workspace descriptor for a consistent identity across portal views.
+- Clarified the workspace selector with a visible demonstration tag and added a persistent sidebar preview-environment panel that explicitly identifies sample data and the absence of live services.
+- Expanded the desktop breadcrumb hierarchy to show workspace context and the active customer or operations destination.
+- Added a customer-only mobile quick-navigation dock for Home, Explore, Applications and My loans, with a More action that opens the existing full navigation drawer.
+- Added safe-area-aware mobile spacing, active destination states, reduced-motion handling and compact breadcrumb behavior on narrow screens.
+- Existing routes and navigation callbacks are reused; no new financial, authentication or account-management behavior was introduced.
+- Tests remain deferred under the current design-first direction. This increment has not been reported as tested or verified.
