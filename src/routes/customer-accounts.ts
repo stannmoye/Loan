@@ -9,7 +9,6 @@ import { applicationIdSchema, createCustomerLoanApplicationSchema } from '../dom
 import {
   createCustomerApplication, getCustomerApplication, listCustomerApplications,
   submitCustomerApplication, withdrawCustomerApplication,
-  type CustomerApplicationError,
 } from '../services/customer-loan-applications.js';
 import {
   CustomerAuthError,
@@ -88,7 +87,11 @@ function configuredOptions(): CustomerAccountRouteOptions {
 
 export function buildCustomerAccountRoutes(options: CustomerAccountRouteOptions) {
   const verifyToken = options.verifyToken ?? verifyCustomerAccessToken;
-  const applicationService: CustomerApplicationRouteService = options.applicationService ?? {\n    create: createCustomerApplication, get: getCustomerApplication, list: listCustomerApplications,\n    submit: submitCustomerApplication, withdraw: withdrawCustomerApplication,\n  };\n  const service: CustomerAccountService = options.service ?? {
+  const applicationService: CustomerApplicationRouteService = options.applicationService ?? {
+    create: createCustomerApplication, get: getCustomerApplication, list: listCustomerApplications,
+    submit: submitCustomerApplication, withdraw: withdrawCustomerApplication,
+  };
+  const service: CustomerAccountService = options.service ?? {
     onboard: onboardCustomer,
     findContext: findActiveCustomerContext,
     getProfile: getCustomerProfile,
