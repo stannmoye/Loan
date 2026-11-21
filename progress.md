@@ -520,3 +520,14 @@ The notifications inbox is sample-only, not a live message system. It has no eve
 - Added desktop/tablet/mobile layout rules consistent with the Northline customer design system.
 - Automated tests and browser visual verification were deferred in accordance with the current design-first priority; this increment is not claimed as runtime-verified.
 
+
+
+## 2026-11-21 — Customer workspace navigation refinement
+
+- Improved the customer sidebar active-state hierarchy, icon contrast, focus visibility and hover feedback while preserving the existing navigation destinations and route behavior.
+- Converted the persistent sidebar support card into a functional Help Centre shortcut so the prominent support affordance now navigates to the existing help section.
+- Added compact-height sidebar scrolling and refined mobile drawer depth and touch target sizing.
+- Preserved customer/operations mode switching, browser history handling, notification navigation and existing page composition.
+- No account, loan, support-case or notification backend behavior was added.
+- Automated tests and browser visual verification remain deferred under the current design-first instruction; this increment is not runtime-verified.
+
