@@ -3524,3 +3524,237 @@ button:focus-visible, input:focus-visible, select:focus-visible {
   }
   .overview-account-service:hover { transform:none; }
 }
+
+
+/* Customer dashboard discovery and closing guidance — polished card rhythm */
+.overview-experience .customer-discovery-section {
+  padding-top: 5px;
+}
+.overview-experience .customer-discovery-section .customer-section-heading {
+  align-items:flex-end;
+  margin-bottom:16px;
+  padding-bottom:14px;
+  border-bottom:1px solid #e8edf3;
+}
+.overview-experience .customer-section-heading h2 {
+  margin-top:7px;
+  font-size:clamp(21px,2.2vw,25px);
+  letter-spacing:-.8px;
+}
+.overview-experience .customer-section-heading p {
+  max-width:58ch;
+  font-size:10px;
+  line-height:1.65;
+}
+.overview-experience .customer-section-heading > button {
+  flex:0 0 auto;
+  margin-bottom:1px;
+}
+.overview-experience .customer-category-grid {
+  gap:14px;
+}
+.overview-experience .customer-category-card {
+  border-color:#e1e8f0;
+  border-radius:15px;
+  box-shadow:0 7px 20px rgba(22,46,75,.045);
+}
+.overview-experience .category-card-button {
+  display:flex;
+  flex-direction:column;
+  min-height:100%;
+  cursor:pointer;
+}
+.overview-experience .category-card-art {
+  height:139px;
+  position:relative;
+  background:linear-gradient(135deg,#edf3fa,#e3ebf4);
+}
+.overview-experience .category-card-art::after {
+  content:"";
+  position:absolute;
+  inset:35% 0 0;
+  background:linear-gradient(180deg,transparent,rgba(13,34,58,.13));
+  pointer-events:none;
+}
+.overview-experience .category-card-art img {
+  transition:transform .35s ease,filter .25s ease;
+}
+.overview-experience .customer-category-card:hover .category-card-art img {
+  transform:scale(1.045);
+  filter:saturate(1.04);
+}
+.overview-experience .category-card-copy {
+  display:flex;
+  flex:1;
+  flex-direction:column;
+  align-items:flex-start;
+  padding:15px 15px 14px;
+}
+.overview-experience .category-card-label {
+  padding:5px 7px;
+  border:1px solid #e8edf3;
+  border-radius:7px;
+  background:#f8fafc;
+  font-size:8px;
+}
+.overview-experience .category-card-copy h3 {
+  margin:10px 0 6px;
+  font-size:14px;
+  letter-spacing:-.3px;
+}
+.overview-experience .category-card-copy p {
+  min-height:49px;
+  font-size:9px;
+  line-height:1.65;
+}
+.overview-experience .category-card-link {
+  margin-top:auto;
+  padding-top:12px;
+  min-height:34px;
+  transition:gap .16s ease,color .16s ease;
+}
+.overview-experience .customer-category-card:hover .category-card-link {
+  gap:9px;
+}
+.overview-experience .customer-category-card:focus-within {
+  outline:3px solid rgba(76,132,190,.38);
+  outline-offset:3px;
+}
+.overview-experience .customer-disclaimer {
+  display:flex;
+  align-items:flex-start;
+  gap:7px;
+  margin-top:13px;
+  padding:10px 12px;
+  border:1px solid #e8edf3;
+  border-radius:9px;
+  background:#fafbfd;
+  color:#7f8da0;
+  font-size:9px;
+  line-height:1.6;
+}
+.overview-experience .customer-bottom-banner {
+  position:relative;
+  overflow:hidden;
+  gap:15px;
+  padding:18px 20px;
+  border-color:#dce6f1;
+  border-radius:15px;
+  background:
+    radial-gradient(circle at 100% 0%,rgba(208,225,245,.55),transparent 38%),
+    linear-gradient(105deg,#f5f9fe,#fbfcfe 70%);
+  box-shadow:0 9px 24px rgba(22,46,75,.045);
+}
+.overview-experience .customer-bottom-banner::after {
+  content:"";
+  position:absolute;
+  width:145px;
+  height:145px;
+  right:-95px;
+  bottom:-110px;
+  border:1px solid rgba(112,147,184,.18);
+  border-radius:50%;
+  pointer-events:none;
+}
+.overview-experience .bottom-banner-icon {
+  width:43px;
+  height:43px;
+  border:1px solid #dce7f3;
+  background:rgba(255,255,255,.82);
+  box-shadow:0 4px 12px rgba(28,58,91,.05);
+}
+.overview-experience .customer-bottom-banner strong {
+  font-size:12px;
+  letter-spacing:-.1px;
+}
+.overview-experience .customer-bottom-banner p {
+  max-width:70ch;
+  font-size:9px;
+  line-height:1.65;
+}
+.overview-experience .customer-bottom-banner button {
+  position:relative;
+  z-index:1;
+  min-height:38px;
+  padding:0 12px;
+  border:1px solid #dce6f1;
+  border-radius:9px;
+  background:rgba(255,255,255,.78);
+  transition:background .16s ease,border-color .16s ease;
+}
+.overview-experience .customer-bottom-banner button:hover {
+  border-color:#c5d6e8;
+  background:#fff;
+}
+.overview-experience .customer-footer-note {
+  gap:9px;
+  padding:2px 2px 5px;
+  color:#75859a;
+  font-size:9px;
+}
+.overview-experience .customer-footer-note svg {
+  width:17px;
+  height:17px;
+  padding:2px;
+  border-radius:5px;
+  background:#edf4fb;
+}
+@media (max-width: 760px) {
+  .overview-experience .customer-discovery-section .customer-section-heading {
+    align-items:flex-start;
+    flex-direction:column;
+    gap:8px;
+    padding-bottom:11px;
+  }
+  .overview-experience .customer-section-heading > button {
+    min-height:38px;
+  }
+  .overview-experience .customer-category-grid {
+    gap:10px;
+  }
+  .overview-experience .category-card-art {
+    height:112px;
+  }
+  .overview-experience .category-card-copy {
+    padding:11px 11px 10px;
+  }
+  .overview-experience .category-card-copy h3 {
+    font-size:12px;
+  }
+  .overview-experience .category-card-copy p {
+    min-height:57px;
+    font-size:8px;
+  }
+  .overview-experience .customer-bottom-banner {
+    gap:10px;
+    padding:14px;
+  }
+  .overview-experience .customer-bottom-banner button {
+    margin-left:52px;
+    width:calc(100% - 52px);
+  }
+}
+@media (max-width: 390px) {
+  .overview-experience .customer-category-grid {
+    grid-template-columns:1fr;
+  }
+  .overview-experience .category-card-art {
+    height:148px;
+  }
+  .overview-experience .category-card-copy p {
+    min-height:unset;
+  }
+  .overview-experience .category-card-link {
+    margin-top:8px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .overview-experience .category-card-art img,
+  .overview-experience .category-card-link,
+  .overview-experience .customer-bottom-banner button {
+    transition:none !important;
+  }
+  .overview-experience .customer-category-card:hover .category-card-art img {
+    transform:none;
+  }
+}
