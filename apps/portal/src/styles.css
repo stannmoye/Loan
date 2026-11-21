@@ -3075,3 +3075,37 @@ button:focus-visible, input:focus-visible, select:focus-visible {
  .help-response-record-grid { grid-template-columns:1fr; gap:8px; }
  .help-response-record-grid article { grid-template-columns:minmax(0,1fr); }
 }
+
+
+/* Global workspace navigation — clearer active states and functional support shortcut */
+.sidebar { box-shadow: 8px 0 30px rgba(20,36,61,.025); }
+.side-nav { padding-bottom:18px; }
+.nav-item { position:relative; min-height:41px; }
+.nav-item > svg { flex:0 0 17px; color:#8a97a8; transition:color .16s ease,transform .16s ease; }
+.nav-item:hover > svg { color:#315a91; transform:translateX(1px); }
+.nav-item.active { background:linear-gradient(100deg,#edf3ff 0%,#f5f8ff 100%); color:#1d4ed8; box-shadow:inset 3px 0 0 #4777b5; }
+.nav-item.active > svg { color:#315f9c; }
+.nav-item:focus-visible,.workspace-switch:focus-visible,.help-card:focus-visible { outline:3px solid rgba(59,130,246,.3); outline-offset:2px; }
+.help-card { width:100%; text-align:left; cursor:pointer; transition:border-color .18s ease,background .18s ease,transform .18s ease; }
+.help-card:hover { border-color:#cbd8e8; background:#f7faff; transform:translateY(-1px); }
+.help-card-copy { display:flex; flex:1; min-width:0; flex-direction:column; gap:3px; }
+.help-card > svg { flex:0 0 auto; color:#8090a4; transition:transform .18s ease,color .18s ease; }
+.help-card:hover > svg { color:#315a91; transform:translateX(2px); }
+.profile-mini { transition:background .18s ease; border-radius:10px; }
+.sidebar-environment { border-radius:11px; }
+.breadcrumb strong { color:#263e5c; }
+@media (max-height:760px) and (min-width:901px) {
+ .sidebar { overflow-y:auto; }
+ .sidebar-top { padding-bottom:22px; }
+ .side-nav { padding-top:19px; }
+ .nav-section-spaced { padding-top:17px; }
+}
+@media (max-width:760px) {
+ .sidebar { box-shadow:18px 0 48px rgba(10,24,44,.16); }
+ .help-card { margin-bottom:12px; }
+ .nav-item { min-height:44px; }
+}
+@media (prefers-reduced-motion:reduce) {
+ .nav-item > svg,.help-card,.help-card > svg { transition:none; }
+ .help-card:hover { transform:none; }
+}
