@@ -114,7 +114,7 @@ function App({ applicationApi }: AppProps = {}) {
         </nav>
         <div className="sidebar-bottom">
           <div className="sidebar-environment"><span className="environment-icon"><ShieldCheck size={15} /></span><span><strong>Preview environment</strong><small>Sample data · no live services</small></span><i /></div>
-          <div className="help-card"><span className="help-icon"><CircleHelp size={17} /></span><div><strong>Here when you need us</strong><small>Guidance and support</small></div><ArrowRight size={15} /></div>
+          <button type="button" className="help-card" aria-label="Open Help Centre" onClick={() => changeCustomerSection("help")}><span className="help-icon"><CircleHelp size={17} /></span><span className="help-card-copy"><strong>Here when you need us</strong><small>Guidance and support</small></span><ArrowRight size={15} /></button>
           <div className="profile-mini"><div className="avatar">{mode === "customer" ? "SC" : "SO"}</div><div className="profile-copy"><strong>{mode === "customer" ? "Sample customer" : "Sample operator"}</strong><small>{mode === "customer" ? "Customer preview" : "Operations preview"}</small></div><ChevronDown size={15} /></div>
         </div>
       </aside>
