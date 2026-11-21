@@ -542,3 +542,13 @@ The notifications inbox is sample-only, not a live message system. It has no eve
 - Improved dashboard spacing and responsive behavior across desktop, tablet and narrow mobile widths, including stacked hero actions and more readable activity rows.
 - Preserved all existing navigation handlers, sample-data disclosures and account/API boundaries. No balances, repayment amounts, due dates, account events or live activity were introduced.
 - Automated tests and browser visual verification remain deferred under the current design-first instruction; this increment is not runtime-verified.
+
+
+## 2026-11-21 — Customer dashboard discovery and closing guidance polish
+
+- Refined the dashboard's finance-category discovery cards with stronger image framing, more consistent card heights, clearer category labels and improved action placement.
+- Added a distinct keyboard-focus treatment to the category-card interaction and preserved reduced-motion behavior.
+- Improved the responsible-information disclaimer's visual separation and readability.
+- Reworked the closing Help Centre banner with a more prominent support action, restrained decorative detail and improved small-screen layout.
+- Preserved existing category content and navigation; no lending offers, rates, product eligibility or personalized financial recommendations were added.
+- Automated tests and browser visual verification remain deferred under the current design-first instruction; this increment is not runtime-verified.
