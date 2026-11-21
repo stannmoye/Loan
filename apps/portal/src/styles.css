@@ -3109,3 +3109,418 @@ button:focus-visible, input:focus-visible, select:focus-visible {
  .nav-item > svg,.help-card,.help-card > svg { transition:none; }
  .help-card:hover { transform:none; }
 }
+
+
+/* Customer overview — editorial welcome, account snapshot hierarchy and activity rhythm */
+.overview-experience {
+  gap: 19px;
+}
+.overview-experience > .overview-heading {
+  padding: 2px 1px 0;
+}
+.overview-experience .overview-heading h1 {
+  font-size: clamp(32px, 3.7vw, 46px);
+  letter-spacing: -1.9px;
+}
+.overview-experience .overview-heading p {
+  max-width: 58ch;
+  font-size: 12px;
+}
+.overview-date {
+  border-color: #e4eaf1;
+  box-shadow: 0 5px 16px rgba(25,48,75,.035);
+}
+.customer-hero {
+  min-height: 316px;
+  grid-template-columns: minmax(0,1.03fr) minmax(0,.97fr);
+  background:
+    radial-gradient(circle at 8% 100%,rgba(76,117,163,.2),transparent 36%),
+    linear-gradient(118deg,#142b46 0%,#1d3b5a 68%,#254b6c 100%);
+  box-shadow: 0 19px 42px rgba(20,43,70,.15);
+}
+.customer-hero::after {
+  content: "";
+  position: absolute;
+  z-index: 1;
+  width: 250px;
+  height: 250px;
+  left: -150px;
+  bottom: -190px;
+  border: 1px solid rgba(222,237,252,.13);
+  border-radius: 50%;
+  box-shadow: 0 0 0 24px rgba(222,237,252,.025),0 0 0 49px rgba(222,237,252,.02);
+  pointer-events: none;
+}
+.hero-copy {
+  padding: 36px 38px 29px;
+}
+.hero-kicker {
+  padding: 7px 10px;
+  border: 1px solid rgba(215,230,247,.17);
+  border-radius: 999px;
+  background: rgba(255,255,255,.055);
+  letter-spacing: 1.05px;
+}
+.hero-copy h2 {
+  max-width: 470px;
+  margin-top: 19px;
+  font-size: clamp(34px,3.45vw,45px);
+  letter-spacing: -1.8px;
+}
+.hero-copy p {
+  max-width: 390px;
+  font-size: 12px;
+  line-height: 1.8;
+}
+.hero-actions {
+  gap: 9px;
+  margin-top: 23px;
+}
+.button-primary,.button-quiet-light {
+  min-height: 43px;
+  padding-inline: 17px;
+}
+.hero-footnote {
+  font-size: 10px;
+  letter-spacing: .05px;
+}
+.hero-visual {
+  min-height: 316px;
+}
+.hero-visual img {
+  min-height: 316px;
+  object-position: center 40%;
+  filter: saturate(.88) contrast(1.025);
+}
+.hero-visual::before {
+  width: 31%;
+  background: linear-gradient(90deg,#1a3552 0%,rgba(26,53,82,.56) 38%,rgba(26,53,82,0) 100%);
+}
+.hero-visual::after {
+  content: "";
+  position: absolute;
+  z-index: 1;
+  inset: 0;
+  background: linear-gradient(0deg,rgba(12,29,49,.22),transparent 48%);
+  pointer-events: none;
+}
+.image-caption {
+  right: 20px;
+  bottom: 19px;
+  padding: 11px 14px;
+  border-color: rgba(255,255,255,.7);
+  box-shadow: 0 12px 32px rgba(9,24,41,.2);
+}
+.customer-sample-banner {
+  border-color: #dce6f0;
+  box-shadow: 0 7px 19px rgba(24,49,78,.045);
+}
+.customer-snapshot-grid {
+  gap: 13px;
+}
+.customer-snapshot-card {
+  position: relative;
+  min-height: 91px;
+  padding: 16px 15px;
+  overflow: hidden;
+  border-color: #e2e9f1;
+  box-shadow: 0 5px 17px rgba(22,45,73,.035);
+}
+.customer-snapshot-card::before {
+  content: "";
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: 3px;
+  background: #91afd2;
+  opacity: .85;
+}
+.customer-snapshot-card:nth-child(2)::before { background: #c6a76b; }
+.customer-snapshot-card:nth-child(3)::before { background: #80b39a; }
+.customer-snapshot-card > div { gap: 5px; }
+.customer-snapshot-card small {
+  font-size: 8px;
+  letter-spacing: .9px;
+}
+.customer-snapshot-card strong {
+  font-size: 12px;
+  letter-spacing: -.1px;
+}
+.customer-snapshot-card span:last-child {
+  font-size: 9px;
+}
+.customer-snapshot-card > button {
+  width: 32px;
+  height: 32px;
+  border: 1px solid #e8eef5;
+}
+.overview-account-services {
+  margin-top: 1px;
+  padding: 22px;
+}
+.overview-account-services-heading {
+  align-items:center;
+  margin-bottom: 17px;
+}
+.overview-account-services-heading h2 {
+  font-size: 19px;
+  letter-spacing: -.6px;
+}
+.overview-account-services-grid {
+  gap: 12px;
+}
+.overview-account-service {
+  min-height: 102px;
+  padding: 15px;
+  border-color: #e2eaf3;
+  transition: border-color .18s ease,box-shadow .18s ease,transform .18s ease;
+}
+.overview-account-service:hover {
+  border-color: #cad9e9;
+  box-shadow: 0 8px 20px rgba(27,56,88,.06);
+  transform: translateY(-1px);
+}
+.overview-account-service-icon {
+  width: 39px;
+  height: 39px;
+}
+.overview-account-service strong {
+  font-size: 11px;
+}
+.overview-service-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 4px 7px;
+  border: 1px solid #e9eef4;
+  border-radius: 6px;
+  background: #f8fafc;
+}
+.customer-dashboard-grid {
+  gap: 17px;
+}
+.journey-surface,.overview-activity-surface,.overview-next-steps {
+  border-color: #e1e8f0;
+  box-shadow: 0 9px 26px rgba(22,46,75,.045);
+}
+.journey-surface {
+  padding: 24px;
+}
+.customer-surface-heading h2 {
+  letter-spacing: -.55px;
+}
+.application-reference-card {
+  padding-block: 16px;
+}
+.application-reference-icon {
+  border: 1px solid #dce8f5;
+  box-shadow: 0 4px 12px rgba(35,75,119,.055);
+}
+.overview-activity-grid {
+  margin-top: 3px;
+  gap: 17px;
+}
+.overview-activity-surface {
+  padding: 24px;
+}
+.overview-activity-list {
+  position: relative;
+  gap: 2px;
+}
+.overview-activity-list::before {
+  content: "";
+  position: absolute;
+  top: 31px;
+  bottom: 31px;
+  left: 17px;
+  width: 1px;
+  background: linear-gradient(180deg,#d7e4f1,#e9eef4);
+}
+.overview-activity-item {
+  position: relative;
+  z-index: 1;
+  grid-template-columns: 37px minmax(0,1fr) auto;
+  gap: 13px;
+  padding: 14px 9px;
+  border: 1px solid transparent;
+  border-radius: 11px;
+  transition: background .16s ease,border-color .16s ease;
+}
+.overview-activity-item:hover {
+  border-color: #e7edf4;
+  background: #fbfcfe;
+}
+.overview-activity-icon {
+  border: 3px solid #fff;
+  box-shadow: 0 0 0 1px rgba(216,228,241,.85);
+}
+.overview-activity-item strong {
+  font-size: 11px;
+  letter-spacing: -.08px;
+}
+.overview-activity-item p {
+  font-size: 9px;
+}
+.overview-activity-item time {
+  padding: 5px 7px;
+  border: 1px solid #e9eef4;
+  border-radius: 7px;
+  background: #f8fafc;
+  font-size: 8px;
+}
+.overview-activity-disclaimer {
+  margin-top: 10px;
+}
+.overview-next-steps {
+  padding: 24px;
+  background:
+    radial-gradient(circle at 100% 0%,rgba(225,236,248,.55),transparent 42%),
+    #fff;
+}
+.next-steps-heading {
+  margin-bottom: 18px;
+}
+.next-steps-icon {
+  width: 38px;
+  height: 38px;
+  border: 1px solid #dfe9f4;
+}
+.overview-checklist-item {
+  padding: 14px 0;
+}
+.overview-checklist-item > span {
+  width: 27px;
+  height: 27px;
+  border: 1px solid #e6edf5;
+  background: #f5f8fc;
+}
+.overview-checklist-item strong {
+  font-size: 10px;
+}
+@media (max-width: 1100px) {
+  .customer-hero {
+    grid-template-columns:minmax(0,1fr) minmax(0,.9fr);
+  }
+  .hero-copy {
+    padding: 30px 27px 25px;
+  }
+  .overview-account-services-grid {
+    grid-template-columns:repeat(3,minmax(0,1fr));
+  }
+  .overview-account-service {
+    align-items:flex-start;
+    flex-direction:column;
+  }
+}
+@media (max-width: 760px) {
+  .overview-experience { gap: 15px; }
+  .overview-experience .overview-heading h1 {
+    font-size: 33px;
+    letter-spacing: -1.35px;
+  }
+  .customer-hero {
+    grid-template-columns:1fr;
+  }
+  .hero-copy {
+    padding: 27px 24px 22px;
+  }
+  .hero-copy h2 {
+    font-size: 35px;
+  }
+  .hero-visual {
+    min-height: 205px;
+    max-height: 225px;
+  }
+  .hero-visual img {
+    min-height: 225px;
+    object-position: center 37%;
+  }
+  .hero-visual::before {
+    display:block;
+    inset:0 0 auto;
+    width:auto;
+    height:24%;
+    background:linear-gradient(180deg,#1a3552,transparent);
+  }
+  .customer-snapshot-grid {
+    grid-template-columns:1fr;
+    gap:9px;
+  }
+  .customer-snapshot-card {
+    min-height:78px;
+  }
+  .overview-account-services-grid {
+    grid-template-columns:1fr;
+  }
+  .overview-account-service {
+    min-height:unset;
+    align-items:center;
+    flex-direction:row;
+  }
+  .customer-dashboard-grid {
+    grid-template-columns:1fr;
+  }
+}
+@media (max-width: 560px) {
+  .overview-experience .overview-heading h1 { font-size:29px; }
+  .customer-hero { border-radius:15px; }
+  .hero-copy { padding:23px 18px 19px; }
+  .hero-kicker {
+    max-width:100%;
+    font-size:8px;
+    letter-spacing:.75px;
+  }
+  .hero-copy h2 {
+    margin:15px 0 9px;
+    font-size:32px;
+    letter-spacing:-1.25px;
+  }
+  .hero-copy p { font-size:10px; }
+  .hero-actions {
+    width:100%;
+    align-items:stretch;
+    flex-direction:column;
+    gap:8px;
+    margin-top:17px;
+  }
+  .hero-actions button { width:100%; }
+  .hero-footnote { padding-top:14px; }
+  .hero-visual { min-height:175px; max-height:190px; }
+  .hero-visual img { min-height:190px; }
+  .image-caption {
+    right:10px;
+    bottom:10px;
+    gap:8px;
+    padding:8px 10px;
+  }
+  .caption-mark { width:29px; height:29px; }
+  .image-caption strong { font-size:10px; }
+  .image-caption small { font-size:8px; }
+  .customer-snapshot-card { padding:11px 12px; }
+  .overview-account-services { padding:15px; }
+  .overview-account-services-heading h2 { font-size:16px; }
+  .overview-account-service { padding:11px; }
+  .journey-surface,.overview-activity-surface,.overview-next-steps { padding:16px 14px; }
+  .overview-activity-list::before { left:15px; }
+  .overview-activity-item {
+    grid-template-columns:33px minmax(0,1fr);
+    gap:9px;
+    padding:11px 4px;
+  }
+  .overview-activity-item time {
+    grid-column:2;
+    justify-self:start;
+    margin-top:-2px;
+  }
+}
+@media (max-width: 380px) {
+  .hero-copy h2 { font-size:29px; }
+  .hero-kicker { font-size:7px; }
+  .overview-preview-state { font-size:7px; }
+  .customer-snapshot-card strong { font-size:11px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .overview-account-service,.overview-activity-item {
+    transition:none !important;
+  }
+  .overview-account-service:hover { transform:none; }
+}
