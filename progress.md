@@ -531,3 +531,14 @@ The notifications inbox is sample-only, not a live message system. It has no eve
 - No account, loan, support-case or notification backend behavior was added.
 - Automated tests and browser visual verification remain deferred under the current design-first instruction; this increment is not runtime-verified.
 
+
+
+## 2026-11-21 — Customer dashboard composition and responsive refinement
+
+- Elevated the customer welcome area with a more editorial hero hierarchy, refined image treatment, stronger call-to-action sizing and restrained layered visual details.
+- Improved the three dashboard snapshot cards with clearer information hierarchy, differentiated visual accents and more legible navigation affordances.
+- Refined the account-services preview cards so unavailable account details, repayment schedules and statements remain easy to scan without implying connected financial data.
+- Reworked the activity preview's visual rhythm with a subtle timeline guide, clearer event grouping and compact date treatments; all entries remain explicitly fictional examples.
+- Improved dashboard spacing and responsive behavior across desktop, tablet and narrow mobile widths, including stacked hero actions and more readable activity rows.
+- Preserved all existing navigation handlers, sample-data disclosures and account/API boundaries. No balances, repayment amounts, due dates, account events or live activity were introduced.
+- Automated tests and browser visual verification remain deferred under the current design-first instruction; this increment is not runtime-verified.
