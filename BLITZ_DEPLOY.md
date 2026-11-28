@@ -32,3 +32,14 @@ Make one coherent change, commit it to `feat/customer-operations-portal-shell`, 
 ## Build verification
 
 The portal's automated validation is defined in `.github/workflows/portal-ci.yml`. It checks the TypeScript/Vite production build, component tests, and desktop/mobile Playwright flows. Review the latest run for this branch before treating a deployment as verified. A successful static-site build does not enable backend authentication or financial operations.
+
+
+## Frontend-only preview and authentication variables
+
+The root Dockerfile builds only `apps/portal` and serves static files with Nginx. It does not start the API or read backend JWT variables. For this frontend-only Blitz deployment, do not add `JWT_ISSUER`, `JWT_AUDIENCE`, or `JWT_PUBLIC_KEY_PEM`.
+
+The backend environment schema treats these three values as optional during startup so the API can start for health and public routes. Protected administrator routes fail closed with HTTP 503 until all three are configured with the real identity provider's matching RS256 public key, issuer and audience. Never use random placeholder keys for production authentication.
+
+## Secrets and API keys
+
+The portal includes an administrative secrets inventory screen, but it does not store secret values. Production credential management requires authenticated administrator authorization and a server-side managed secrets vault. Until that vault is connected, configure backend secrets only in the hosting provider's protected environment settings. Never put private keys, API tokens, database passwords or encryption master keys in frontend code, browser storage, or Git.
