@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
 import {
   Activity, ArrowDownRight, ArrowRight, Banknote, Bell, BriefcaseBusiness, CheckCircle2,
-  ChartNoAxesCombined, ChevronDown, CircleHelp, Clock3, FileCheck2, FileSearch, FileText, Filter,
+  ChevronDown, CircleHelp, Clock3, FileCheck2, FileSearch, FileText, Filter,
   Globe2, HandCoins, Home, Landmark, LayoutDashboard, Menu, Search, Settings, ShieldCheck,
   SlidersHorizontal, UserRound, Users, WalletCards, Workflow, X
 } from "lucide-react";
@@ -127,7 +127,7 @@ function App({ applicationApi }: AppProps = {}) {
 
             <span className="nav-section nav-section-spaced">PEOPLE, INSIGHTS & SETTINGS</span>
             <button className="nav-item" onClick={() => navNotice("Staff management and role assignment are planned. Access is not controlled by this demonstration menu.")}><Users size={17} />Staff & roles</button>
-            <button className="nav-item" onClick={() => navNotice("Reports and analytics are mapped here. All dashboard data remains illustrative until approved data services are connected.")}><ChartNoAxesCombined size={17} />Reports & analytics</button>
+            <button className="nav-item" onClick={() => navNotice("Reports and analytics are mapped here. All dashboard data remains illustrative until approved data services are connected.")}><Activity size={17} />Reports & analytics</button>
             <button className="nav-item" onClick={() => navNotice("Country, currency and banking configuration is a planned area. No bank account details or live bank connections are supported.")}><Globe2 size={17} />Country & banking setup</button>
             <button className="nav-item" onClick={() => navNotice("Platform settings are a planned area. Security, integrations and environment configuration are not changed from this preview.")}><Settings size={17} />Platform settings</button>
             <button className="nav-item" onClick={() => navNotice("Access and immutable audit controls require the production identity, authorization and audit services before activation.")}><ShieldCheck size={17} />Access & audit</button>
