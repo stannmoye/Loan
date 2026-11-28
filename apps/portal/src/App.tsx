@@ -1,9 +1,9 @@
 import { useEffect, useMemo, useState } from "react";
 import {
-  Activity, ArrowDownRight, ArrowRight, Bell, BriefcaseBusiness, CheckCircle2,
-  ChevronDown, CircleHelp, Clock3, FileCheck2, FileText, Filter,
-  Home, Landmark, LayoutDashboard, Menu, Search,
-  ShieldCheck, UserRound, WalletCards, X
+  Activity, ArrowDownRight, ArrowRight, Banknote, Bell, BriefcaseBusiness, CheckCircle2,
+  ChartNoAxesCombined, ChevronDown, CircleHelp, Clock3, FileCheck2, FileSearch, FileText, Filter,
+  Globe2, HandCoins, Home, Landmark, LayoutDashboard, Menu, Search, Settings, ShieldCheck,
+  SlidersHorizontal, Users, WalletCards, Workflow, X
 } from "lucide-react";
 import { reviewCases, type CaseStatus, type ReviewCase } from "./data/fixtures";
 import { CustomerExperience } from "./customer/CustomerExperience";
@@ -105,11 +105,32 @@ function App({ applicationApi }: AppProps = {}) {
           </> : <>
             <span className="nav-section">OPERATIONS</span>
             <button className="nav-item active" aria-current="page"><LayoutDashboard size={17} />Case overview</button>
-            <button className="nav-item" onClick={() => navNotice("The customer directory will be connected to authenticated customer services in a later stage.")}><UserRound size={17} />Customers</button>
-            <button className="nav-item" onClick={() => navNotice("Product administration is not part of this presentation-only portal increment.")}><BriefcaseBusiness size={17} />Loan products</button>
-            <button className="nav-item" onClick={() => navNotice("Financial operations are not implemented in this preview. No payment or balance action is available.")}><Activity size={17} />Financial operations</button>
-            <span className="nav-section nav-section-spaced">CONTROL</span>
-            <button className="nav-item" onClick={() => navNotice("Staff access controls will be connected after identity and authorization services are implemented.")}><ShieldCheck size={17} />Access & audit</button>
+            <button className="nav-item" onClick={() => navNotice("Application management is mapped in the operations menu. Live records, assignment and decision controls are not connected in this preview.")}><FileText size={17} />Applications</button>
+            <button className="nav-item" onClick={() => navNotice("Customer directory is a planned operations area. Customer records and personal information are not available in this preview.")}><Users size={17} />Customers</button>
+            <button className="nav-item" onClick={() => navNotice("Loan account servicing is a planned area. No live loan balances, statements or account changes are available.")}><WalletCards size={17} />Loan accounts</button>
+            <button className="nav-item" onClick={() => navNotice("Repayment monitoring is a planned area. No collections, payment processing or repayment status changes are available.")}><HandCoins size={17} />Repayments</button>
+
+            <span className="nav-section nav-section-spaced">PRODUCT & WORKFLOWS</span>
+            <button className="nav-item" onClick={() => navNotice("Loan product management is mapped here. Product publishing and customer-facing offer configuration are not connected.")}><BriefcaseBusiness size={17} />Loan products</button>
+            <button className="nav-item" onClick={() => navNotice("Pricing and eligibility configuration is a planned control area. No rates, fees or eligibility decisions are configured by this preview.")}><SlidersHorizontal size={17} />Pricing & eligibility</button>
+            <button className="nav-item" onClick={() => navNotice("Workflow and stage configuration is planned. Stage templates, customer-specific stages and task assignment are not yet active.")}><Workflow size={17} />Workflow & stages</button>
+
+            <span className="nav-section nav-section-spaced">DOCUMENTS & COMPLIANCE</span>
+            <button className="nav-item" onClick={() => navNotice("Document review is a planned area. Upload, storage, scanning and verification are disabled in this preview.")}><FileSearch size={17} />Document review</button>
+            <button className="nav-item" onClick={() => navNotice("Identity and KYC verification are not active. Do not enter or upload identity information in this preview.")}><ShieldCheck size={17} />KYC & verification</button>
+            <button className="nav-item" onClick={() => navNotice("Compliance case management is a planned area and is not connected to regulatory or customer records.")}><FileCheck2 size={17} />Compliance cases</button>
+
+            <span className="nav-section nav-section-spaced">FINANCIAL OPERATIONS</span>
+            <button className="nav-item" onClick={() => navNotice("Disbursement controls are not implemented. No funds can be transferred or released from this preview.")}><Banknote size={17} />Disbursements</button>
+            <button className="nav-item" onClick={() => navNotice("Collections management is not implemented. No payment requests or collection actions can be performed.")}><Activity size={17} />Collections</button>
+            <button className="nav-item" onClick={() => navNotice("Reconciliation is a planned finance control. No bank feeds, ledger entries or settlement records are connected.")}><Landmark size={17} />Reconciliation</button>
+
+            <span className="nav-section nav-section-spaced">PEOPLE, INSIGHTS & SETTINGS</span>
+            <button className="nav-item" onClick={() => navNotice("Staff management and role assignment are planned. Access is not controlled by this demonstration menu.")}><Users size={17} />Staff & roles</button>
+            <button className="nav-item" onClick={() => navNotice("Reports and analytics are mapped here. All dashboard data remains illustrative until approved data services are connected.")}><ChartNoAxesCombined size={17} />Reports & analytics</button>
+            <button className="nav-item" onClick={() => navNotice("Country, currency and banking configuration is a planned area. No bank account details or live bank connections are supported.")}><Globe2 size={17} />Country & banking setup</button>
+            <button className="nav-item" onClick={() => navNotice("Platform settings are a planned area. Security, integrations and environment configuration are not changed from this preview.")}><Settings size={17} />Platform settings</button>
+            <button className="nav-item" onClick={() => navNotice("Access and immutable audit controls require the production identity, authorization and audit services before activation.")}><ShieldCheck size={17} />Access & audit</button>
           </>}
         </nav>
         <div className="sidebar-bottom">
