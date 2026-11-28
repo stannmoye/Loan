@@ -3,7 +3,7 @@ import {
   Activity, ArrowDownRight, ArrowRight, Banknote, Bell, BriefcaseBusiness, CheckCircle2,
   ChartNoAxesCombined, ChevronDown, CircleHelp, Clock3, FileCheck2, FileSearch, FileText, Filter,
   Globe2, HandCoins, Home, Landmark, LayoutDashboard, Menu, Search, Settings, ShieldCheck,
-  SlidersHorizontal, Users, WalletCards, Workflow, X
+  SlidersHorizontal, UserRound, Users, WalletCards, Workflow, X
 } from "lucide-react";
 import { reviewCases, type CaseStatus, type ReviewCase } from "./data/fixtures";
 import { CustomerExperience } from "./customer/CustomerExperience";
