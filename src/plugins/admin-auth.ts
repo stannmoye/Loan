@@ -2,7 +2,23 @@ import type { FastifyInstance, FastifyRequest } from 'fastify';
 import { importSPKI, jwtVerify } from 'jose';
 import { env } from '../config/env.js';
 
-const publicKey = importSPKI(env.JWT_PUBLIC_KEY_PEM.replace(/\\n/g, '\n'), 'RS256');
+// Do not parse or import the key at module load time. The API must be able to
+// start for health checks and public routes before administrator auth is set up.
+async function getPublicKey() {
+  if (!env.JWT_PUBLIC_KEY_PEM || !env.JWT_ISSUER || !env.JWT_AUDIENCE) {
+    const error = new Error('Administrator authentication is not configured');
+    Object.assign(error, { statusCode: 503 });
+    throw error;
+  }
+
+  try {
+    return await importSPKI(env.JWT_PUBLIC_KEY_PEM.replace(/\\n/g, '\n'), 'RS256');
+  } catch {
+    const error = new Error('Administrator authentication key is invalid');
+    Object.assign(error, { statusCode: 503 });
+    throw error;
+  }
+}
 
 export async function requirePermission(request: FastifyRequest, permission: string): Promise<string> {
   const authorization = request.headers.authorization;
@@ -12,11 +28,12 @@ export async function requirePermission(request: FastifyRequest, permission: str
     throw error;
   }
   const token = authorization.slice(7);
+  const publicKey = await getPublicKey();
   let verified;
   try {
-    verified = await jwtVerify(token, await publicKey, {
-      issuer: env.JWT_ISSUER,
-      audience: env.JWT_AUDIENCE,
+    verified = await jwtVerify(token, publicKey, {
+      issuer: env.JWT_ISSUER!,
+      audience: env.JWT_AUDIENCE!,
       algorithms: ['RS256'],
     });
   } catch {
