@@ -28,3 +28,7 @@ The backend API and MySQL database are not included in this static preview conta
 ## Update workflow
 
 Make one coherent change, commit it to `feat/customer-operations-portal-shell`, and push. Blitz Cloud builds the newest commit and keeps the currently running version online until the new version starts successfully. Check the app's build/activity log if an update does not appear.
+
+## Build verification
+
+The portal's automated validation is defined in `.github/workflows/portal-ci.yml`. It checks the TypeScript/Vite production build, component tests, and desktop/mobile Playwright flows. Review the latest run for this branch before treating a deployment as verified. A successful static-site build does not enable backend authentication or financial operations.
