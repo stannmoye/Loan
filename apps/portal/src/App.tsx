@@ -155,7 +155,7 @@ function App({ applicationApi }: AppProps = {}) {
         <div className="content-wrap">
           <div className="mode-switch" role="group" aria-label="Preview workspace"><button className={mode === "customer" ? "mode-active" : ""} onClick={() => changeMode("customer")}>Customer view</button><button className={mode === "operations" ? "mode-active" : ""} onClick={() => changeMode("operations")}>Operations view</button></div>
           {notice && <div className="notice-banner" role="status"><span>{notice}</span><button aria-label="Dismiss notice" onClick={() => setNotice("")}><X size={16} /></button></div>}
-          {mode === "customer" ? <CustomerExperience section={customerSection} onSectionChange={changeCustomerSection} onNotice={setNotice} applicationApi={applicationApi} /> : adminSettingsOpen ? <SecretsSettings /> : adminWorkspace === "workflow" ? <WorkflowDesigner onBack={() => setAdminWorkspace("cases")} onNotice={setNotice} /> : adminWorkspace === "documents" ? <DocumentOversight onBack={() => setAdminWorkspace("cases")} onNotice={setNotice} /> : <OperationsView query={query} setQuery={setQuery} filter={filter} setFilter={setFilter} cases={filteredCases} selected={selected} setSelected={setSelected} onNotice={setNotice} onOpenWorkflow={() => setAdminWorkspace("workflow")} />}
+          {mode === "customer" ? <CustomerExperience section={customerSection} onSectionChange={changeCustomerSection} onNotice={setNotice} applicationApi={applicationApi} /> : adminSettingsOpen ? <SecretsSettings /> : adminWorkspace === "workflow" ? <WorkflowDesigner onBack={() => setAdminWorkspace("cases")} onNotice={setNotice} /> : adminWorkspace === "documents" ? <DocumentOversight onBack={() => setAdminWorkspace("cases")} onNotice={setNotice} /> : <OperationsView query={query} setQuery={setQuery} filter={filter} setFilter={setFilter} cases={filteredCases} selected={selected} setSelected={setSelected} onNotice={setNotice} onOpenWorkflow={() => setAdminWorkspace("workflow")} onOpenDocuments={() => setAdminWorkspace("documents")} />}
           <footer className="page-footer"><span>Northline is a product concept for a lending platform.</span><span>Illustrative interface · No live financial services</span></footer>
         </div>
         {mode === "customer" && <nav className="mobile-quick-nav" aria-label="Quick customer navigation">
@@ -188,7 +188,7 @@ function SecretsSettings() {
 function OperationsView({ query, setQuery, filter, setFilter, cases, selected, setSelected, onNotice, onOpenWorkflow }: {
   query: string; setQuery: (value: string) => void; filter: "All" | CaseStatus;
   setFilter: (value: "All" | CaseStatus) => void; cases: ReviewCase[];
-  selected: ReviewCase; setSelected: (value: ReviewCase) => void; onNotice: (message: string) => void; onOpenWorkflow: () => void;
+  selected: ReviewCase; setSelected: (value: ReviewCase) => void; onNotice: (message: string) => void; onOpenWorkflow: () => void; onOpenDocuments: () => void;
 }) {
   const totalCases = reviewCases.length;
   const needsReview = reviewCases.filter(c => c.status === "Needs review").length;
@@ -229,7 +229,7 @@ function OperationsView({ query, setQuery, filter, setFilter, cases, selected, s
         <button className="admin-suite-card suite-blue" onClick={() => onNotice("Application management is a design preview. Live application records, assignment and decisions are not connected.")}><span className="admin-suite-icon"><FileText size={19}/></span><span className="admin-suite-copy"><strong>Application review</strong><small>Intake, evidence and review queues</small></span><ArrowRight size={17}/></button>
         <button className="admin-suite-card suite-violet" onClick={() => onNotice("Customer management is a design preview. No live customer profiles or personal information are available.")}><span className="admin-suite-icon"><Users size={19}/></span><span className="admin-suite-copy"><strong>Customer workspace</strong><small>Profiles, service history and ownership</small></span><ArrowRight size={17}/></button>
         <button className="admin-suite-card suite-gold" onClick={onOpenWorkflow}><span className="admin-suite-icon"><Workflow size={19}/></span><span className="admin-suite-copy"><strong>Workflow designer</strong><small>Stages, milestones and next actions</small></span><ArrowRight size={17}/></button>
-        <button className="admin-suite-card suite-green" onClick={() => { const event = new CustomEvent("open-document-oversight"); window.dispatchEvent(event); onNotice("Open Document review from the operations navigation to explore the evidence oversight workspace."); }}><span className="admin-suite-icon"><FileSearch size={19}/></span><span className="admin-suite-copy"><strong>Evidence oversight</strong><small>Document requests and review controls</small></span><ArrowRight size={17}/></button>
+        <button className="admin-suite-card suite-green" onClick={onOpenDocuments}><span className="admin-suite-icon"><FileSearch size={19}/></span><span className="admin-suite-copy"><strong>Evidence oversight</strong><small>Document requests and review controls</small></span><ArrowRight size={17}/></button>
       </div>
     </section>
     <div className="ops-layout">
