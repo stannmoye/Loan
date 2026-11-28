@@ -4393,3 +4393,46 @@ button, .product-card, .overview-tile { -webkit-tap-highlight-color: transparent
   .admin-suite-card { padding:12px; }
 }
 @media (prefers-reduced-motion: reduce) { .admin-suite-card { transition:none; } }
+
+
+/* Application review workspace */
+.review-preparation-panel,.workflow-preview-panel {
+  margin-top:16px; padding:17px; border:1px solid #e2eaf4; border-radius:15px;
+  background:linear-gradient(145deg,#fff,#f8faff);
+}
+.review-preparation-heading { display:flex; align-items:center; justify-content:space-between; gap:12px; }
+.review-preparation-heading h3,.workflow-preview-panel h3 { margin:4px 0 0; color:#203653; font-size:14px; }
+.review-preparation-tag { display:inline-flex; align-items:center; gap:6px; padding:6px 9px; border-radius:20px; border:1px solid #e8e1ce; background:#fff8e9; color:#8b641f; font-size:10px; font-weight:750; }
+.review-preparation-panel > p { margin:9px 0 13px; color:#718096; font-size:11px; line-height:1.55; }
+.review-readiness-grid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:9px; }
+.review-readiness-item { display:flex; align-items:center; gap:9px; min-width:0; padding:10px; border:1px solid #e8edf4; border-radius:11px; background:#fff; }
+.review-readiness-icon { width:33px; height:33px; flex:none; display:grid; place-items:center; border-radius:10px; }
+.review-icon-blue { color:#2866c7; background:#eaf2ff; }
+.review-icon-gold { color:#a97624; background:#fff3dd; }
+.review-icon-violet { color:#7456bd; background:#f1ebff; }
+.review-readiness-item > span:nth-child(2) { min-width:0; flex:1; display:flex; flex-direction:column; gap:3px; }
+.review-readiness-item strong { color:#30435f; font-size:10px; }
+.review-readiness-item small { color:#8491a4; font-size:9px; line-height:1.4; }
+.review-readiness-item b { color:#9a762f; font-size:9px; font-weight:750; }
+.workflow-preview-panel .detail-section-heading { margin-bottom:13px; }
+.workflow-preview-rail { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:0; }
+.workflow-preview-step { position:relative; display:flex; align-items:flex-start; gap:8px; min-width:0; padding:0 8px 0 0; }
+.workflow-preview-step:not(:last-child):after { content:""; position:absolute; left:29px; right:6px; top:13px; height:2px; background:#e4eaf2; transform:translateX(0); }
+.workflow-preview-step i { z-index:1; width:27px; height:27px; flex:none; display:grid; place-items:center; border:1px solid #dfe7f1; border-radius:50%; background:#fff; color:#9aa8ba; font-style:normal; }
+.workflow-preview-step > span { min-width:0; display:flex; flex-direction:column; gap:4px; padding-top:2px; }
+.workflow-preview-step strong { color:#66758b; font-size:9px; line-height:1.35; }
+.workflow-preview-step small { color:#9aa5b5; font-size:8px; line-height:1.4; }
+.workflow-preview-step.step-done i { color:#168653; border-color:#bfe5cf; background:#eaf8ef; }
+.workflow-preview-step.step-active i { color:#2866c7; border-color:#bfd4f4; background:#edf4ff; box-shadow:0 0 0 4px #edf4ff; }
+.workflow-preview-step.step-active strong { color:#245da8; }
+.workflow-preview-foot { display:flex; align-items:flex-start; gap:7px; margin-top:14px; padding:9px 10px; border-radius:9px; background:#f0f5fc; color:#617792; font-size:9px; line-height:1.5; }
+.workflow-preview-foot svg { flex:none; color:#4774ad; }
+@media (max-width: 760px) {
+  .review-readiness-grid { grid-template-columns:1fr; }
+  .workflow-preview-rail { grid-template-columns:1fr 1fr; row-gap:15px; }
+  .workflow-preview-step:not(:last-child):after { display:none; }
+}
+@media (max-width: 420px) {
+  .review-preparation-heading { align-items:flex-start; flex-direction:column; }
+  .workflow-preview-rail { grid-template-columns:1fr; }
+}
