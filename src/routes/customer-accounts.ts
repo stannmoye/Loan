@@ -201,7 +201,8 @@ export function buildCustomerAccountRoutes(options: CustomerAccountRouteOptions)
       if (!parsed.success) return reply.code(400).send({ error: 'Invalid application identifier' });
       return { data: await withdrawCustomerApplication(context, parsed.data) };
     });
-\n    app.post('/api/v1/customer/auth/logout', async (request) => {
+
+    app.post('/api/v1/customer/auth/logout', async (request) => {
       const identity = await requireIdentity(request);
       const context = await requireContext(identity);
       const result = await service.revokeSession(context, context.currentSessionId);
