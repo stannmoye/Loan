@@ -4,7 +4,8 @@ import {
   ChevronDown, CircleHelp, Clock3, FileCheck2, FileSearch, FileText, Filter,
   Globe2, HandCoins, Home, Landmark, LayoutDashboard, Menu, Search, Settings, ShieldCheck,
   SlidersHorizontal, UserRound, Users, WalletCards, Workflow, X,
-  Plus, ChevronUp, ChevronDown as ChevronDownIcon, ListChecks, Sparkles, Save
+  Plus, ChevronUp, ChevronDown as ChevronDownIcon, ListChecks, Sparkles, Save,
+  Mail, MessageSquare, Smartphone, Send
 } from "lucide-react";
 import { reviewCases, type CaseStatus, type ReviewCase } from "./data/fixtures";
 import { CustomerExperience } from "./customer/CustomerExperience";
@@ -50,7 +51,7 @@ function App({ applicationApi }: AppProps = {}) {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [notice, setNotice] = useState("");
   const [adminSettingsOpen, setAdminSettingsOpen] = useState(false);
-  const [adminWorkspace, setAdminWorkspace] = useState<"cases" | "workflow" | "documents" | "staff">("cases");
+  const [adminWorkspace, setAdminWorkspace] = useState<"cases" | "workflow" | "documents" | "staff" | "communications">("cases");
   const [customerSection, setCustomerSection] = useState<CustomerSection>(() => sectionFromPath(window.location.pathname));
 
   useEffect(() => {
@@ -132,6 +133,7 @@ function App({ applicationApi }: AppProps = {}) {
 
             <span className="nav-section nav-section-spaced">PEOPLE, INSIGHTS & SETTINGS</span>
             <button className={adminWorkspace === "staff" ? "nav-item active" : "nav-item"} aria-current={adminWorkspace === "staff" ? "page" : undefined} onClick={() => { setAdminWorkspace("staff"); setAdminSettingsOpen(false); setMobileOpen(false); setNotice(""); }}><Users size={17} />Staff & roles</button>
+            <button className={adminWorkspace === "communications" ? "nav-item active" : "nav-item"} aria-current={adminWorkspace === "communications" ? "page" : undefined} onClick={() => { setAdminWorkspace("communications"); setAdminSettingsOpen(false); setMobileOpen(false); setNotice(""); }}><Bell size={17} />Notifications & communications</button>
             <button className="nav-item" onClick={() => navNotice("Reports and analytics are mapped here. All dashboard data remains illustrative until approved data services are connected.")}><Activity size={17} />Reports & analytics</button>
             <button className="nav-item" onClick={() => navNotice("Country, currency and banking configuration is a planned area. No bank account details or live bank connections are supported.")}><Globe2 size={17} />Country & banking setup</button>
             <button className={adminSettingsOpen ? "nav-item active" : "nav-item"} onClick={() => { setAdminSettingsOpen(true); setMobileOpen(false); setNotice(""); }}><Settings size={17} />Platform settings</button>
@@ -149,13 +151,13 @@ function App({ applicationApi }: AppProps = {}) {
       <main className="main-area">
         <header className="topbar">
           <button className="icon-button mobile-menu" aria-label="Open navigation" onClick={() => setMobileOpen(true)}><Menu size={20} /></button>
-          <div className="breadcrumb"><span className="breadcrumb-brand">Northline</span><span className="crumb-separator">/</span><span className="breadcrumb-workspace">{mode === "customer" ? "Customer space" : "Operations"}</span><span className="crumb-separator">/</span><strong>{mode === "customer" ? customerSectionLabels[customerSection] : adminSettingsOpen ? "Secrets & API keys" : adminWorkspace === "workflow" ? "Workflow designer" : adminWorkspace === "documents" ? "Document oversight" : adminWorkspace === "staff" ? "Staff, roles & permissions" : "Case overview"}</strong></div>
+          <div className="breadcrumb"><span className="breadcrumb-brand">Northline</span><span className="crumb-separator">/</span><span className="breadcrumb-workspace">{mode === "customer" ? "Customer space" : "Operations"}</span><span className="crumb-separator">/</span><strong>{mode === "customer" ? customerSectionLabels[customerSection] : adminSettingsOpen ? "Secrets & API keys" : adminWorkspace === "workflow" ? "Workflow designer" : adminWorkspace === "documents" ? "Document oversight" : adminWorkspace === "staff" ? "Staff, roles & permissions" : adminWorkspace === "communications" ? "Notifications & communications" : "Case overview"}</strong></div>
           <div className="topbar-actions"><span className="preview-label"><span />Illustrative preview</span><button className={mode === "customer" && customerSection === "notifications" ? "icon-button notification-button top-notification-active" : "icon-button notification-button"} aria-label="Open notifications" aria-current={mode === "customer" && customerSection === "notifications" ? "page" : undefined} onClick={() => mode === "customer" ? changeCustomerSection("notifications") : navNotice("Operations notifications are not connected in this preview.")}><Bell size={18} /></button><div className="top-avatar">{mode === "customer" ? "SC" : "SO"}</div></div>
         </header>
         <div className="content-wrap">
           <div className="mode-switch" role="group" aria-label="Preview workspace"><button className={mode === "customer" ? "mode-active" : ""} onClick={() => changeMode("customer")}>Customer view</button><button className={mode === "operations" ? "mode-active" : ""} onClick={() => changeMode("operations")}>Operations view</button></div>
           {notice && <div className="notice-banner" role="status"><span>{notice}</span><button aria-label="Dismiss notice" onClick={() => setNotice("")}><X size={16} /></button></div>}
-          {mode === "customer" ? <CustomerExperience section={customerSection} onSectionChange={changeCustomerSection} onNotice={setNotice} applicationApi={applicationApi} /> : adminSettingsOpen ? <SecretsSettings /> : adminWorkspace === "workflow" ? <WorkflowDesigner onBack={() => setAdminWorkspace("cases")} onNotice={setNotice} /> : adminWorkspace === "documents" ? <DocumentOversight onBack={() => setAdminWorkspace("cases")} onNotice={setNotice} /> : adminWorkspace === "staff" ? <StaffRolesWorkspace onBack={() => setAdminWorkspace("cases")} onNotice={setNotice} /> : <OperationsView query={query} setQuery={setQuery} filter={filter} setFilter={setFilter} cases={filteredCases} selected={selected} setSelected={setSelected} onNotice={setNotice} onOpenWorkflow={() => setAdminWorkspace("workflow")} onOpenDocuments={() => setAdminWorkspace("documents")} />}
+          {mode === "customer" ? <CustomerExperience section={customerSection} onSectionChange={changeCustomerSection} onNotice={setNotice} applicationApi={applicationApi} /> : adminSettingsOpen ? <SecretsSettings /> : adminWorkspace === "workflow" ? <WorkflowDesigner onBack={() => setAdminWorkspace("cases")} onNotice={setNotice} /> : adminWorkspace === "documents" ? <DocumentOversight onBack={() => setAdminWorkspace("cases")} onNotice={setNotice} /> : adminWorkspace === "staff" ? <StaffRolesWorkspace onBack={() => setAdminWorkspace("cases")} onNotice={setNotice} /> : adminWorkspace === "communications" ? <CommunicationsWorkspace onBack={() => setAdminWorkspace("cases")} onNotice={setNotice} /> : <OperationsView query={query} setQuery={setQuery} filter={filter} setFilter={setFilter} cases={filteredCases} selected={selected} setSelected={setSelected} onNotice={setNotice} onOpenWorkflow={() => setAdminWorkspace("workflow")} onOpenDocuments={() => setAdminWorkspace("documents")} />}
           <footer className="page-footer"><span>Northline is a product concept for a lending platform.</span><span>Illustrative interface · No live financial services</span></footer>
         </div>
         {mode === "customer" && <nav className="mobile-quick-nav" aria-label="Quick customer navigation">
@@ -496,6 +498,96 @@ function StaffRolesWorkspace({onBack,onNotice}:{onBack:()=>void;onNotice:(messag
       </section>
     </div>
     <section className="staff-governance-panel"><div className="staff-governance-heading"><div><span className="eyebrow">ACCESS GOVERNANCE</span><h3>Design controls before granting access</h3><p>A clear baseline for secure staff administration.</p></div><span className="staff-governance-badge">Policy blueprint</span></div><div className="staff-governance-grid">{[{title:"Least privilege",detail:"Grant only the minimum access required for a staff member's assigned duties.",icon:<ShieldCheck size={17}/>},{title:"Separation of duties",detail:"Separate application review, verification and final approval responsibilities.",icon:<Users size={17}/>},{title:"Step-up authentication",detail:"Require stronger authentication for sensitive administration and access changes.",icon:<KeyRound size={17}/>},{title:"Periodic access review",detail:"Review roles regularly and promptly remove access that is no longer required.",icon:<Clock3 size={17}/>},{title:"Auditable changes",detail:"Record who changed access, what changed, when and why.",icon:<FileCheck2 size={17}/>},{title:"Scoped assignments",detail:"Limit case and evidence access to authorised teams and assigned work.",icon:<BriefcaseBusiness size={17}/>}].map(item=><article className="staff-governance-tile" key={item.title}><span>{item.icon}</span><div><strong>{item.title}</strong><small>{item.detail}</small></div></article>)}</div></section>
+  </section>;
+}
+
+
+type MessageChannel = "In-app" | "Email" | "SMS";
+type MessageStatus = "Delivered" | "Queued" | "Needs attention";
+type MessageRecord = {id:string;title:string;channel:MessageChannel;recipient:string;category:string;priority:"Standard"|"Important"|"Urgent";status:MessageStatus;time:string;preview:string;event:string;reference:string};
+const messageFixtures: MessageRecord[] = [
+  {id:"MSG-2048",title:"Application update available",channel:"In-app",recipient:"Sample customer · SC-1042",category:"Application progress",priority:"Important",status:"Delivered",time:"Today · 10:42",preview:"There is a new update in your illustrative application timeline. Open your customer workspace to review the next step.",event:"Application stage changed",reference:"APP-DEMO-1042"},
+  {id:"MSG-2047",title:"Document checklist reminder",channel:"Email",recipient:"Sample customer · SC-1088",category:"Document reminders",priority:"Standard",status:"Queued",time:"Today · 10:18",preview:"Your sample document checklist has been updated. Review the listed requirements in the demonstration workspace.",event:"Requirement reminder",reference:"APP-DEMO-1088"},
+  {id:"MSG-2046",title:"Verification review assigned",channel:"In-app",recipient:"Sample staff · Operations",category:"Staff activity",priority:"Standard",status:"Delivered",time:"Today · 09:56",preview:"A fictional verification case has been assigned to the sample operations queue for review.",event:"Case assignment",reference:"CASE-DEMO-2206"},
+  {id:"MSG-2045",title:"Welcome to Northline",channel:"Email",recipient:"Sample customer · SC-1042",category:"Account updates",priority:"Standard",status:"Delivered",time:"Yesterday · 16:24",preview:"Welcome to the Northline product preview. Explore the sample dashboard and learn how the customer workspace is organised.",event:"Preview onboarding",reference:"USER-DEMO-1042"},
+  {id:"MSG-2044",title:"Service notice preview",channel:"SMS",recipient:"Masked sample destination",category:"Service notices",priority:"Urgent",status:"Needs attention",time:"Yesterday · 15:02",preview:"This is a sample service notice. No phone number is stored and no SMS has been sent.",event:"Provider delivery simulation",reference:"NOTICE-DEMO-008"},
+  {id:"MSG-2043",title:"Case review completed",channel:"In-app",recipient:"Sample staff · Case review",category:"Staff activity",priority:"Standard",status:"Delivered",time:"Yesterday · 11:35",preview:"The illustrative case review checklist has been marked complete in this local preview.",event:"Review milestone",reference:"CASE-DEMO-2191"}
+];
+const messageTemplates = [
+  {name:"Application received",category:"Application progress",channels:"In-app · Email",purpose:"Confirm receipt and explain where progress updates appear."},
+  {name:"Next step required",category:"Customer action",channels:"In-app · Email · SMS",purpose:"Explain a pending action using clear, accessible language."},
+  {name:"Document checklist reminder",category:"Document reminders",channels:"In-app · Email",purpose:"Remind customers to review outstanding requirements."},
+  {name:"Verification status update",category:"Verification",channels:"In-app · Email",purpose:"Provide a neutral update when a review milestone changes."},
+  {name:"Case assigned to reviewer",category:"Staff activity",channels:"In-app · Email",purpose:"Notify an authorised team about a sample case assignment."},
+  {name:"Service maintenance notice",category:"Service notices",channels:"In-app · Email · SMS",purpose:"Share service availability information and support guidance."}
+];
+function CommunicationsWorkspace({onBack,onNotice}:{onBack:()=>void;onNotice:(message:string)=>void}) {
+  const [activeTab,setActiveTab]=useState<"messages"|"templates"|"preferences">("messages");
+  const [channel,setChannel]=useState<"All"|"In-app"|"Email"|"SMS">("All");
+  const [status,setStatus]=useState<"All"|MessageStatus>("All");
+  const [query,setQuery]=useState("");
+  const [selectedId,setSelectedId]=useState(messageFixtures[0].id);
+  const [enabledChannels,setEnabledChannels]=useState<Record<MessageChannel,boolean>>({"In-app":true,Email:true,SMS:false});
+  const [enabledCategories,setEnabledCategories]=useState<Record<string,boolean>>({"Application progress":true,"Document reminders":true,"Account updates":true,"Service notices":true,"Staff activity":true});
+  const [templateQuery,setTemplateQuery]=useState("");
+  const selected=messageFixtures.find(item=>item.id===selectedId)??messageFixtures[0];
+  const visible=messageFixtures.filter(item=>(channel==="All"||item.channel===channel)&&(status==="All"||item.status===status)&&[item.id,item.title,item.recipient,item.category,item.reference].join(" ").toLowerCase().includes(query.toLowerCase()));
+  const deliveredCount=messageFixtures.filter(item=>item.status==="Delivered").length;
+  const queuedCount=messageFixtures.filter(item=>item.status==="Queued").length;
+  const attentionCount=messageFixtures.filter(item=>item.status==="Needs attention").length;
+  const templates=messageTemplates.filter(item=>[item.name,item.category,item.purpose,item.channels].join(" ").toLowerCase().includes(templateQuery.toLowerCase()));
+  const previewAction=(action:string)=>onNotice(action+" is preview-only. No message is sent, scheduled, retried or published from this workspace.");
+  const toggleChannel=(item:MessageChannel)=>setEnabledChannels(current=>({...current,[item]:!current[item]}));
+  const toggleCategory=(item:string)=>setEnabledCategories(current=>({...current,[item]:!current[item]}));
+  return <section className="operations-page communications-page">
+    <div className="page-heading staff-heading"><div><div className="eyebrow">CUSTOMER EXPERIENCE / COMMUNICATIONS</div><h1>Every update, clearly connected.</h1><p>Review message activity, explore reusable templates and map communication preferences across channels.</p></div><button className="workflow-back-button" onClick={onBack}><ArrowRight size={15}/> Back to case overview</button></div>
+    <div className="sample-notice"><span className="sample-mark"><ShieldCheck size={16}/></span><div><strong>Communication centre preview — outbound messaging is disabled</strong><p>All messages, recipients, delivery states and template content below are fictional. This workspace has no email, SMS or push provider connection.</p></div></div>
+    <div className="communications-metrics">
+      <article className="communications-metric"><span className="communications-metric-icon comm-blue"><MessageSquare size={17}/></span><small>Sample messages</small><strong>{messageFixtures.length.toString().padStart(2,"0")}</strong><em>Illustrative activity</em></article>
+      <article className="communications-metric"><span className="communications-metric-icon comm-green"><CheckCircle2 size={17}/></span><small>Delivered</small><strong>{deliveredCount.toString().padStart(2,"0")}</strong><em>Simulated status only</em></article>
+      <article className="communications-metric"><span className="communications-metric-icon comm-violet"><Clock3 size={17}/></span><small>Queued</small><strong>{queuedCount.toString().padStart(2,"0")}</strong><em>No live queue</em></article>
+      <article className="communications-metric"><span className="communications-metric-icon comm-amber"><Bell size={17}/></span><small>Needs attention</small><strong>{attentionCount.toString().padStart(2,"0")}</strong><em>Sample exception</em></article>
+    </div>
+    <div className="communications-tabs" role="tablist" aria-label="Communication centre sections">
+      <button role="tab" aria-selected={activeTab==="messages"} className={activeTab==="messages"?"active":""} onClick={()=>setActiveTab("messages")}><MessageSquare size={15}/> Message activity</button>
+      <button role="tab" aria-selected={activeTab==="templates"} className={activeTab==="templates"?"active":""} onClick={()=>setActiveTab("templates")}><FileText size={15}/> Templates <span>{messageTemplates.length}</span></button>
+      <button role="tab" aria-selected={activeTab==="preferences"} className={activeTab==="preferences"?"active":""} onClick={()=>setActiveTab("preferences")}><SlidersHorizontal size={15}/> Preferences & channels</button>
+    </div>
+    {activeTab==="messages"&&<div className="communications-workspace">
+      <section className="panel communications-queue">
+        <div className="communications-panel-heading"><div><span className="eyebrow">MESSAGE REGISTER</span><h2>Recent communication</h2></div><span className="quiet-tag">{visible.length} records</span></div>
+        <label className="search-box"><Search size={15}/><input value={query} onChange={event=>setQuery(event.target.value)} placeholder="Search messages or references" aria-label="Search messages"/></label>
+        <div className="communications-filter-row"><label><Filter size={13}/><select value={channel} onChange={event=>setChannel(event.target.value as typeof channel)} aria-label="Filter by channel"><option>All</option><option>In-app</option><option>Email</option><option>SMS</option></select></label><label><SlidersHorizontal size={13}/><select value={status} onChange={event=>setStatus(event.target.value as typeof status)} aria-label="Filter by delivery status"><option>All</option><option>Delivered</option><option>Queued</option><option>Needs attention</option></select></label></div>
+        <div className="communications-message-list">{visible.map(item=><button key={item.id} className={selectedId===item.id?"communications-message-row selected":"communications-message-row"} onClick={()=>setSelectedId(item.id)}><span className={"communications-channel-icon "+(item.channel==="Email"?"email":item.channel==="SMS"?"sms":"inapp")}>{item.channel==="Email"?<Mail size={15}/>:item.channel==="SMS"?<Smartphone size={15}/>:<Bell size={15}/>}</span><span className="communications-message-copy"><strong>{item.title}</strong><small>{item.recipient}</small><em>{item.id} · {item.time}</em></span><span className={"communications-status "+(item.status==="Delivered"?"delivered":item.status==="Queued"?"queued":"attention")}>{item.status}</span></button>)}{visible.length===0&&<div className="communications-empty"><Search size={19}/><strong>No matching messages</strong><span>Adjust the search or channel filters.</span></div>}</div>
+        <div className="communications-queue-foot"><ShieldCheck size={14}/> Fictional event history · no provider connection</div>
+      </section>
+      <section className="panel communications-detail">
+        <div className="communications-detail-heading"><div><span className="eyebrow">MESSAGE DETAIL · {selected.id}</span><h2>{selected.title}</h2><span>{selected.time} · {selected.channel}</span></div><span className={"communications-status "+(selected.status==="Delivered"?"delivered":selected.status==="Queued"?"queued":"attention")}>{selected.status}</span></div>
+        <div className="communications-detail-body">
+          <div className="communications-recipient"><span className="communications-recipient-avatar"><UserRound size={17}/></span><div><small>RECIPIENT</small><strong>{selected.recipient}</strong><em>Sample identity · destination not stored</em></div></div>
+          <div className="communications-content-preview"><div><span>CONTENT PREVIEW</span><span className="preview-only-tag">DEMO COPY</span></div><p>{selected.preview}</p></div>
+          <div className="communications-facts"><div><small>CATEGORY</small><strong>{selected.category}</strong></div><div><small>PRIORITY</small><strong>{selected.priority}</strong></div><div><small>TRIGGER EVENT</small><strong>{selected.event}</strong></div><div><small>REFERENCE</small><strong>{selected.reference}</strong></div></div>
+          <div className="communications-timeline"><span className="eyebrow">EVENT TIMELINE</span><div><i className="timeline-dot complete"/><span><strong>Message event created</strong><small>{selected.time} · Sample event</small></span></div><div><i className={"timeline-dot "+(selected.status==="Delivered"?"complete":"pending")}/><span><strong>{selected.status==="Delivered"?"Delivery status recorded":selected.status==="Queued"?"Waiting in sample queue":"Provider attention required"}</strong><small>Illustrative state · not a provider receipt</small></span></div></div>
+        </div>
+        <div className="communications-detail-actions"><div><strong>Provider actions are unavailable</strong><small>Sending and retrying require verified consent and a connected provider.</small></div><button disabled><Send size={13}/> Send / retry disabled</button></div>
+      </section>
+    </div>}
+    {activeTab==="templates"&&<section className="communications-template-panel panel">
+      <div className="communications-panel-heading"><div><span className="eyebrow">MESSAGE LIBRARY</span><h2>Reusable communication templates</h2><p>Starter patterns for consistent, accessible customer and staff updates.</p></div><button className="communications-outline-button" onClick={()=>previewAction("Template creation") }><Plus size={14}/> New template preview</button></div>
+      <label className="search-box"><Search size={15}/><input value={templateQuery} onChange={event=>setTemplateQuery(event.target.value)} placeholder="Search template library" aria-label="Search templates"/></label>
+      <div className="communications-template-grid">{templates.map(item=><article className="communications-template-card" key={item.name}><div className="communications-template-top"><span><FileText size={16}/></span><small>{item.category}</small></div><h3>{item.name}</h3><p>{item.purpose}</p><div className="communications-template-channels">{item.channels.split(" · ").map(channelName=><span key={channelName}>{channelName}</span>)}</div><button onClick={()=>previewAction("Template editing")}><SlidersHorizontal size={13}/> Edit preview</button></article>)}{templates.length===0&&<div className="communications-empty"><Search size={19}/><strong>No matching templates</strong><span>Try another search phrase.</span></div>}</div>
+      <div className="communications-template-foot"><ShieldCheck size={15}/> Production templates should be versioned, approved, localised and tested for accessibility before activation.</div>
+    </section>}
+    {activeTab==="preferences"&&<div className="communications-preferences">
+      <section className="panel communications-preference-panel"><div className="communications-panel-heading"><div><span className="eyebrow">CHANNEL CONFIGURATION</span><h2>Available delivery channels</h2><p>Local preview toggles only; no provider is configured.</p></div><span className="quiet-tag">Preview</span></div>
+        {(["In-app","Email","SMS"] as MessageChannel[]).map(item=><div className="communications-setting-row" key={item}><span className="communications-setting-icon">{item==="In-app"?<Bell size={16}/>:item==="Email"?<Mail size={16}/>:<Smartphone size={16}/>}</span><span><strong>{item}</strong><small>{item==="In-app"?"Notification centre and account activity":item==="Email"?"Transactional email delivery":"Text message delivery"}</small></span><button className={enabledChannels[item]?"communications-toggle enabled":"communications-toggle"} role="switch" aria-checked={enabledChannels[item]} onClick={()=>toggleChannel(item)}><i/></button></div>)}
+      </section>
+      <section className="panel communications-preference-panel"><div className="communications-panel-heading"><div><span className="eyebrow">EVENT PREFERENCES</span><h2>Notification categories</h2><p>Demonstration preferences held only in local component state.</p></div></div>
+        {Object.keys(enabledCategories).map(item=><div className="communications-setting-row" key={item}><span className="communications-setting-icon category"><CheckCircle2 size={15}/></span><span><strong>{item}</strong><small>Sample event preference</small></span><button className={enabledCategories[item]?"communications-toggle enabled":"communications-toggle"} role="switch" aria-checked={enabledCategories[item]} onClick={()=>toggleCategory(item)}><i/></button></div>)}
+      </section>
+      <div className="communications-consent-note"><ShieldCheck size={18}/><div><strong>Consent and preference governance</strong><p>Before production use, record lawful communication purpose, channel-specific consent where required, opt-outs and suppression lists. Respect mandatory service notices separately from optional marketing preferences, and retain an auditable history of preference changes.</p></div></div>
+    </div>}
+    <section className="communications-production-panel"><div><span className="eyebrow">PRODUCTION READINESS</span><h3>Safe delivery needs more than a Send button.</h3><p>Connect an approved provider, verified sender identity, secure secrets vault and consent service before activating outbound communications.</p></div><div className="communications-requirement-grid"><span><ShieldCheck size={14}/> Consent & opt-out controls</span><span><KeyRound size={14}/> Encrypted provider credentials</span><span><Activity size={14}/> Rate limits & monitoring</span><span><ListChecks size={14}/> Idempotency & retry policy</span><span><FileCheck2 size={14}/> Immutable audit trail</span><span><Clock3 size={14}/> Dead-letter handling</span></div></section>
   </section>;
 }
 
