@@ -10,6 +10,13 @@ const envSchema = z.object({
   JWT_ISSUER: z.string().min(1).optional(),
   JWT_AUDIENCE: z.string().min(1).optional(),
   JWT_PUBLIC_KEY_PEM: z.string().min(1).optional(),
+  CUSTOMER_JWT_ISSUER: z.string().min(1).optional(),
+  CUSTOMER_JWT_AUDIENCE: z.string().min(1).optional(),
+  CUSTOMER_JWT_PUBLIC_KEY_PEM: z.string().min(1).optional(),
+  CUSTOMER_PROFILE_ENCRYPTION_KEY_HEX: z.string().regex(/^[a-fA-F0-9]{64}$/).optional(),
+  CUSTOMER_PRIVACY_NOTICE_VERSION: z.string().regex(/^[A-Za-z0-9._-]{1,64}$/).optional(),
+  CUSTOMER_TERMS_OF_SERVICE_VERSION: z.string().regex(/^[A-Za-z0-9._-]{1,64}$/).optional(),
+  CUSTOMER_APPLICATION_DECLARATION_VERSION: z.string().regex(/^[A-Za-z0-9._-]{1,64}$/).optional(),
   CORS_ORIGIN: z.string().url(),
 });
 
