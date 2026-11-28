@@ -3795,3 +3795,16 @@ button:focus-visible, input:focus-visible, select:focus-visible {
     padding-bottom: 20px;
   }
 }
+
+.secrets-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:18px; margin-top:20px; }
+.secrets-card { padding:22px; }
+.secrets-card .panel-heading { display:flex; align-items:center; justify-content:space-between; margin-bottom:14px; }
+.secrets-card .panel-heading h2, .secrets-guidance h2 { margin:7px 0 0; color:var(--navy); font-size:18px; }
+.secret-row { display:flex; align-items:center; justify-content:space-between; gap:12px; padding:14px 0; border-top:1px solid var(--line); }
+.secret-row strong,.secret-row small { display:block; }
+.secret-row strong { font-size:12px; color:var(--navy); }
+.secret-row small { margin-top:5px; color:var(--muted); font-size:10px; line-height:1.5; }
+.secrets-guidance { margin-top:18px; padding:22px; }
+.secrets-guidance ul { color:var(--muted); font-size:12px; line-height:1.9; padding-left:20px; }
+.secrets-guidance p { background:#f8fafc; border-radius:10px; padding:13px; color:var(--muted); font-size:12px; line-height:1.7; }
+@media(max-width:640px) { .secret-row { align-items:flex-start; flex-direction:column; } }
