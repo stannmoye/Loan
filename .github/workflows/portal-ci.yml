@@ -1,6 +1,13 @@
 name: Portal CI
 
 on:
+  push:
+    branches: [main]
+    paths:
+      - "apps/portal/**"
+      - "Dockerfile"
+      - ".dockerignore"
+      - ".github/workflows/portal-ci.yml"
   workflow_dispatch:
   pull_request:
     branches: [main]
