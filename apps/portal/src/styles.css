@@ -3758,3 +3758,40 @@ button:focus-visible, input:focus-visible, select:focus-visible {
     transform:none;
   }
 }
+
+/* Expanded operations navigation — keep the complete menu reachable on short screens. */
+.side-nav {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding-bottom: 18px;
+  scrollbar-width: thin;
+  scrollbar-color: #d7e0eb transparent;
+}
+.sidebar-bottom {
+  flex: 0 0 auto;
+}
+.side-nav .nav-section {
+  line-height: 1.45;
+}
+@media (max-height: 820px) {
+  .sidebar {
+    overflow: hidden;
+  }
+  .side-nav {
+    padding-top: 19px;
+  }
+  .nav-section-spaced {
+    padding-top: 17px;
+  }
+}
+@media (max-width: 760px) {
+  .sidebar {
+    overflow: hidden;
+  }
+  .side-nav {
+    padding-top: 20px;
+    padding-bottom: 20px;
+  }
+}
