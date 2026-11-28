@@ -6,9 +6,10 @@ const envSchema = z.object({
   PORT: z.coerce.number().int().min(1).max(65535).default(3000),
   HOST: z.string().default('127.0.0.1'),
   DATABASE_URL: z.string().min(1),
-  JWT_ISSUER: z.string().min(1),
-  JWT_AUDIENCE: z.string().min(1),
-  JWT_PUBLIC_KEY_PEM: z.string().min(1),
+  // Optional at startup; protected API routes fail closed until configured.
+  JWT_ISSUER: z.string().min(1).optional(),
+  JWT_AUDIENCE: z.string().min(1).optional(),
+  JWT_PUBLIC_KEY_PEM: z.string().min(1).optional(),
   CUSTOMER_JWT_ISSUER: z.string().min(1).optional(),
   CUSTOMER_JWT_AUDIENCE: z.string().min(1).optional(),
   CUSTOMER_JWT_PUBLIC_KEY_PEM: z.string().min(1).optional(),
