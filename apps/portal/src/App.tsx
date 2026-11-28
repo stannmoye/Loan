@@ -3,7 +3,8 @@ import {
   Activity, ArrowDownRight, ArrowRight, Banknote, Bell, BriefcaseBusiness, CheckCircle2, KeyRound,
   ChevronDown, CircleHelp, Clock3, FileCheck2, FileSearch, FileText, Filter,
   Globe2, HandCoins, Home, Landmark, LayoutDashboard, Menu, Search, Settings, ShieldCheck,
-  SlidersHorizontal, UserRound, Users, WalletCards, Workflow, X
+  SlidersHorizontal, UserRound, Users, WalletCards, Workflow, X,
+  Plus, ChevronUp, ChevronDown as ChevronDownIcon, ListChecks, Sparkles, Save
 } from "lucide-react";
 import { reviewCases, type CaseStatus, type ReviewCase } from "./data/fixtures";
 import { CustomerExperience } from "./customer/CustomerExperience";
@@ -49,6 +50,7 @@ function App({ applicationApi }: AppProps = {}) {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [notice, setNotice] = useState("");
   const [adminSettingsOpen, setAdminSettingsOpen] = useState(false);
+  const [adminWorkspace, setAdminWorkspace] = useState<"cases" | "workflow">("cases");
   const [customerSection, setCustomerSection] = useState<CustomerSection>(() => sectionFromPath(window.location.pathname));
 
   useEffect(() => {
@@ -73,6 +75,7 @@ function App({ applicationApi }: AppProps = {}) {
     setMobileOpen(false);
     setNotice("");
     setAdminSettingsOpen(false);
+    setAdminWorkspace("cases");
     if (next === "customer") setCustomerSection("overview");
     window.history.pushState({}, "", next === "operations" ? "/operations" : "/");
   }
@@ -115,7 +118,7 @@ function App({ applicationApi }: AppProps = {}) {
             <span className="nav-section nav-section-spaced">PRODUCT & WORKFLOWS</span>
             <button className="nav-item" onClick={() => navNotice("Loan product management is mapped here. Product publishing and customer-facing offer configuration are not connected.")}><BriefcaseBusiness size={17} />Loan products</button>
             <button className="nav-item" onClick={() => navNotice("Pricing and eligibility configuration is a planned control area. No rates, fees or eligibility decisions are configured by this preview.")}><SlidersHorizontal size={17} />Pricing & eligibility</button>
-            <button className="nav-item" onClick={() => navNotice("Workflow and stage configuration is planned. Stage templates, customer-specific stages and task assignment are not yet active.")}><Workflow size={17} />Workflow & stages</button>
+            <button className={adminWorkspace === "workflow" ? "nav-item active" : "nav-item"} aria-current={adminWorkspace === "workflow" ? "page" : undefined} onClick={() => { setAdminWorkspace("workflow"); setAdminSettingsOpen(false); setMobileOpen(false); setNotice(""); }}><Workflow size={17} />Workflow & stages</button>
 
             <span className="nav-section nav-section-spaced">DOCUMENTS & COMPLIANCE</span>
             <button className="nav-item" onClick={() => navNotice("Document review is a planned area. Upload, storage, scanning and verification are disabled in this preview.")}><FileSearch size={17} />Document review</button>
@@ -146,13 +149,13 @@ function App({ applicationApi }: AppProps = {}) {
       <main className="main-area">
         <header className="topbar">
           <button className="icon-button mobile-menu" aria-label="Open navigation" onClick={() => setMobileOpen(true)}><Menu size={20} /></button>
-          <div className="breadcrumb"><span className="breadcrumb-brand">Northline</span><span className="crumb-separator">/</span><span className="breadcrumb-workspace">{mode === "customer" ? "Customer space" : "Operations"}</span><span className="crumb-separator">/</span><strong>{mode === "customer" ? customerSectionLabels[customerSection] : adminSettingsOpen ? "Secrets & API keys" : "Case overview"}</strong></div>
+          <div className="breadcrumb"><span className="breadcrumb-brand">Northline</span><span className="crumb-separator">/</span><span className="breadcrumb-workspace">{mode === "customer" ? "Customer space" : "Operations"}</span><span className="crumb-separator">/</span><strong>{mode === "customer" ? customerSectionLabels[customerSection] : adminSettingsOpen ? "Secrets & API keys" : adminWorkspace === "workflow" ? "Workflow designer" : "Case overview"}</strong></div>
           <div className="topbar-actions"><span className="preview-label"><span />Illustrative preview</span><button className={mode === "customer" && customerSection === "notifications" ? "icon-button notification-button top-notification-active" : "icon-button notification-button"} aria-label="Open notifications" aria-current={mode === "customer" && customerSection === "notifications" ? "page" : undefined} onClick={() => mode === "customer" ? changeCustomerSection("notifications") : navNotice("Operations notifications are not connected in this preview.")}><Bell size={18} /></button><div className="top-avatar">{mode === "customer" ? "SC" : "SO"}</div></div>
         </header>
         <div className="content-wrap">
           <div className="mode-switch" role="group" aria-label="Preview workspace"><button className={mode === "customer" ? "mode-active" : ""} onClick={() => changeMode("customer")}>Customer view</button><button className={mode === "operations" ? "mode-active" : ""} onClick={() => changeMode("operations")}>Operations view</button></div>
           {notice && <div className="notice-banner" role="status"><span>{notice}</span><button aria-label="Dismiss notice" onClick={() => setNotice("")}><X size={16} /></button></div>}
-          {mode === "customer" ? <CustomerExperience section={customerSection} onSectionChange={changeCustomerSection} onNotice={setNotice} applicationApi={applicationApi} /> : adminSettingsOpen ? <SecretsSettings /> : <OperationsView query={query} setQuery={setQuery} filter={filter} setFilter={setFilter} cases={filteredCases} selected={selected} setSelected={setSelected} onNotice={setNotice} />}
+          {mode === "customer" ? <CustomerExperience section={customerSection} onSectionChange={changeCustomerSection} onNotice={setNotice} applicationApi={applicationApi} /> : adminSettingsOpen ? <SecretsSettings /> : adminWorkspace === "workflow" ? <WorkflowDesigner onBack={() => setAdminWorkspace("cases")} onNotice={setNotice} /> : <OperationsView query={query} setQuery={setQuery} filter={filter} setFilter={setFilter} cases={filteredCases} selected={selected} setSelected={setSelected} onNotice={setNotice} onOpenWorkflow={() => setAdminWorkspace("workflow")} />}
           <footer className="page-footer"><span>Northline is a product concept for a lending platform.</span><span>Illustrative interface · No live financial services</span></footer>
         </div>
         {mode === "customer" && <nav className="mobile-quick-nav" aria-label="Quick customer navigation">
@@ -182,10 +185,10 @@ function SecretsSettings() {
   </section>;
 }
 
-function OperationsView({ query, setQuery, filter, setFilter, cases, selected, setSelected, onNotice }: {
+function OperationsView({ query, setQuery, filter, setFilter, cases, selected, setSelected, onNotice, onOpenWorkflow }: {
   query: string; setQuery: (value: string) => void; filter: "All" | CaseStatus;
   setFilter: (value: "All" | CaseStatus) => void; cases: ReviewCase[];
-  selected: ReviewCase; setSelected: (value: ReviewCase) => void; onNotice: (message: string) => void;
+  selected: ReviewCase; setSelected: (value: ReviewCase) => void; onNotice: (message: string) => void; onOpenWorkflow: () => void;
 }) {
   const totalCases = reviewCases.length;
   const needsReview = reviewCases.filter(c => c.status === "Needs review").length;
@@ -225,7 +228,7 @@ function OperationsView({ query, setQuery, filter, setFilter, cases, selected, s
       <div className="admin-suite-grid">
         <button className="admin-suite-card suite-blue" onClick={() => onNotice("Application management is a design preview. Live application records, assignment and decisions are not connected.")}><span className="admin-suite-icon"><FileText size={19}/></span><span className="admin-suite-copy"><strong>Application review</strong><small>Intake, evidence and review queues</small></span><ArrowRight size={17}/></button>
         <button className="admin-suite-card suite-violet" onClick={() => onNotice("Customer management is a design preview. No live customer profiles or personal information are available.")}><span className="admin-suite-icon"><Users size={19}/></span><span className="admin-suite-copy"><strong>Customer workspace</strong><small>Profiles, service history and ownership</small></span><ArrowRight size={17}/></button>
-        <button className="admin-suite-card suite-gold" onClick={() => onNotice("Workflow controls are not active. Stage templates, rules and customer-specific tasks require protected workflow services.")}><span className="admin-suite-icon"><Workflow size={19}/></span><span className="admin-suite-copy"><strong>Workflow designer</strong><small>Stages, milestones and next actions</small></span><ArrowRight size={17}/></button>
+        <button className="admin-suite-card suite-gold" onClick={onOpenWorkflow}><span className="admin-suite-icon"><Workflow size={19}/></span><span className="admin-suite-copy"><strong>Workflow designer</strong><small>Stages, milestones and next actions</small></span><ArrowRight size={17}/></button>
         <button className="admin-suite-card suite-green" onClick={() => onNotice("Document oversight is not active. Secure upload, malware scanning, storage and verification are not connected.")}><span className="admin-suite-icon"><FileSearch size={19}/></span><span className="admin-suite-copy"><strong>Evidence oversight</strong><small>Document requests and review controls</small></span><ArrowRight size={17}/></button>
       </div>
     </section>
@@ -298,6 +301,72 @@ function OperationsView({ query, setQuery, filter, setFilter, cases, selected, s
       </section>
       <div className="detail-actions"><div><strong>Review controls</strong><small>Real decisions require authenticated staff, permissions and backend workflows.</small></div><button className="button-outline" onClick={() => onNotice("No decision was recorded. Approval and rejection controls will be enabled only after the protected underwriting API is implemented.")}>Decision controls unavailable</button></div></section>
     </div>
+  </section>;
+}
+
+
+
+type WorkflowStage = { id: number; name: string; description: string; owner: string; customerAction: string; required: boolean; enabled: boolean };
+
+function WorkflowDesigner({ onBack, onNotice }: { onBack: () => void; onNotice: (message: string) => void }) {
+  const [template, setTemplate] = useState("standard");
+  const [target, setTarget] = useState("global");
+  const [selectedCustomer, setSelectedCustomer] = useState(reviewCases[0].id);
+  const [newStage, setNewStage] = useState("");
+  const [stages, setStages] = useState<WorkflowStage[]>([
+    { id: 1, name: "Application submitted", description: "Capture the initial application and create a case record.", owner: "System", customerAction: "Review the application summary", required: true, enabled: true },
+    { id: 2, name: "Initial completeness review", description: "Organise the submitted information and identify outstanding items.", owner: "Operations", customerAction: "No action currently required", required: true, enabled: true },
+    { id: 3, name: "Document review", description: "Review requested evidence through an approved secure document service.", owner: "Verification team", customerAction: "Provide requested documents when securely enabled", required: true, enabled: true },
+    { id: 4, name: "Verification", description: "Complete the configured identity and information verification process.", owner: "Verification team", customerAction: "Respond to any secure follow-up request", required: true, enabled: true },
+    { id: 5, name: "Final review", description: "Route the case through the authorised review and approval process.", owner: "Authorised reviewer", customerAction: "Wait for a secure status update", required: true, enabled: true },
+    { id: 6, name: "Outcome communicated", description: "Communicate the authorised outcome and next steps.", owner: "Operations", customerAction: "Read the secure notification", required: true, enabled: true }
+  ]);
+  const moveStage = (index: number, direction: -1 | 1) => setStages(current => {
+    const next = [...current]; const destination = index + direction;
+    if (destination < 0 || destination >= next.length) return current;
+    [next[index], next[destination]] = [next[destination], next[index]];
+    return next;
+  });
+  const updateStage = (id: number, patch: Partial<WorkflowStage>) => setStages(current => current.map(stage => stage.id === id ? { ...stage, ...patch } : stage));
+  const addStage = () => {
+    const name = newStage.trim();
+    if (!name) return;
+    setStages(current => [...current, { id: Math.max(0, ...current.map(stage => stage.id)) + 1, name, description: "Define the purpose and completion criteria for this stage.", owner: "Operations", customerAction: "Set the next customer action", required: false, enabled: true }]);
+    setNewStage("");
+  };
+  const activeStages = stages.filter(stage => stage.enabled).length;
+  const selectedRecord = reviewCases.find(item => item.id === selectedCustomer) ?? reviewCases[0];
+  return <section className="operations-page workflow-designer-page">
+    <div className="page-heading workflow-page-heading"><div><div className="eyebrow">OPERATIONS / PRODUCT & WORKFLOWS</div><h1>Design every step<br className="mobile-break"/> of the journey.</h1><p>Shape a clear, consistent application journey with configurable milestones and customer actions.</p></div><button className="workflow-back-button" onClick={onBack}><ArrowRight size={15}/> Back to case overview</button></div>
+    <div className="sample-notice"><span className="sample-mark"><ShieldCheck size={16}/></span><div><strong>Local workflow preview</strong><p>Changes below exist only in this browser session. Publishing, assigning stages and changing real customer journeys require authenticated workflow services and an audit trail.</p></div></div>
+    <div className="workflow-designer-hero">
+      <div className="workflow-hero-copy"><span className="workflow-hero-kicker"><Sparkles size={13}/> WORKFLOW STUDIO</span><h2>One journey. Clear ownership.</h2><p>Build a transparent sequence for customers and operations teams, from application intake through the final communication.</p><div className="workflow-hero-stats"><span><strong>{stages.length}</strong><small>Total stages</small></span><span><strong>{activeStages}</strong><small>Enabled stages</small></span><span><strong>{stages.filter(stage => stage.required).length}</strong><small>Required stages</small></span></div></div>
+      <div className="workflow-hero-art"><div className="workflow-orbit orbit-one"/><div className="workflow-orbit orbit-two"/><div className="workflow-hero-symbol"><Workflow size={42}/></div><span className="workflow-orbit-node node-one"><CheckCircle2 size={15}/></span><span className="workflow-orbit-node node-two"><Clock3 size={15}/></span><span className="workflow-orbit-node node-three"><Users size={15}/></span></div>
+    </div>
+    <div className="workflow-config-grid">
+      <section className="panel workflow-config-card"><div className="workflow-card-heading"><div><span className="eyebrow">01 / TEMPLATE</span><h3>Journey configuration</h3><p>Choose the workflow blueprint and who it applies to.</p></div><span className="workflow-heading-icon"><SlidersHorizontal size={18}/></span></div>
+        <label className="workflow-field-label" htmlFor="workflow-template">Workflow template</label><select id="workflow-template" className="workflow-select" value={template} onChange={event => setTemplate(event.target.value)}><option value="standard">Standard loan application</option><option value="business">Business finance journey</option><option value="property">Property finance journey</option><option value="vehicle">Vehicle finance journey</option></select>
+        <label className="workflow-field-label" htmlFor="workflow-target">Apply configuration to</label><select id="workflow-target" className="workflow-select" value={target} onChange={event => setTarget(event.target.value)}><option value="global">Global template · future applications</option><option value="customer">One customer · sample override</option></select>
+        {target === "customer" && <><label className="workflow-field-label" htmlFor="workflow-customer">Sample customer</label><select id="workflow-customer" className="workflow-select" value={selectedCustomer} onChange={event => setSelectedCustomer(event.target.value)}>{reviewCases.map(item => <option key={item.id} value={item.id}>{item.customer} · {item.reference}</option>)}</select><div className="workflow-customer-preview"><Users size={16}/><span><strong>{selectedRecord.customer}</strong><small>{selectedRecord.product} · {selectedRecord.stage}</small></span></div></>}
+        <div className="workflow-config-note"><ShieldCheck size={15}/><span>{target === "global" ? "Global templates should be versioned and reviewed before future rollout." : "This selection is a visual customer override example. No customer record is modified."}</span></div>
+      </section>
+      <section className="panel workflow-config-card workflow-next-action-card"><div className="workflow-card-heading"><div><span className="eyebrow">02 / CUSTOMER EXPERIENCE</span><h3>Next-action principles</h3><p>Keep every milestone understandable and actionable.</p></div><span className="workflow-heading-icon workflow-heading-violet"><ListChecks size={18}/></span></div>
+        <div className="workflow-principle-row"><span className="workflow-principle-icon principle-blue"><CheckCircle2 size={16}/></span><span><strong>Clear completion criteria</strong><small>Every stage needs an owner and a defined exit condition.</small></span></div>
+        <div className="workflow-principle-row"><span className="workflow-principle-icon principle-gold"><Bell size={16}/></span><span><strong>One next action at a time</strong><small>Show customers the most important pending task, not a confusing checklist.</small></span></div>
+        <div className="workflow-principle-row"><span className="workflow-principle-icon principle-green"><ShieldCheck size={16}/></span><span><strong>Controlled stage transitions</strong><small>Require authorised roles, evidence and an auditable event.</small></span></div>
+      </section>
+    </div>
+    <section className="panel workflow-stage-editor">
+      <div className="workflow-stage-editor-heading"><div><span className="eyebrow">03 / STAGE BUILDER</span><h3>Application journey stages</h3><p>Reorder milestones, define ownership and preview the customer-facing next action.</p></div><span className="workflow-stage-count">{activeStages} active / {stages.length}</span></div>
+      <div className="workflow-stage-rail">{stages.filter(stage => stage.enabled).map((stage,index) => <span key={stage.id} className={index === 0 ? "workflow-rail-dot first" : "workflow-rail-dot"}>{index + 1}</span>)}</div>
+      <div className="workflow-stage-list">{stages.map((stage,index) => <article className={stage.enabled ? "workflow-stage-card" : "workflow-stage-card stage-disabled"} key={stage.id}>
+        <div className="workflow-stage-order"><span>{String(index + 1).padStart(2,"0")}</span><div><button aria-label={`Move ${stage.name} up`} disabled={index === 0} onClick={() => moveStage(index,-1)}><ChevronUp size={15}/></button><button aria-label={`Move ${stage.name} down`} disabled={index === stages.length - 1} onClick={() => moveStage(index,1)}><ChevronDownIcon size={15}/></button></div></div>
+        <div className="workflow-stage-main"><div className="workflow-stage-title-row"><strong>{stage.name}</strong><span className={stage.required ? "workflow-required-tag" : "workflow-optional-tag"}>{stage.required ? "Required" : "Optional"}</span></div><p>{stage.description}</p><div className="workflow-stage-meta"><span><UserRound size={12}/> {stage.owner}</span><span><ListChecks size={12}/> Customer action defined</span></div><div className="workflow-stage-action"><small>NEXT CUSTOMER ACTION</small><strong>{stage.customerAction}</strong></div></div>
+        <div className="workflow-stage-controls"><label className="workflow-toggle"><input type="checkbox" checked={stage.enabled} onChange={event => updateStage(stage.id,{enabled:event.target.checked})}/><span/>{stage.enabled ? "Enabled" : "Paused"}</label><button className="workflow-stage-option" onClick={() => updateStage(stage.id,{required:!stage.required})}>{stage.required ? "Make optional" : "Make required"}</button></div>
+      </article>)}</div>
+      <div className="workflow-add-stage-row"><div><strong>Add a milestone</strong><small>Create a custom step in this local preview.</small></div><div className="workflow-add-stage-control"><input value={newStage} onChange={event => setNewStage(event.target.value)} onKeyDown={event => { if (event.key === "Enter") addStage(); }} placeholder="e.g. Additional review" aria-label="New workflow stage name"/><button onClick={addStage} disabled={!newStage.trim()}><Plus size={15}/> Add stage</button></div></div>
+    </section>
+    <div className="workflow-footer-actions"><div><ShieldCheck size={16}/><span><strong>Draft preview only</strong><small>No workflow is published and no customer status is changed.</small></span></div><button onClick={() => onNotice("Workflow preview is ready for review. Publishing is disabled until authenticated permissions, versioning and audit services are implemented.")}><Save size={15}/> Review draft</button></div>
   </section>;
 }
 
