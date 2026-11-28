@@ -50,7 +50,7 @@ function App({ applicationApi }: AppProps = {}) {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [notice, setNotice] = useState("");
   const [adminSettingsOpen, setAdminSettingsOpen] = useState(false);
-  const [adminWorkspace, setAdminWorkspace] = useState<"cases" | "workflow" | "documents">("cases");
+  const [adminWorkspace, setAdminWorkspace] = useState<"cases" | "workflow" | "documents" | "staff">("cases");
   const [customerSection, setCustomerSection] = useState<CustomerSection>(() => sectionFromPath(window.location.pathname));
 
   useEffect(() => {
@@ -131,7 +131,7 @@ function App({ applicationApi }: AppProps = {}) {
             <button className="nav-item" onClick={() => navNotice("Reconciliation is a planned finance control. No bank feeds, ledger entries or settlement records are connected.")}><Landmark size={17} />Reconciliation</button>
 
             <span className="nav-section nav-section-spaced">PEOPLE, INSIGHTS & SETTINGS</span>
-            <button className="nav-item" onClick={() => navNotice("Staff management and role assignment are planned. Access is not controlled by this demonstration menu.")}><Users size={17} />Staff & roles</button>
+            <button className={adminWorkspace === "staff" ? "nav-item active" : "nav-item"} aria-current={adminWorkspace === "staff" ? "page" : undefined} onClick={() => { setAdminWorkspace("staff"); setAdminSettingsOpen(false); setMobileOpen(false); setNotice(""); }}><Users size={17} />Staff & roles</button>
             <button className="nav-item" onClick={() => navNotice("Reports and analytics are mapped here. All dashboard data remains illustrative until approved data services are connected.")}><Activity size={17} />Reports & analytics</button>
             <button className="nav-item" onClick={() => navNotice("Country, currency and banking configuration is a planned area. No bank account details or live bank connections are supported.")}><Globe2 size={17} />Country & banking setup</button>
             <button className={adminSettingsOpen ? "nav-item active" : "nav-item"} onClick={() => { setAdminSettingsOpen(true); setMobileOpen(false); setNotice(""); }}><Settings size={17} />Platform settings</button>
@@ -149,13 +149,13 @@ function App({ applicationApi }: AppProps = {}) {
       <main className="main-area">
         <header className="topbar">
           <button className="icon-button mobile-menu" aria-label="Open navigation" onClick={() => setMobileOpen(true)}><Menu size={20} /></button>
-          <div className="breadcrumb"><span className="breadcrumb-brand">Northline</span><span className="crumb-separator">/</span><span className="breadcrumb-workspace">{mode === "customer" ? "Customer space" : "Operations"}</span><span className="crumb-separator">/</span><strong>{mode === "customer" ? customerSectionLabels[customerSection] : adminSettingsOpen ? "Secrets & API keys" : adminWorkspace === "workflow" ? "Workflow designer" : adminWorkspace === "documents" ? "Document oversight" : "Case overview"}</strong></div>
+          <div className="breadcrumb"><span className="breadcrumb-brand">Northline</span><span className="crumb-separator">/</span><span className="breadcrumb-workspace">{mode === "customer" ? "Customer space" : "Operations"}</span><span className="crumb-separator">/</span><strong>{mode === "customer" ? customerSectionLabels[customerSection] : adminSettingsOpen ? "Secrets & API keys" : adminWorkspace === "workflow" ? "Workflow designer" : adminWorkspace === "documents" ? "Document oversight" : adminWorkspace === "staff" ? "Staff, roles & permissions" : "Case overview"}</strong></div>
           <div className="topbar-actions"><span className="preview-label"><span />Illustrative preview</span><button className={mode === "customer" && customerSection === "notifications" ? "icon-button notification-button top-notification-active" : "icon-button notification-button"} aria-label="Open notifications" aria-current={mode === "customer" && customerSection === "notifications" ? "page" : undefined} onClick={() => mode === "customer" ? changeCustomerSection("notifications") : navNotice("Operations notifications are not connected in this preview.")}><Bell size={18} /></button><div className="top-avatar">{mode === "customer" ? "SC" : "SO"}</div></div>
         </header>
         <div className="content-wrap">
           <div className="mode-switch" role="group" aria-label="Preview workspace"><button className={mode === "customer" ? "mode-active" : ""} onClick={() => changeMode("customer")}>Customer view</button><button className={mode === "operations" ? "mode-active" : ""} onClick={() => changeMode("operations")}>Operations view</button></div>
           {notice && <div className="notice-banner" role="status"><span>{notice}</span><button aria-label="Dismiss notice" onClick={() => setNotice("")}><X size={16} /></button></div>}
-          {mode === "customer" ? <CustomerExperience section={customerSection} onSectionChange={changeCustomerSection} onNotice={setNotice} applicationApi={applicationApi} /> : adminSettingsOpen ? <SecretsSettings /> : adminWorkspace === "workflow" ? <WorkflowDesigner onBack={() => setAdminWorkspace("cases")} onNotice={setNotice} /> : adminWorkspace === "documents" ? <DocumentOversight onBack={() => setAdminWorkspace("cases")} onNotice={setNotice} /> : <OperationsView query={query} setQuery={setQuery} filter={filter} setFilter={setFilter} cases={filteredCases} selected={selected} setSelected={setSelected} onNotice={setNotice} onOpenWorkflow={() => setAdminWorkspace("workflow")} onOpenDocuments={() => setAdminWorkspace("documents")} />}
+          {mode === "customer" ? <CustomerExperience section={customerSection} onSectionChange={changeCustomerSection} onNotice={setNotice} applicationApi={applicationApi} /> : adminSettingsOpen ? <SecretsSettings /> : adminWorkspace === "workflow" ? <WorkflowDesigner onBack={() => setAdminWorkspace("cases")} onNotice={setNotice} /> : adminWorkspace === "documents" ? <DocumentOversight onBack={() => setAdminWorkspace("cases")} onNotice={setNotice} /> : adminWorkspace === "staff" ? <StaffRolesWorkspace onBack={() => setAdminWorkspace("cases")} onNotice={setNotice} /> : <OperationsView query={query} setQuery={setQuery} filter={filter} setFilter={setFilter} cases={filteredCases} selected={selected} setSelected={setSelected} onNotice={setNotice} onOpenWorkflow={() => setAdminWorkspace("workflow")} onOpenDocuments={() => setAdminWorkspace("documents")} />}
           <footer className="page-footer"><span>Northline is a product concept for a lending platform.</span><span>Illustrative interface · No live financial services</span></footer>
         </div>
         {mode === "customer" && <nav className="mobile-quick-nav" aria-label="Quick customer navigation">
@@ -425,5 +425,78 @@ function DocumentOversight({ onBack, onNotice }: { onBack: () => void; onNotice:
 
 function FilesIcon() { return <FileText size={17}/>; }
 function LockKeyholeIcon() { return <ShieldCheck size={18}/>; }
+
+
+
+type StaffRole = "Administrator" | "Operations manager" | "Case reviewer" | "Verification specialist" | "Read-only analyst";
+type StaffStatus = "Active" | "Invited" | "Suspended";
+type StaffMember = { id:string; name:string; email:string; team:string; role:StaffRole; status:StaffStatus; initials:string; lastActive:string; location:string };
+
+const staffFixtures:StaffMember[] = [
+  {id:"ST-001",name:"Maya Johnson",email:"maya.johnson@example.test",team:"Operations",role:"Administrator",status:"Active",initials:"MJ",lastActive:"Today · 09:24",location:"Global operations"},
+  {id:"ST-002",name:"Ethan Williams",email:"ethan.williams@example.test",team:"Underwriting",role:"Operations manager",status:"Active",initials:"EW",lastActive:"Today · 08:52",location:"Regional team"},
+  {id:"ST-003",name:"Zara Okonkwo",email:"zara.okonkwo@example.test",team:"Verification",role:"Verification specialist",status:"Active",initials:"ZO",lastActive:"Yesterday · 16:40",location:"Regional team"},
+  {id:"ST-004",name:"Noah Mensah",email:"noah.mensah@example.test",team:"Case review",role:"Case reviewer",status:"Active",initials:"NM",lastActive:"Yesterday · 15:12",location:"Regional team"},
+  {id:"ST-005",name:"Ava Patel",email:"ava.patel@example.test",team:"Analytics",role:"Read-only analyst",status:"Invited",initials:"AP",lastActive:"Invitation pending",location:"Global operations"},
+  {id:"ST-006",name:"Liam Carter",email:"liam.carter@example.test",team:"Case review",role:"Case reviewer",status:"Suspended",initials:"LC",lastActive:"Access paused",location:"Regional team"}
+];
+
+const roleDescriptions:Record<StaffRole,string> = {
+  "Administrator":"Platform configuration and access governance in the proposed permission model.",
+  "Operations manager":"Team oversight, case allocation and operational workflow supervision.",
+  "Case reviewer":"Assigned application review and evidence checklist access.",
+  "Verification specialist":"Evidence verification workspace and verification task access.",
+  "Read-only analyst":"Read-only access to approved operational reporting."
+};
+const permissionRows = [
+  {group:"CASE MANAGEMENT",items:[["View assigned cases","Case Reviewer","Operations Manager"],["Assign and reassign cases","Operations Manager"],["Edit case workflow","Operations Manager","Administrator"],["Close operational cases","Operations Manager","Administrator"]]},
+  {group:"DOCUMENTS & VERIFICATION",items:[["View assigned evidence","Case Reviewer","Verification Specialist","Operations Manager"],["Record verification outcome","Verification Specialist"],["Configure evidence requirements","Operations Manager","Administrator"]]},
+  {group:"PEOPLE & GOVERNANCE",items:[["View staff directory","Read-only Analyst","Case Reviewer","Verification Specialist","Operations Manager","Administrator"],["Manage staff roles","Administrator"],["View audit events","Operations Manager","Administrator"],["Manage platform settings","Administrator"]]}
+] as const;
+
+function StaffRolesWorkspace({onBack,onNotice}:{onBack:()=>void;onNotice:(message:string)=>void}) {
+  const [members,setMembers]=useState(staffFixtures);
+  const [selectedId,setSelectedId]=useState(staffFixtures[0].id);
+  const [query,setQuery]=useState("");
+  const [team,setTeam]=useState("All teams");
+  const [activeTab,setActiveTab]=useState<"profile"|"permissions"|"activity">("profile");
+  const [roleDraft,setRoleDraft]=useState<StaffRole>(staffFixtures[0].role);
+  const teams=["All teams",...Array.from(new Set(staffFixtures.map(item=>item.team)))];
+  const visible=members.filter(item=>(team==="All teams"||item.team===team)&&[item.name,item.email,item.role,item.team,item.id].join(" ").toLowerCase().includes(query.toLowerCase()));
+  const selected=members.find(item=>item.id===selectedId)??members[0];
+  const activeCount=members.filter(item=>item.status==="Active").length;
+  const inviteCount=members.filter(item=>item.status==="Invited").length;
+  const suspendedCount=members.filter(item=>item.status==="Suspended").length;
+  const selectMember=(item:StaffMember)=>{setSelectedId(item.id);setRoleDraft(item.role);setActiveTab("profile");};
+  const saveDraft=()=>onNotice("Role changes are preview-only. A production role update must require an authorised administrator, step-up authentication, approval policy and an immutable audit event.");
+  const toggleStatus=()=>onNotice("Staff access changes are disabled in this preview. Suspension and reactivation must be performed by an authorised identity provider and recorded in the audit trail.");
+  return <section className="operations-page staff-roles-page">
+    <div className="page-heading staff-heading"><div><div className="eyebrow">GOVERNANCE / PEOPLE & ACCESS</div><h1>Clear ownership.<br className="mobile-break"/> Controlled access.</h1><p>Organise teams, define responsibilities and review the proposed permission structure.</p></div><button className="workflow-back-button" onClick={onBack}><ArrowRight size={15}/> Back to case overview</button></div>
+    <div className="sample-notice"><span className="sample-mark"><ShieldCheck size={16}/></span><div><strong>Illustrative staff directory — no live access is controlled here</strong><p>All people and roles are fictional sample records. Role edits, invitations, suspensions and permission changes are not sent to an identity provider or applied to real accounts.</p></div></div>
+    <div className="staff-metric-grid">
+      <article className="staff-metric-card"><span className="staff-metric-icon staff-icon-blue"><Users size={17}/></span><small>Team members</small><strong>{members.length.toString().padStart(2,"0")}</strong><em>Sample directory</em></article>
+      <article className="staff-metric-card"><span className="staff-metric-icon staff-icon-green"><CheckCircle2 size={17}/></span><small>Active access</small><strong>{activeCount.toString().padStart(2,"0")}</strong><em>Illustrative status</em></article>
+      <article className="staff-metric-card"><span className="staff-metric-icon staff-icon-violet"><Clock3 size={17}/></span><small>Invitations</small><strong>{inviteCount.toString().padStart(2,"0")}</strong><em>Not actually sent</em></article>
+      <article className="staff-metric-card"><span className="staff-metric-icon staff-icon-amber"><ShieldCheck size={17}/></span><small>Suspended</small><strong>{suspendedCount.toString().padStart(2,"0")}</strong><em>Sample state only</em></article>
+    </div>
+    <div className="staff-workspace-grid">
+      <section className="panel staff-directory-panel">
+        <div className="staff-panel-heading"><div><span className="eyebrow">PEOPLE DIRECTORY</span><h2>Staff & teams</h2></div><span className="quiet-tag">{visible.length} shown</span></div>
+        <label className="search-box"><Search size={15}/><input value={query} onChange={event=>setQuery(event.target.value)} placeholder="Search staff, team or role" aria-label="Search staff directory"/></label>
+        <div className="staff-team-filter"><Filter size={14}/><select value={team} onChange={event=>setTeam(event.target.value)} aria-label="Filter by team">{teams.map(item=><option key={item}>{item}</option>)}</select></div>
+        <div className="staff-member-list">{visible.map(item=><button key={item.id} className={selectedId===item.id?"staff-member-row staff-member-selected":"staff-member-row"} onClick={()=>selectMember(item)}><span className="staff-avatar">{item.initials}</span><span className="staff-member-copy"><strong>{item.name}</strong><small>{item.role}</small><em>{item.team}</em></span><span className={"staff-status staff-status-"+item.status.toLowerCase()}>{item.status}</span></button>)}{visible.length===0&&<div className="empty-state"><Search size={20}/><strong>No staff found</strong><span>Try a different search or team.</span></div>}</div>
+        <div className="staff-directory-footer"><ShieldCheck size={14}/> Sample identities only · no invitations or access changes</div>
+      </section>
+      <section className="panel staff-profile-panel">
+        <div className="staff-profile-top"><div className="staff-profile-avatar">{selected.initials}</div><div className="staff-profile-heading"><span className="eyebrow">STAFF PROFILE · {selected.id}</span><h2>{selected.name}</h2><span>{selected.email}</span></div><span className={"staff-status staff-status-"+selected.status.toLowerCase()}>{selected.status}</span></div>
+        <div className="staff-tabs" role="tablist" aria-label="Staff profile sections"><button role="tab" aria-selected={activeTab==="profile"} className={activeTab==="profile"?"active":""} onClick={()=>setActiveTab("profile")}>Profile</button><button role="tab" aria-selected={activeTab==="permissions"} className={activeTab==="permissions"?"active":""} onClick={()=>setActiveTab("permissions")}>Role & permissions</button><button role="tab" aria-selected={activeTab==="activity"} className={activeTab==="activity"?"active":""} onClick={()=>setActiveTab("activity")}>Activity</button></div>
+        {activeTab==="profile"&&<div className="staff-profile-content"><div className="staff-info-grid"><div><small>TEAM</small><strong>{selected.team}</strong></div><div><small>WORKSPACE</small><strong>{selected.location}</strong></div><div><small>LAST ACTIVITY</small><strong>{selected.lastActive}</strong></div><div><small>ACCOUNT STATUS</small><strong>{selected.status}</strong></div></div><div className="staff-role-editor"><div><span className="eyebrow">ASSIGNED ROLE · PREVIEW</span><strong>Role assignment</strong><p>{roleDescriptions[roleDraft]}</p></div><select value={roleDraft} onChange={event=>setRoleDraft(event.target.value as StaffRole)} aria-label="Preview role assignment">{(["Administrator","Operations manager","Case reviewer","Verification specialist","Read-only analyst"] as StaffRole[]).map(role=><option key={role}>{role}</option>)}</select><button onClick={saveDraft}><Save size={14}/> Review role change</button></div><div className="staff-action-row"><div><strong>Account access</strong><small>Access controls are not connected to this preview.</small></div><button onClick={toggleStatus}><ShieldCheck size={14}/> Access control disabled</button></div></div>}
+        {activeTab==="permissions"&&<div className="staff-permission-content"><div className="staff-permission-intro"><KeyRound size={18}/><div><strong>Role-based access model</strong><small>Proposed permissions for the selected role: {selected.role}</small></div></div>{permissionRows.map(group=><div className="staff-permission-group" key={group.group}><h3>{group.group}</h3>{group.items.map((item,index)=>{const granted=item.slice(1).includes(selected.role.replace(" ",""));return <div className="staff-permission-row" key={item[0]}><span>{item[0]}</span><b className={granted?"permission-included":"permission-restricted"}>{granted?"Included in role":"Not assigned"}</b></div>;})}</div>)}<div className="staff-permission-note"><ShieldCheck size={14}/> Apply least-privilege access, explicit deny rules and server-side checks on every protected operation.</div></div>}
+        {activeTab==="activity"&&<div className="staff-activity-content"><div className="staff-activity-empty"><Activity size={23}/><strong>No connected activity feed</strong><span>Sample last-activity information is shown in the profile. Sign-in and administrative events require an identity provider and audit service.</span></div><div className="staff-audit-requirements"><strong>Production audit requirements</strong><small>Actor · action · target · timestamp · source · outcome · reason · correlation ID</small></div></div>}
+      </section>
+    </div>
+    <section className="staff-governance-panel"><div className="staff-governance-heading"><div><span className="eyebrow">ACCESS GOVERNANCE</span><h3>Design controls before granting access</h3><p>A clear baseline for secure staff administration.</p></div><span className="staff-governance-badge">Policy blueprint</span></div><div className="staff-governance-grid">{[{title:"Least privilege",detail:"Grant only the minimum access required for a staff member's assigned duties.",icon:<ShieldCheck size={17}/>},{title:"Separation of duties",detail:"Separate application review, verification and final approval responsibilities.",icon:<Users size={17}/>},{title:"Step-up authentication",detail:"Require stronger authentication for sensitive administration and access changes.",icon:<KeyRound size={17}/>},{title:"Periodic access review",detail:"Review roles regularly and promptly remove access that is no longer required.",icon:<Clock3 size={17}/>},{title:"Auditable changes",detail:"Record who changed access, what changed, when and why.",icon:<FileCheck2 size={17}/>},{title:"Scoped assignments",detail:"Limit case and evidence access to authorised teams and assigned work.",icon:<BriefcaseBusiness size={17}/>}].map(item=><article className="staff-governance-tile" key={item.title}><span>{item.icon}</span><div><strong>{item.title}</strong><small>{item.detail}</small></div></article>)}</div></section>
+  </section>;
+}
 
 export default App;
