@@ -95,3 +95,7 @@ Exact-head [Portal CI 44579153905](https://github.com/stannmoye/Loan/actions/run
 Exact-head [Stage 1 CI 44579153914](https://github.com/stannmoye/Loan/actions/runs/44579153914) passed root build, 41 tests across 5 files, static invariants, MySQL 8.4 migrations, seed and customer identity integration.
 
 These checks validate the client contract and API foundation; the customer-facing screens still use sample data until an external identity provider is selected, configured and reviewed.
+
+## Current verification
+
+The portal validation workflow is configured to run the production TypeScript/Vite build, component tests, and desktop/mobile Playwright checks for changes under `apps/portal/`. The historical run links above refer to earlier revisions; always use the latest pull-request check result for the current source head.
