@@ -32,8 +32,8 @@ jobs:
       JWT_PUBLIC_KEY_PEM: test-placeholder-not-used-by-db-checks
       CORS_ORIGIN: http://localhost:3000
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v5
         with:
           node-version: 22
       - run: npm install --no-audit --no-fund
