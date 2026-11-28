@@ -59,7 +59,7 @@ jobs:
             fi
             sleep 1
           done
-          admin_status=$(curl --silent --output /tmp/loan-admin-auth-response.json --write-out '%{http_code}' -X POST http://127.0.0.1:3101/api/v1/admin/loan-products)
+          admin_status=$(curl --silent --output /tmp/loan-admin-auth-response.json --write-out '%{http_code}' -H 'Authorization: Bearer startup-smoke-test' -X POST http://127.0.0.1:3101/api/v1/admin/loan-products)
           test "$admin_status" = "503"
           grep -q "Administrator authentication is not configured" /tmp/loan-api-startup.log || true
       - run: npm test
