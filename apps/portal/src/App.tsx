@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import {
-  Activity, ArrowDownRight, ArrowRight, Banknote, Bell, BriefcaseBusiness, CheckCircle2,
+  Activity, ArrowDownRight, ArrowRight, Banknote, Bell, BriefcaseBusiness, CheckCircle2, KeyRound,
   ChevronDown, CircleHelp, Clock3, FileCheck2, FileSearch, FileText, Filter,
   Globe2, HandCoins, Home, Landmark, LayoutDashboard, Menu, Search, Settings, ShieldCheck,
   SlidersHorizontal, UserRound, Users, WalletCards, Workflow, X
@@ -48,6 +48,7 @@ function App({ applicationApi }: AppProps = {}) {
   const [selected, setSelected] = useState<ReviewCase>(reviewCases[0]);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [notice, setNotice] = useState("");
+  const [adminSettingsOpen, setAdminSettingsOpen] = useState(false);
   const [customerSection, setCustomerSection] = useState<CustomerSection>(() => sectionFromPath(window.location.pathname));
 
   useEffect(() => {
@@ -71,6 +72,7 @@ function App({ applicationApi }: AppProps = {}) {
     setMode(next);
     setMobileOpen(false);
     setNotice("");
+    setAdminSettingsOpen(false);
     if (next === "customer") setCustomerSection("overview");
     window.history.pushState({}, "", next === "operations" ? "/operations" : "/");
   }
@@ -129,7 +131,8 @@ function App({ applicationApi }: AppProps = {}) {
             <button className="nav-item" onClick={() => navNotice("Staff management and role assignment are planned. Access is not controlled by this demonstration menu.")}><Users size={17} />Staff & roles</button>
             <button className="nav-item" onClick={() => navNotice("Reports and analytics are mapped here. All dashboard data remains illustrative until approved data services are connected.")}><Activity size={17} />Reports & analytics</button>
             <button className="nav-item" onClick={() => navNotice("Country, currency and banking configuration is a planned area. No bank account details or live bank connections are supported.")}><Globe2 size={17} />Country & banking setup</button>
-            <button className="nav-item" onClick={() => navNotice("Platform settings are a planned area. Security, integrations and environment configuration are not changed from this preview.")}><Settings size={17} />Platform settings</button>
+            <button className={adminSettingsOpen ? "nav-item active" : "nav-item"} onClick={() => { setAdminSettingsOpen(true); setMobileOpen(false); setNotice(""); }}><Settings size={17} />Platform settings</button>
+            <button className={adminSettingsOpen ? "nav-item active" : "nav-item"} onClick={() => { setAdminSettingsOpen(true); setMobileOpen(false); setNotice(""); }}><KeyRound size={17} />Secrets & API keys</button>
             <button className="nav-item" onClick={() => navNotice("Access and immutable audit controls require the production identity, authorization and audit services before activation.")}><ShieldCheck size={17} />Access & audit</button>
           </>}
         </nav>
@@ -143,13 +146,13 @@ function App({ applicationApi }: AppProps = {}) {
       <main className="main-area">
         <header className="topbar">
           <button className="icon-button mobile-menu" aria-label="Open navigation" onClick={() => setMobileOpen(true)}><Menu size={20} /></button>
-          <div className="breadcrumb"><span className="breadcrumb-brand">Northline</span><span className="crumb-separator">/</span><span className="breadcrumb-workspace">{mode === "customer" ? "Customer space" : "Operations"}</span><span className="crumb-separator">/</span><strong>{mode === "customer" ? customerSectionLabels[customerSection] : "Case overview"}</strong></div>
+          <div className="breadcrumb"><span className="breadcrumb-brand">Northline</span><span className="crumb-separator">/</span><span className="breadcrumb-workspace">{mode === "customer" ? "Customer space" : "Operations"}</span><span className="crumb-separator">/</span><strong>{mode === "customer" ? customerSectionLabels[customerSection] : adminSettingsOpen ? "Secrets & API keys" : "Case overview"}</strong></div>
           <div className="topbar-actions"><span className="preview-label"><span />Illustrative preview</span><button className={mode === "customer" && customerSection === "notifications" ? "icon-button notification-button top-notification-active" : "icon-button notification-button"} aria-label="Open notifications" aria-current={mode === "customer" && customerSection === "notifications" ? "page" : undefined} onClick={() => mode === "customer" ? changeCustomerSection("notifications") : navNotice("Operations notifications are not connected in this preview.")}><Bell size={18} /></button><div className="top-avatar">{mode === "customer" ? "SC" : "SO"}</div></div>
         </header>
         <div className="content-wrap">
           <div className="mode-switch" role="group" aria-label="Preview workspace"><button className={mode === "customer" ? "mode-active" : ""} onClick={() => changeMode("customer")}>Customer view</button><button className={mode === "operations" ? "mode-active" : ""} onClick={() => changeMode("operations")}>Operations view</button></div>
           {notice && <div className="notice-banner" role="status"><span>{notice}</span><button aria-label="Dismiss notice" onClick={() => setNotice("")}><X size={16} /></button></div>}
-          {mode === "customer" ? <CustomerExperience section={customerSection} onSectionChange={changeCustomerSection} onNotice={setNotice} applicationApi={applicationApi} /> : <OperationsView query={query} setQuery={setQuery} filter={filter} setFilter={setFilter} cases={filteredCases} selected={selected} setSelected={setSelected} onNotice={setNotice} />}
+          {mode === "customer" ? <CustomerExperience section={customerSection} onSectionChange={changeCustomerSection} onNotice={setNotice} applicationApi={applicationApi} /> : adminSettingsOpen ? <SecretsSettings /> : <OperationsView query={query} setQuery={setQuery} filter={filter} setFilter={setFilter} cases={filteredCases} selected={selected} setSelected={setSelected} onNotice={setNotice} />}
           <footer className="page-footer"><span>Northline is a product concept for a lending platform.</span><span>Illustrative interface · No live financial services</span></footer>
         </div>
         {mode === "customer" && <nav className="mobile-quick-nav" aria-label="Quick customer navigation">
@@ -162,6 +165,21 @@ function App({ applicationApi }: AppProps = {}) {
       </main>
     </div>
   );
+}
+
+
+function SecretsSettings() {
+  const groups = [
+    { title: "Authentication", items: ["Admin JWT public key", "Customer JWT public key", "JWT issuer and audience"] },
+    { title: "Database & encryption", items: ["Database connection string", "Customer profile encryption key", "Secrets-vault encryption key"] },
+    { title: "External services", items: ["Email and SMS providers", "Document storage", "Identity verification", "Banking and payment providers"] },
+  ];
+  return <section className="operations-page secrets-page">
+    <div className="page-heading"><div><div className="eyebrow">PLATFORM SETTINGS / SECURITY</div><h1>Secrets & API keys</h1><p>A central inventory for credentials, integrations and secure key rotation.</p></div></div>
+    <div className="sample-notice"><span className="sample-mark"><ShieldCheck size={16} /></span><div><strong>Secure vault connection not configured</strong><p>This preview does not store secrets. No key values are collected or saved here. Connect a server-side secrets vault and authenticated administrator permissions before enabling credential changes.</p></div></div>
+    <div className="secrets-grid">{groups.map(group => <section className="panel secrets-card" key={group.title}><div className="panel-heading"><div><span className="eyebrow">CREDENTIAL GROUP</span><h2>{group.title}</h2></div><KeyRound size={19}/></div>{group.items.map(item => <div className="secret-row" key={item}><span><strong>{item}</strong><small>Not connected · configure in secure deployment environment</small></span><span className="evidence-state">Not configured</span></div>)}</section>)}</div>
+    <div className="panel secrets-guidance"><h2>How credential management will work</h2><ul><li>Only authorized administrators can add or rotate credentials.</li><li>Saved values remain masked; existing secrets cannot be retrieved through the browser.</li><li>Secret values are encrypted and stored server-side in a managed vault.</li><li>Every change records the administrator, timestamp and affected integration without recording the secret value.</li><li>Production signing keys and vault master keys remain outside the application database.</li></ul><p>For this Blitz frontend preview, no JWT key is required. The backend will reject protected operations until its issuer, audience and matching RS256 public key are configured.</p></div>
+  </section>;
 }
 
 function OperationsView({ query, setQuery, filter, setFilter, cases, selected, setSelected, onNotice }: {
