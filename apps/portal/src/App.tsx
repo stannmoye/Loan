@@ -250,6 +250,52 @@ function OperationsView({ query, setQuery, filter, setFilter, cases, selected, s
         </div>
         <div className="workflow-preview-foot"><ShieldCheck size={15}/><span>Stage order and completion remain illustrative until the workflow service is connected.</span></div>
       </div>
+      <section className="customer-relationship-panel">
+        <div className="customer-relationship-heading">
+          <div><span className="eyebrow">CUSTOMER RELATIONSHIP</span><h3>Customer workspace</h3><p>A consolidated view of this sample customer's case context and service touchpoints.</p></div>
+          <span className="customer-preview-chip"><Users size={13}/> Sample profile</span>
+        </div>
+        <div className="customer-profile-strip">
+          <div className="customer-profile-avatar">{selected.customer.split(" ").map(part => part[0]).slice(0,2).join("").toUpperCase()}</div>
+          <div className="customer-profile-main"><strong>{selected.customer}</strong><span>Customer reference · {selected.reference}</span><small>Illustrative account · no live identity record</small></div>
+          <div className="customer-account-state"><span className="customer-state-dot"/><strong>Preview only</strong><small>Account status not verified</small></div>
+        </div>
+        <div className="customer-relationship-grid">
+          <article className="customer-relationship-card">
+            <span className="customer-card-icon customer-card-blue"><FileText size={17}/></span>
+            <div><small>APPLICATION HISTORY</small><strong>1 sample application</strong><span>{selected.product} · {selected.reference}</span></div>
+            <StatusPill status={selected.status}/>
+          </article>
+          <article className="customer-relationship-card">
+            <span className="customer-card-icon customer-card-violet"><UserRound size={17}/></span>
+            <div><small>CASE OWNERSHIP</small><strong>{selected.owner}</strong><span>Assignment service not connected</span></div>
+            <span className="customer-mini-state">Illustrative</span>
+          </article>
+          <article className="customer-relationship-card">
+            <span className="customer-card-icon customer-card-gold"><Workflow size={17}/></span>
+            <div><small>CUSTOMER WORKFLOW</small><strong>{selected.stage}</strong><span>Current sample milestone</span></div>
+            <span className="customer-mini-state">Not live</span>
+          </article>
+        </div>
+        <div className="customer-history-grid">
+          <section className="customer-history-block">
+            <div className="customer-history-title"><div><span className="eyebrow">CASE ACTIVITY</span><h4>Application history</h4></div><span>Sample timeline</span></div>
+            <div className="customer-activity-list">
+              <div className="customer-activity-item"><i className="activity-complete"><CheckCircle2 size={13}/></i><span><strong>Application received</strong><small>{selected.updated} · Sample case created</small></span><b>Recorded</b></div>
+              <div className="customer-activity-item"><i className="activity-current"><Clock3 size={13}/></i><span><strong>{selected.stage}</strong><small>Current stage shown in the case fixture</small></span><b>Current</b></div>
+              <div className="customer-activity-item"><i><ArrowRight size={13}/></i><span><strong>Next workflow milestone</strong><small>To be defined by an authorized workflow service</small></span><b>Upcoming</b></div>
+            </div>
+          </section>
+          <section className="customer-history-block">
+            <div className="customer-history-title"><div><span className="eyebrow">SERVICE TOUCHPOINTS</span><h4>Communication history</h4></div><span>Illustrative</span></div>
+            <div className="customer-communication-list">
+              <div className="customer-communication-item"><span className="communication-icon"><Bell size={15}/></span><span><strong>Application status update</strong><small>Sample notification · no message was sent</small></span><time>—</time></div>
+              <div className="customer-communication-item"><span className="communication-icon communication-gold"><FileText size={15}/></span><span><strong>Information request</strong><small>Example service event · delivery not connected</small></span><time>—</time></div>
+              <div className="customer-communication-note"><ShieldCheck size={14}/> No email, SMS or in-app communication is sent from this preview.</div>
+            </div>
+          </section>
+        </div>
+      </section>
       <div className="detail-actions"><div><strong>Review controls</strong><small>Real decisions require authenticated staff, permissions and backend workflows.</small></div><button className="button-outline" onClick={() => onNotice("No decision was recorded. Approval and rejection controls will be enabled only after the protected underwriting API is implemented.")}>Decision controls unavailable</button></div></section>
     </div>
   </section>;
