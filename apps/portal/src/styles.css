@@ -4436,3 +4436,69 @@ button, .product-card, .overview-tile { -webkit-tap-highlight-color: transparent
   .review-preparation-heading { align-items:flex-start; flex-direction:column; }
   .workflow-preview-rail { grid-template-columns:1fr; }
 }
+
+
+/* Customer relationship workspace */
+.customer-relationship-panel {
+  margin-top:17px; padding:19px; border:1px solid #dfe8f4; border-radius:17px;
+  background:radial-gradient(circle at 100% 0%,rgba(105,126,211,.08),transparent 28%),linear-gradient(145deg,#fff,#f8faff);
+  box-shadow:0 9px 24px rgba(20,36,61,.045);
+}
+.customer-relationship-heading { display:flex; align-items:flex-start; justify-content:space-between; gap:14px; margin-bottom:15px; }
+.customer-relationship-heading h3 { margin:4px 0 5px; color:#203653; font-size:16px; letter-spacing:-.35px; }
+.customer-relationship-heading p { margin:0; color:#78879b; font-size:10px; line-height:1.5; }
+.customer-preview-chip { display:inline-flex; align-items:center; gap:6px; flex:none; padding:7px 10px; border:1px solid #dce7f7; border-radius:20px; background:#edf4ff; color:#4269a6; font-size:9px; font-weight:750; }
+.customer-profile-strip { display:flex; align-items:center; gap:12px; padding:14px; border:1px solid #e5ebf4; border-radius:13px; background:#fff; }
+.customer-profile-avatar { width:43px; height:43px; flex:none; display:grid; place-items:center; border-radius:13px; color:#fff; background:linear-gradient(145deg,#347be0,#6b69d7); font-size:13px; font-weight:800; box-shadow:0 6px 14px rgba(52,123,224,.18); }
+.customer-profile-main { min-width:0; flex:1; display:flex; flex-direction:column; gap:3px; }
+.customer-profile-main strong { color:#263a57; font-size:13px; }
+.customer-profile-main span { color:#667992; font-size:10px; }
+.customer-profile-main small { color:#9aa5b5; font-size:9px; }
+.customer-account-state { display:flex; flex-direction:column; align-items:flex-end; gap:4px; }
+.customer-account-state strong { color:#9a762f; font-size:10px; }
+.customer-account-state small { color:#96a1b1; font-size:9px; text-align:right; }
+.customer-state-dot { width:8px; height:8px; border-radius:50%; background:#e3a23b; box-shadow:0 0 0 4px #fff4df; }
+.customer-relationship-grid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:10px; margin-top:11px; }
+.customer-relationship-card { min-width:0; display:flex; align-items:flex-start; gap:9px; padding:12px; border:1px solid #e6ecf4; border-radius:12px; background:#fff; }
+.customer-card-icon { width:32px; height:32px; flex:none; display:grid; place-items:center; border-radius:10px; }
+.customer-card-blue { color:#2866c7; background:#eaf2ff; }
+.customer-card-violet { color:#7456bd; background:#f1ebff; }
+.customer-card-gold { color:#a97624; background:#fff3dd; }
+.customer-relationship-card > div { min-width:0; flex:1; display:flex; flex-direction:column; gap:4px; }
+.customer-relationship-card > div small { color:#8b98aa; font-size:8px; font-weight:800; letter-spacing:.7px; }
+.customer-relationship-card > div strong { overflow-wrap:anywhere; color:#2c405e; font-size:10px; }
+.customer-relationship-card > div span { color:#8794a7; font-size:9px; line-height:1.4; }
+.customer-relationship-card .status-pill { flex:none; font-size:8px; }
+.customer-mini-state { flex:none; padding:5px 7px; border-radius:20px; color:#78879b; background:#f2f5f9; font-size:8px; font-weight:750; }
+.customer-history-grid { display:grid; grid-template-columns:1fr 1fr; gap:11px; margin-top:12px; }
+.customer-history-block { min-width:0; padding:14px; border:1px solid #e5ebf4; border-radius:13px; background:rgba(255,255,255,.9); }
+.customer-history-title { display:flex; align-items:center; justify-content:space-between; gap:10px; margin-bottom:11px; }
+.customer-history-title h4 { margin:4px 0 0; color:#2a3e5b; font-size:12px; }
+.customer-history-title > span { color:#8d9aae; font-size:8px; }
+.customer-activity-list,.customer-communication-list { display:flex; flex-direction:column; gap:0; }
+.customer-activity-item,.customer-communication-item { display:flex; align-items:center; gap:9px; min-width:0; padding:9px 0; border-bottom:1px solid #edf1f6; }
+.customer-activity-item:last-child,.customer-communication-item:nth-child(2) { border-bottom:0; }
+.customer-activity-item > i,.communication-icon { width:29px; height:29px; flex:none; display:grid; place-items:center; border-radius:9px; color:#96a3b5; background:#f1f4f8; font-style:normal; }
+.customer-activity-item > i.activity-complete { color:#168653; background:#e8f7ef; }
+.customer-activity-item > i.activity-current { color:#2866c7; background:#eaf2ff; }
+.customer-activity-item > span,.customer-communication-item > span:nth-child(2) { min-width:0; flex:1; display:flex; flex-direction:column; gap:3px; }
+.customer-activity-item strong,.customer-communication-item strong { color:#40536e; font-size:9px; }
+.customer-activity-item small,.customer-communication-item small { color:#909caf; font-size:8px; line-height:1.4; }
+.customer-activity-item b { flex:none; color:#8290a4; font-size:8px; font-weight:700; }
+.communication-icon { color:#2866c7; background:#eaf2ff; }
+.communication-gold { color:#a97624; background:#fff3dd; }
+.customer-communication-item time { color:#a0aaba; font-size:8px; }
+.customer-communication-note { display:flex; align-items:flex-start; gap:7px; margin-top:9px; padding:8px 9px; border:1px solid #dce8f7; border-radius:9px; background:#f2f7ff; color:#647b99; font-size:8px; line-height:1.45; }
+.customer-communication-note svg { flex:none; color:#4774ad; }
+@media (max-width: 760px) {
+  .customer-relationship-grid { grid-template-columns:1fr; }
+  .customer-history-grid { grid-template-columns:1fr; }
+  .customer-relationship-heading { flex-direction:column; }
+}
+@media (max-width: 480px) {
+  .customer-relationship-panel { padding:14px; }
+  .customer-profile-strip { align-items:flex-start; flex-wrap:wrap; }
+  .customer-account-state { margin-left:55px; align-items:flex-start; }
+  .customer-account-state small { text-align:left; }
+}
+@media (prefers-reduced-motion: reduce) { .customer-relationship-panel * { scroll-behavior:auto!important; } }
