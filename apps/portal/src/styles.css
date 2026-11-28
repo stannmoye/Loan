@@ -3808,3 +3808,163 @@ button:focus-visible, input:focus-visible, select:focus-visible {
 .secrets-guidance ul { color:var(--muted); font-size:12px; line-height:1.9; padding-left:20px; }
 .secrets-guidance p { background:#f8fafc; border-radius:10px; padding:13px; color:var(--muted); font-size:12px; line-height:1.7; }
 @media(max-width:640px) { .secret-row { align-items:flex-start; flex-direction:column; } }
+
+
+/* ──────────────────────────────────────────────────────────────────────────
+   Northline visual refresh — brighter surfaces, richer colour and depth.
+   Kept as a token-led layer so the palette can be tuned centrally.
+   ────────────────────────────────────────────────────────────────────────── */
+:root {
+  --navy: #142b55;
+  --navy-soft: #24477b;
+  --blue: #2878f0;
+  --blue-dark: #1558c7;
+  --pale-blue: #e5f0ff;
+  --muted: #5f718d;
+  --soft-muted: #8797ad;
+  --line: #e4eaf4;
+  --surface: #ffffff;
+  --canvas: #f4f7ff;
+  --success: #13875b;
+  --warning: #c77b12;
+  --gold: #d69a28;
+  --radius: 17px;
+  --shadow-soft: 0 14px 36px rgba(35, 67, 125, .075);
+}
+body {
+  background:
+    radial-gradient(ellipse at 92% 2%, rgba(190, 216, 255, .30), transparent 34rem),
+    radial-gradient(ellipse at 4% 30%, rgba(224, 211, 255, .20), transparent 28rem),
+    var(--canvas);
+}
+.sidebar {
+  background: linear-gradient(180deg, #ffffff 0%, #f8faff 72%, #f1f6ff 100%);
+  border-right-color: #dfe8f7;
+  box-shadow: 8px 0 28px rgba(34, 69, 130, .035);
+}
+.brand-mark {
+  background: linear-gradient(145deg, #2878f0, #6656d9 58%, #9b55c7);
+  box-shadow: 0 7px 16px rgba(67, 103, 220, .28);
+}
+.brand-period { color: #e2a52d; }
+.workspace-switch {
+  background: linear-gradient(110deg, #f0f6ff, #f8f5ff);
+  border-color: #dce7fb;
+}
+.workspace-switch.selected {
+  background: linear-gradient(110deg, #e8f2ff, #f2edff);
+  border-color: #c9dcff;
+}
+.nav-item { border-radius: 11px; }
+.nav-item:hover { background: linear-gradient(100deg, #eff6ff, #f7f3ff); }
+.nav-item.active {
+  color: #1558c7;
+  background: linear-gradient(105deg, #e4efff, #f0ebff);
+  box-shadow: inset 3px 0 0 #397df0;
+}
+.help-card { background: linear-gradient(120deg, #f1f7ff, #f8f5ff); border-color: #e1e8fa; }
+.help-icon { color: #4d58c8; background: #e8eaff; }
+.main-area { background: transparent; }
+.topbar {
+  background: rgba(255,255,255,.88);
+  border-bottom-color: #e2e9f5;
+  box-shadow: 0 5px 20px rgba(36, 67, 124, .035);
+}
+.preview-label > span, .meta-dot { background: #16a779; box-shadow: 0 0 0 3px rgba(22,167,121,.12); }
+.icon-button:hover { background: #edf4ff; color: #1d62cb; }
+.content-wrap { padding-top: 25px; }
+.customer-intro h1, .page-heading h1 { color: #142b55; }
+.eyebrow, .workspace-label, .nav-section { color: #7789a5; }
+.customer-hero {
+  background: linear-gradient(115deg, #173b78 0%, #245ec1 49%, #634bc5 100%);
+  box-shadow: 0 18px 42px rgba(43, 87, 180, .20);
+}
+.customer-hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: .18;
+  background-image: radial-gradient(circle at 1px 1px, rgba(255,255,255,.8) 1px, transparent 0);
+  background-size: 23px 23px;
+}
+.hero-copy { background: linear-gradient(100deg, rgba(15,43,91,.22), transparent); }
+.hero-kicker { color: #d5e6ff; }
+.hero-copy h2 { text-shadow: 0 2px 16px rgba(7,25,64,.16); }
+.button-primary {
+  color: #174da5;
+  border-color: rgba(255,255,255,.88);
+  background: linear-gradient(135deg, #ffffff, #eaf2ff);
+  box-shadow: 0 7px 18px rgba(9,31,78,.16);
+}
+.button-primary:hover { background: #fff; box-shadow: 0 10px 22px rgba(9,31,78,.22); }
+.button-quiet-light { border-color: rgba(255,255,255,.38); background: rgba(255,255,255,.12); }
+.image-caption { border-color: rgba(255,255,255,.8); }
+.caption-mark { color: #6350c9; background: linear-gradient(135deg, #e9edff, #f7eaff); }
+.notice-banner {
+  color: #2854a2;
+  border-color: #cbdcff;
+  background: linear-gradient(105deg, #eaf3ff, #f4efff);
+}
+.intro-trust { border-color: #dce7fa; background: linear-gradient(120deg, #fff, #f6f8ff); }
+.trust-icon { color: #3f62c7; background: linear-gradient(135deg, #e8efff, #f2eaff); }
+.sample-notice { border-color: #dce6f6; background: linear-gradient(110deg, #fff, #f7faff); }
+.sample-mark { color: #356bc3; background: #e8f1ff; }
+.sample-tag { color: #93600b; background: #fff5d9; border-color: #f4df9d; }
+.overview-tile, .panel, .product-card, .customer-surface {
+  border-color: #e1e8f4;
+  box-shadow: 0 8px 24px rgba(42, 73, 132, .055);
+}
+.overview-tile { transition: transform .18s ease, box-shadow .18s ease; }
+.overview-tile:hover { transform: translateY(-2px); box-shadow: 0 13px 27px rgba(42,73,132,.09); }
+.overview-icon.blue { color: #2169d5; background: linear-gradient(135deg, #e4f0ff, #dce8ff); }
+.overview-icon.gold { color: #a66a09; background: linear-gradient(135deg, #fff3d5, #ffebbd); }
+.overview-icon.green { color: #12835b; background: linear-gradient(135deg, #ddf8eb, #e7f8f0); }
+.journey-icon { color: #276bd0; background: linear-gradient(135deg, #e4efff, #e8e8ff); }
+.journey-status { color: #9a650c; background: #fff5dc; border-color: #f2e0b2; }
+.progress-track { background: #e9eef8; }
+.progress-track span { background: linear-gradient(90deg, #2878f0, #6a5cdd 58%, #16a779); }
+.timeline-done .timeline-marker { border-color: #b9e9d2; background: #e2f8ed; color: #11845b; }
+.timeline-row:not(:last-child)::before { background: linear-gradient(#9cc5ff, #e2eaf7); }
+.next-step-icon { background: linear-gradient(135deg, #e6efff, #eeeaff); color: #4d58c8; }
+.next-illustration { background: radial-gradient(circle at 50% 48%, #fff 0 18%, transparent 19%), linear-gradient(135deg, #eaf3ff, #f1edff 58%, #e5f8f3); }
+.doc-illustration { color: #4d63d4; border-color: #d7def8; box-shadow: 0 12px 22px rgba(65,86,164,.16); }
+.orbit-a, .orbit-b { border-color: rgba(102,120,205,.22); }
+.illustration-spark { color: #e2a52d; }
+.security-card { border-color: #d9e8fb; background: linear-gradient(115deg, #f1f7ff, #f5f2ff); }
+.security-icon { color: #326bd1; background: #e3edff; }
+.product-card { transition: transform .2s ease, box-shadow .2s ease, border-color .2s ease; }
+.product-card:hover { border-color: #c8d9fb; box-shadow: 0 15px 30px rgba(42,73,132,.12); }
+.product-art { background: linear-gradient(135deg, #e8f1ff, #f2edff); }
+.product-label { color: #5573a5; }
+.product-card button, .text-action { color: #2168d1; }
+.product-card button:hover, .text-action:hover { color: #624bc8; }
+.activity-icon { color: #4166c5; background: linear-gradient(135deg, #e9efff, #f1eaff); }
+.support-panel { border-color: #d9e7fb; background: linear-gradient(135deg, #f0f7ff, #f8f4ff); }
+.mode-switch { background: linear-gradient(100deg, #e8effb, #eeeaff); }
+.mode-switch button.mode-active { color: #245fc0; box-shadow: 0 2px 7px rgba(47,82,151,.12); }
+.button-outline { border-color: #d3e0f5; color: #285aa7; background: linear-gradient(120deg, #fff, #f5f8ff); }
+.button-outline:hover { border-color: #a9c5f4; background: #f1f6ff; }
+.quiet-tag, .customer-soft-pill { background: #eef3fc; color: #5d7192; }
+.customer-page .customer-surface, .operations-page .customer-surface { background: rgba(255,255,255,.96); }
+input, select, textarea {
+  border-color: #dce5f3;
+}
+input:focus, select:focus, textarea:focus {
+  border-color: #7da9f4;
+  box-shadow: 0 0 0 3px rgba(64,126,231,.12);
+}
+button, .product-card, .overview-tile { -webkit-tap-highlight-color: transparent; }
+@media (max-width: 760px) {
+  .content-wrap { padding-top: 17px; }
+  .customer-hero { background: linear-gradient(145deg, #173b78, #2869cc 62%, #6651c5); }
+}
+@media (prefers-reduced-motion: no-preference) {
+  .customer-hero { animation: northline-arrive .55s ease-out both; }
+  .panel, .overview-tile, .product-card { animation: northline-fade-up .45s ease both; }
+  .product-card:nth-child(2) { animation-delay: 45ms; }
+  .product-card:nth-child(3) { animation-delay: 90ms; }
+  .product-card:nth-child(4) { animation-delay: 135ms; }
+  @keyframes northline-arrive { from { opacity: .75; transform: translateY(7px); } to { opacity: 1; transform: translateY(0); } }
+  @keyframes northline-fade-up { from { opacity: .7; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
+}
