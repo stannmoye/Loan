@@ -381,7 +381,7 @@ const evidenceFixtures: EvidenceRecord[] = [
   { id:"EV-2043",caseRef:reviewCases[1].reference,customer:reviewCases[1].customer,category:"Income evidence",description:"Income evidence placeholder · no file attached",status:"In review",priority:"Standard",received:"Sample queue",owner:"Operations" },
   { id:"EV-2044",caseRef:reviewCases[2].reference,customer:reviewCases[2].customer,category:"Business registration",description:"Business registration placeholder · no file attached",status:"Needs review",priority:"Priority",received:"Sample queue",owner:"Verification team" },
   { id:"EV-2045",caseRef:reviewCases[3].reference,customer:reviewCases[3].customer,category:"Bank statement",description:"Financial evidence placeholder · no file attached",status:"Not provided",priority:"Standard",received:"Sample queue",owner:"Customer action" },
-  { id:"EV-2046",caseRef:reviewCases[4].reference,customer:reviewCases[4].customer,category:"Property document",description:"Property evidence placeholder · no file attached",status:"Verified",priority:"Standard",received:"Sample queue",owner:"Operations" }
+  { id:"EV-2046",caseRef:reviewCases[3].reference,customer:reviewCases[3].customer,category:"Property document",description:"Property evidence placeholder · no file attached",status:"Verified",priority:"Standard",received:"Sample queue",owner:"Operations" }
 ];
 
 function DocumentOversight({ onBack, onNotice }: { onBack: () => void; onNotice: (message: string) => void }) {
