@@ -4353,3 +4353,43 @@ button, .product-card, .overview-tile { -webkit-tap-highlight-color: transparent
 @media (prefers-reduced-motion: reduce) {
   .document-category-card, .loan-workspace-shortcut { transition:none!important; }
 }
+
+
+/* Operations command-centre refinement */
+.admin-control-suite {
+  margin: 20px 0 22px;
+  padding: 22px;
+  border: 1px solid #e0e8f3;
+  border-radius: 19px;
+  background: radial-gradient(circle at 100% 0%,rgba(103,139,210,.09),transparent 34%),linear-gradient(145deg,#fff 0%,#f8faff 100%);
+  box-shadow: 0 10px 28px rgba(20,36,61,.045);
+}
+.admin-suite-heading { display:flex; align-items:flex-start; justify-content:space-between; gap:16px; margin-bottom:17px; }
+.admin-suite-heading h2 { margin:5px 0 5px; color:#172b49; font-size:19px; letter-spacing:-.45px; }
+.admin-suite-heading p { margin:0; color:#718096; font-size:12px; line-height:1.55; }
+.admin-suite-badge { display:inline-flex; align-items:center; gap:7px; flex:none; padding:7px 10px; border:1px solid #dce8f7; border-radius:30px; background:#f1f6ff; color:#42658f; font-size:10px; font-weight:750; }
+.admin-suite-grid { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:11px; }
+.admin-suite-card {
+  min-width:0; display:flex; align-items:center; gap:11px; padding:14px 12px;
+  border:1px solid #e5ebf4; border-radius:14px; background:#fff; color:#273a56; text-align:left;
+  box-shadow:0 5px 14px rgba(20,36,61,.035);
+  transition:transform .18s,border-color .18s,box-shadow .18s;
+}
+.admin-suite-card:hover { transform:translateY(-2px); border-color:#cbdaf0; box-shadow:0 11px 22px rgba(37,99,235,.075); }
+.admin-suite-icon { width:39px; height:39px; flex:none; display:grid; place-items:center; border-radius:12px; }
+.admin-suite-copy { min-width:0; flex:1; display:flex; flex-direction:column; gap:4px; }
+.admin-suite-copy strong { color:#263a57; font-size:11px; font-weight:800; }
+.admin-suite-copy small { color:#8793a5; font-size:9px; line-height:1.45; }
+.admin-suite-card > svg:last-child { color:#9aa8ba; flex:none; }
+.suite-blue .admin-suite-icon { color:#2866c7; background:#eaf2ff; }
+.suite-violet .admin-suite-icon { color:#7456bd; background:#f1ebff; }
+.suite-gold .admin-suite-icon { color:#a97624; background:#fff3dd; }
+.suite-green .admin-suite-icon { color:#168653; background:#e8f7ef; }
+@media (max-width: 1050px) { .admin-suite-grid { grid-template-columns:repeat(2,minmax(0,1fr)); } }
+@media (max-width: 600px) {
+  .admin-control-suite { padding:16px; }
+  .admin-suite-heading { flex-direction:column; }
+  .admin-suite-grid { grid-template-columns:1fr; }
+  .admin-suite-card { padding:12px; }
+}
+@media (prefers-reduced-motion: reduce) { .admin-suite-card { transition:none; } }
