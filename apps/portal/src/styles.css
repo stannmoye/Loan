@@ -4729,3 +4729,112 @@ button, .product-card, .overview-tile { -webkit-tap-highlight-color: transparent
   .evidence-detail-actions button { width:100%; justify-content:center; }
 }
 @media (max-width: 390px) { .evidence-category-grid { grid-template-columns:1fr; } }
+
+
+/* Staff directory, roles and permission governance */
+.staff-heading { align-items:center; }
+.staff-metric-grid { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:11px; margin:18px 0 13px; }
+.staff-metric-card { display:flex; flex-direction:column; gap:5px; min-width:0; padding:15px; border:1px solid #e5ebf4; border-radius:14px; background:#fff; box-shadow:0 6px 16px rgba(20,36,61,.035); }
+.staff-metric-icon { width:33px; height:33px; display:grid; place-items:center; margin-bottom:4px; border-radius:10px; }
+.staff-metric-card small { color:#7d8ba0; font-size:9px; font-weight:750; }
+.staff-metric-card strong { color:#243b5a; font-size:23px; letter-spacing:-.8px; }
+.staff-metric-card em { color:#9aa6b6; font-size:8px; font-style:normal; }
+.staff-icon-blue { color:#316ec4; background:#eaf2ff; }
+.staff-icon-green { color:#168653; background:#e8f7ef; }
+.staff-icon-violet { color:#7757bd; background:#f2edff; }
+.staff-icon-amber { color:#b27a25; background:#fff4df; }
+.staff-workspace-grid { display:grid; grid-template-columns:minmax(285px,.88fr) minmax(0,1.32fr); gap:13px; margin-top:14px; align-items:start; }
+.staff-directory-panel,.staff-profile-panel { min-width:0; overflow:hidden; border:1px solid #e3eaf3; border-radius:15px; background:#fff; box-shadow:0 7px 18px rgba(20,36,61,.035); }
+.staff-panel-heading { display:flex; align-items:center; justify-content:space-between; padding:17px 17px 12px; }
+.staff-panel-heading h2 { margin:4px 0 0; color:#273d5b; font-size:15px; }
+.staff-directory-panel > .search-box { margin:0 14px 9px; }
+.staff-team-filter { display:flex; align-items:center; gap:8px; margin:0 14px 10px; padding:8px 10px; border:1px solid #e7edf4; border-radius:9px; color:#8392a7; background:#fafcff; }
+.staff-team-filter select { width:100%; border:0; outline:0; color:#60738e; background:transparent; font:inherit; font-size:9px; }
+.staff-member-list { display:flex; flex-direction:column; max-height:535px; overflow:auto; padding:0 9px; }
+.staff-member-row { display:flex; align-items:center; gap:9px; width:100%; padding:11px 8px; border:0; border-bottom:1px solid #edf1f6; border-radius:9px; text-align:left; background:#fff; cursor:pointer; }
+.staff-member-row:hover,.staff-member-selected { background:#f3f7ff; }
+.staff-member-selected { box-shadow:inset 3px 0 #397bd0; }
+.staff-avatar,.staff-profile-avatar { width:36px; height:36px; flex:none; display:grid; place-items:center; border-radius:12px; color:#416fae; background:linear-gradient(145deg,#e6f0ff,#f1edff); font-size:10px; font-weight:850; }
+.staff-member-copy { min-width:0; flex:1; display:flex; flex-direction:column; gap:3px; }
+.staff-member-copy strong { overflow:hidden; color:#354b68; font-size:10px; text-overflow:ellipsis; white-space:nowrap; }
+.staff-member-copy small { color:#71839c; font-size:8px; }
+.staff-member-copy em { color:#a0aaba; font-size:8px; font-style:normal; }
+.staff-status { display:inline-flex; align-items:center; justify-content:center; flex:none; padding:5px 7px; border-radius:20px; font-size:7px; font-weight:800; }
+.staff-status-active { color:#16764c; background:#e7f7ee; }
+.staff-status-invited { color:#7153b0; background:#f1ebff; }
+.staff-status-suspended { color:#9b5b53; background:#fff0ed; }
+.staff-directory-footer { display:flex; align-items:center; gap:7px; padding:11px 15px; color:#8292a8; background:#f8faff; font-size:8px; }
+.staff-directory-footer svg { color:#4d7db7; }
+.staff-profile-top { display:flex; align-items:center; gap:12px; padding:18px 18px 14px; }
+.staff-profile-avatar { width:48px; height:48px; border-radius:15px; font-size:13px; }
+.staff-profile-heading { min-width:0; flex:1; display:flex; flex-direction:column; gap:4px; }
+.staff-profile-heading h2 { margin:0; color:#293e5c; font-size:15px; }
+.staff-profile-heading > span:last-child { overflow:hidden; color:#8795a8; font-size:8px; text-overflow:ellipsis; }
+.staff-tabs { display:flex; gap:18px; padding:0 18px; border-bottom:1px solid #e9eef5; }
+.staff-tabs button { position:relative; padding:11px 0; border:0; color:#8996a8; background:none; font-size:9px; font-weight:750; }
+.staff-tabs button.active { color:#356db5; }
+.staff-tabs button.active:after { content:""; position:absolute; right:0; bottom:-1px; left:0; height:2px; border-radius:2px; background:#397bd0; }
+.staff-profile-content,.staff-permission-content,.staff-activity-content { padding:16px 18px; }
+.staff-info-grid { display:grid; grid-template-columns:1fr 1fr; gap:15px; padding:2px 1px 17px; }
+.staff-info-grid > div { display:flex; flex-direction:column; gap:5px; min-width:0; }
+.staff-info-grid small { color:#9aa6b6; font-size:7px; font-weight:850; letter-spacing:.7px; }
+.staff-info-grid strong { overflow-wrap:anywhere; color:#405673; font-size:9px; }
+.staff-role-editor { display:flex; align-items:center; flex-wrap:wrap; gap:10px; padding:14px; border:1px solid #e5ecf5; border-radius:11px; background:#f9fbff; }
+.staff-role-editor > div { min-width:180px; flex:1; display:flex; flex-direction:column; gap:5px; }
+.staff-role-editor > div > strong { color:#405775; font-size:10px; }
+.staff-role-editor p { margin:0; color:#8493a8; font-size:8px; line-height:1.5; }
+.staff-role-editor select { min-width:160px; max-width:100%; padding:9px; border:1px solid #dfe7f1; border-radius:8px; color:#526984; background:#fff; font:inherit; font-size:8px; }
+.staff-role-editor button,.staff-action-row button { display:inline-flex; align-items:center; justify-content:center; gap:6px; padding:9px 11px; border:1px solid #dce7f6; border-radius:8px; color:#386eae; background:#edf4ff; font-size:8px; font-weight:800; cursor:pointer; }
+.staff-action-row { display:flex; align-items:center; justify-content:space-between; gap:10px; margin-top:12px; padding:13px 2px 0; border-top:1px solid #edf1f6; }
+.staff-action-row > div { display:flex; flex-direction:column; gap:4px; }
+.staff-action-row strong { color:#687d98; font-size:9px; }
+.staff-action-row small { color:#99a5b5; font-size:8px; }
+.staff-action-row button { color:#8b97a7; border-color:#e3eaf3; background:#f4f6f9; cursor:not-allowed; }
+.staff-permission-intro { display:flex; align-items:center; gap:10px; margin-bottom:14px; color:#4b78b2; }
+.staff-permission-intro > div { display:flex; flex-direction:column; gap:4px; }
+.staff-permission-intro strong { color:#405775; font-size:10px; }
+.staff-permission-intro small { color:#8997aa; font-size:8px; }
+.staff-permission-group { margin-top:12px; }
+.staff-permission-group h3 { margin:0; padding:8px 0; color:#8493a8; border-bottom:1px solid #e9eef5; font-size:7px; letter-spacing:.8px; }
+.staff-permission-row { display:flex; align-items:center; justify-content:space-between; gap:10px; padding:10px 1px; border-bottom:1px solid #f0f3f7; }
+.staff-permission-row span { color:#536984; font-size:8px; }
+.staff-permission-row b { flex:none; font-size:7px; }
+.permission-included { color:#178151; }
+.permission-restricted { color:#a0aaba; }
+.staff-permission-note { display:flex; gap:7px; margin-top:14px; padding:10px; border-radius:9px; color:#6f829c; background:#f1f6fc; font-size:8px; line-height:1.5; }
+.staff-permission-note svg { flex:none; color:#4b78b2; }
+.staff-activity-empty { min-height:185px; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:8px; text-align:center; color:#8da0b8; }
+.staff-activity-empty svg { color:#5b83b7; }
+.staff-activity-empty strong { color:#536984; font-size:10px; }
+.staff-activity-empty span { max-width:320px; color:#8998ab; font-size:8px; line-height:1.6; }
+.staff-audit-requirements { display:flex; flex-direction:column; gap:5px; padding:12px; border:1px solid #e7edf4; border-radius:9px; background:#fafcff; }
+.staff-audit-requirements strong { color:#536984; font-size:8px; }
+.staff-audit-requirements small { color:#8c9aae; font-size:8px; line-height:1.5; }
+.staff-governance-panel { margin-top:14px; padding:18px; border:1px solid #e3eaf3; border-radius:15px; background:linear-gradient(140deg,#fff,#f9fbff); }
+.staff-governance-heading { display:flex; align-items:flex-start; justify-content:space-between; gap:12px; }
+.staff-governance-heading h3 { margin:4px 0 5px; color:#2c425f; font-size:14px; }
+.staff-governance-heading p { margin:0; color:#8492a6; font-size:9px; }
+.staff-governance-badge { flex:none; padding:6px 9px; border-radius:20px; color:#4774ae; background:#eaf2ff; font-size:8px; font-weight:800; }
+.staff-governance-grid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:9px; margin-top:15px; }
+.staff-governance-tile { display:flex; align-items:flex-start; gap:9px; min-width:0; padding:12px; border:1px solid #e8edf4; border-radius:10px; background:#fff; }
+.staff-governance-tile > span { width:30px; height:30px; flex:none; display:grid; place-items:center; border-radius:9px; color:#4c78b2; background:#edf4ff; }
+.staff-governance-tile > div { min-width:0; display:flex; flex-direction:column; gap:5px; }
+.staff-governance-tile strong { color:#405672; font-size:9px; }
+.staff-governance-tile small { color:#8b98aa; font-size:8px; line-height:1.45; }
+@media (max-width: 900px) {
+ .staff-workspace-grid { grid-template-columns:1fr; }
+ .staff-member-list { max-height:360px; }
+ .staff-governance-grid { grid-template-columns:repeat(2,minmax(0,1fr)); }
+}
+@media (max-width: 600px) {
+ .staff-heading { align-items:flex-start; flex-direction:column; }
+ .staff-metric-grid { grid-template-columns:repeat(2,minmax(0,1fr)); }
+ .staff-profile-top { flex-wrap:wrap; }
+ .staff-profile-heading { flex-basis:calc(100% - 65px); }
+ .staff-role-editor { align-items:stretch; flex-direction:column; }
+ .staff-role-editor select,.staff-role-editor button { width:100%; max-width:none; }
+ .staff-action-row { align-items:flex-start; flex-direction:column; }
+ .staff-action-row button { width:100%; }
+ .staff-governance-grid { grid-template-columns:1fr; }
+ .staff-governance-heading { flex-direction:column; }
+}
