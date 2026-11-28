@@ -28,6 +28,8 @@ jobs:
         run: npm run build
       - name: Run customer portal interaction tests
         run: npm test
+      - name: Build the Blitz deployment image
+        run: docker build --pull -f ../../Dockerfile -t loan-portal-preview:ci ../..
       - name: Install Chromium for browser checks
         run: npx playwright install --with-deps chromium
       - name: Run desktop and mobile browser checks
