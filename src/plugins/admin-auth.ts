@@ -19,9 +19,10 @@ export async function requirePermission(request: FastifyRequest, permission: str
     throw error;
   }
   const token = authorization.slice(7);
+  const publicKey = await getPublicKey();
   let verified;
   try {
-    verified = await jwtVerify(token, await getPublicKey(), {
+    verified = await jwtVerify(token, publicKey, {
       issuer: env.JWT_ISSUER!,
       audience: env.JWT_AUDIENCE!,
       algorithms: ['RS256'],
