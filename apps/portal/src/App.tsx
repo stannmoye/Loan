@@ -185,7 +185,7 @@ function SecretsSettings() {
   </section>;
 }
 
-function OperationsView({ query, setQuery, filter, setFilter, cases, selected, setSelected, onNotice, onOpenWorkflow }: {
+function OperationsView({ query, setQuery, filter, setFilter, cases, selected, setSelected, onNotice, onOpenWorkflow, onOpenDocuments }: {
   query: string; setQuery: (value: string) => void; filter: "All" | CaseStatus;
   setFilter: (value: "All" | CaseStatus) => void; cases: ReviewCase[];
   selected: ReviewCase; setSelected: (value: ReviewCase) => void; onNotice: (message: string) => void; onOpenWorkflow: () => void; onOpenDocuments: () => void;
